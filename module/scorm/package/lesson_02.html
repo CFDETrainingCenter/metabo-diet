@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Lesson 2 - Comparing study design | Metabo-Diet</title>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body data-page-id="lesson_02">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand">METABO-DIET</p>
+      <p class="mode">Harmonizing dietary and exercise phenotypes with metabolomics</p>
+    </div>
+  </header>
+  <div class="page-shell">
+    
+<nav class="course-nav" aria-label="Course navigation">
+  <h2>Course navigation</h2>
+  <ul><li><a href="index.html">Course home</a></li>
+<li><a href="pretest.html">Pretest</a></li>
+<li><a href="lesson_01.html">Lesson 1 - Why harmonization matters</a></li>
+<li><a href="lesson_02.html">Lesson 2 - Comparing study design</a></li>
+<li><a href="lesson_03.html">Lesson 3 - Harmonizing metabolomics and metadata</a></li>
+<li><a href="lesson_04.html">Lesson 4 - Guided analysis and interpretation</a></li>
+<li><a href="lesson_05.html">Lesson 5 - Access tiers and transfer</a></li>
+<li><a href="posttest.html">Posttest</a></li></ul>
+  <p class="status" id="lms-mode">Checking LMS connection...</p>
+  <p class="status" id="course-status">Course status: not attempted</p>
+</nav>
+
+    <main id="main-content" tabindex="-1">
+      
+<article>
+<h1>Lesson 2 - Comparing study design and phenotype capture</h1>
+<p><strong>Estimated time:</strong> 30 minutes</p>
+<p><strong>Bloom levels:</strong> Understand, analyze</p>
+<p><strong>Module objectives addressed:</strong> LO1, LO2</p>
+<h2>Learning objectives</h2>
+<p>By the end of this lesson, you will be able to:</p>
+<ol>
+<li>Extract design, specimen, timepoint, phenotype, and provenance evidence from two Metabolomics Workbench records.</li>
+<li>Classify fields as directly comparable, partially comparable, or not comparable for a stated purpose.</li>
+<li>Explain how diet and exercise phenotypes acquire meaning from protocol details.</li>
+<li>Use MoTrPAC and NPH as design references without treating their data as module dependencies.</li>
+</ol>
+<h2>Lesson map</h2>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Activity</th>
+<th scope="col">Minutes</th>
+</tr></thead><tbody>
+<tr>
+<td>From labels to estimands</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Five-layer study comparison</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Consortium design references</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Cohort-comparison worksheet</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Knowledge check</td>
+<td>3</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>Notebook connection - <code>NB-L2</code>.</strong> After reading the comparison framework, open <strong>Lesson 2 - Comparing study design and phenotype capture (<code>NB-L2</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Run the ten-endpoint source audit, endpoint-size table, biological-sample table, and timepoint checks in order. Use the learner-edit cell to inspect each study separately, then transfer the evidence to the cohort-comparison worksheet before continuing to <code>NB-L3</code>.</p>
+</blockquote>
+<h2>1. Begin with the question, not the column name</h2>
+<p>A variable is comparable only relative to a purpose. Age in years may be sufficiently comparable for a descriptive cohort table but insufficient if one study reports exact age and another reports broad, top-coded categories. A <code>post</code> sample may be suitable for identifying that both studies collected after an intervention but unsuitable for modeling a common acute-response time.</p>
+<p>Before aligning columns, write the target question as an <strong>estimand sketch</strong>:</p>
+<ul>
+<li><strong>Population:</strong> Who is represented?</li>
+<li><strong>Exposure or intervention:</strong> What contrast is of interest?</li>
+<li><strong>Outcome:</strong> Which metabolite measure or derived quantity is being interpreted?</li>
+<li><strong>Time:</strong> At what biological interval is the outcome defined?</li>
+<li><strong>Summary:</strong> Is the target a within-person change, a group mean, a rank, an overlap count, or something else?</li>
+</ul>
+<p>For this module, the safe default target is descriptive:</p>
+<blockquote>
+<p>Describe which metabolite identities and broad chemical classes are represented in both studies, while preserving differences in population, specimen, timepoint, platform, and measurement scale.</p>
+</blockquote>
+<p>That target supports crosswalking and overlap summaries. It does not require the two cohorts to estimate the same intervention effect.</p>
+<h2>2. The five-layer comparison</h2>
+<p>Use the cohort-comparison worksheet to collect evidence at five layers. For every entry, capture the source location and avoid filling a blank by inference.</p>
+<h3>Layer A - Study design and population</h3>
+<p>Record:</p>
+<ul>
+<li>Observational versus interventional design.</li>
+<li>Parallel, crossover, repeated-measures, or other structure.</li>
+<li>Recruitment setting and inclusion or exclusion criteria.</li>
+<li>Unit of assignment and unit of analysis.</li>
+<li>Number of participants and samples, keeping those counts distinct.</li>
+<li>Randomization, masking, washout, run-in, or familiarization when applicable.</li>
+<li>Attrition and missing visits if reported.</li>
+</ul>
+<p>The number of samples is not the number of independent participants. Repeated samples from one participant are correlated. If participant identifiers are absent or cannot be linked reliably, within-person analyses may be impossible even when multiple timepoints exist.</p>
+<h3>Layer B - Phenotype anchor</h3>
+<p>For a diet-anchored study, inspect:</p>
+<ul>
+<li>Food or dietary pattern definition.</li>
+<li>Controlled feeding versus advice or free-living exposure.</li>
+<li>Energy balance, meal timing, compliance measures, and washout.</li>
+<li>Fasting state and any test-meal challenge.</li>
+<li>Dietary assessment method and its reference period.</li>
+</ul>
+<p>For an exercise-anchored study, inspect:</p>
+<ul>
+<li>Modality, intensity, duration, dose, and supervision.</li>
+<li>Acute bout versus chronic training.</li>
+<li>Fitness or performance measures.</li>
+<li>Pre-exercise standardization, recent activity restrictions, and feeding state.</li>
+<li>Recovery intervals and workload scaling.</li>
+</ul>
+<p>The words <code>diet</code> and <code>exercise</code> are topic labels, not exposure definitions. The worksheet should contain protocol-level details sufficient for another analyst to understand the contrast.</p>
+<h3>Layer C - Specimen and pre-analytical context</h3>
+<p>Record:</p>
+<ul>
+<li>Biospecimen, matrix, and anatomical source.</li>
+<li>Collection tube or anticoagulant when relevant.</li>
+<li>Fasting or fed status.</li>
+<li>Collection clock time if available.</li>
+<li>Processing delay, centrifugation, aliquoting, and storage temperature.</li>
+<li>Freeze-thaw information if available.</li>
+</ul>
+<p>Plasma and serum are both blood-derived, but they are not identical matrices. Treat them as partially comparable at most, and only for a purpose that tolerates the distinction. A field left unreported is <code>not reported</code>, not <code>same</code>.</p>
+<h3>Layer D - Time semantics</h3>
+<p>Translate each deposited time label into a physiological definition. Use a canonical structure such as:</p>
+<p><code>anchor | offset | duration/unit | state | visit/order</code></p>
+<p>Examples:</p>
+<ul>
+<li><code>exercise_bout_end | +0 | min | acute_response | visit_2</code></li>
+<li><code>exercise_bout_end | +180 | min | recovery | visit_2</code></li>
+<li><code>diet_period_start | +14 | day | end_of_feeding_period | period_1</code></li>
+<li><code>test_meal_start | -10 | min | fasting_baseline | visit_1</code></li>
+</ul>
+<p>Do not translate <code>post</code> without evidence. When the necessary reference point or offset is absent, flag the timepoint as unresolved.</p>
+<h3>Layer E - Assay and metadata provenance</h3>
+<p>Record:</p>
+<ul>
+<li>Analysis type, platform, chromatography, ion mode, and targeted or untargeted status.</li>
+<li>Quantification or abundance scale and units.</li>
+<li>Normalization, transformation, blank correction, batch correction, and missing-value handling when documented.</li>
+<li>Analysis identifier as well as study accession.</li>
+<li>mwTab block or REST response that supports each field.</li>
+<li>Retrieval date, endpoint, and record version or checksum when available.</li>
+</ul>
+<p>A study may contain multiple analyses. Never assume a study-level description applies identically to every analysis table.</p>
+<h2>3. Comparability is a reasoned decision</h2>
+<p>Use these operational categories:</p>
+<h3>Directly comparable</h3>
+<p>The two fields represent the same construct at sufficient granularity for the stated use, with compatible coding or a transparent lossless conversion.</p>
+<p>Example: Both studies report participant age in years at enrollment, and the target is a descriptive median and range. Verify population definitions and disclosure rules before reporting.</p>
+<h3>Partially comparable</h3>
+<p>The fields share a broader construct but differ in granularity, timing, protocol, matrix, or measurement. They may support stratified description or a coarser derived category, but the difference must remain visible.</p>
+<p>Example: One study records exact fasting duration; another records only <code>fasted</code>. Both can support a high-level fasting-state flag, but not a dose-response model by fasting hours.</p>
+<h3>Not comparable</h3>
+<p>The fields represent different constructs, lack essential provenance, or would require an unsupported assumption.</p>
+<p>Example: <code>post_diet</code> after a 14-day feeding period and <code>post_exercise</code> immediately after an acute bout cannot be treated as one common post-intervention timepoint.</p>
+<h3>Not yet assessable</h3>
+<p>Use this fourth workflow status when evidence is missing or the accession is unresolved. It prevents uncertainty from being silently converted into incompatibility or compatibility. Before analysis, resolve it or explicitly exclude it.</p>
+<h2>4. Worked example with the locked configuration</h2>
+<p>The following decisions are grounded in the locked Metabolomics Workbench records and remain subject to the dated verification recorded in your worksheet.</p>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Domain</th>
+<th scope="col"><code>DIET_ACCESSION = ST001521</code></th>
+<th scope="col"><code>EXERCISE_ACCESSION = ST003348</code></th>
+<th scope="col">Decision for this module</th>
+</tr></thead><tbody>
+<tr>
+<td>Species</td>
+<td>Human in summary and subject metadata</td>
+<td>Human in summary and subject metadata</td>
+<td>Direct at a broad species level</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td>Blood plasma</td>
+<td>Collection metadata specifies blood serum, although factors say <code>blood</code></td>
+<td>Partial for discovery; keep plasma and serum distinct</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Baseline and Days 5, 9, 12, and 15 across feeding plus antibiotic/PEG procedures</td>
+<td>REST, immediate post-exercise, 3-hour recovery, and 22-hour recovery</td>
+<td>Not a shared time axis</td>
+</tr>
+<tr>
+<td>Phenotype</td>
+<td>Three diet groups in a longitudinal FARMM protocol</td>
+<td>Acute endurance race-walking and recovery</td>
+<td>Not one common intervention variable</td>
+</tr>
+<tr>
+<td>Metabolite name</td>
+<td>Submitted name and RefMet output</td>
+<td>Submitted name and RefMet output</td>
+<td>Exact-name comparison possible after Lesson 3 review</td>
+</tr>
+<tr>
+<td>Intensity</td>
+<td>Four LC-MS analyses, unitless peak areas</td>
+<td>Two LC-MS analyses, peak area</td>
+<td>No cross-study quantitative pooling</td>
+</tr>
+</tbody></table></div>
+<p>Notice that a useful table can contain <code>not yet assessable</code>. The worksheet is an evidence ledger, not a form that must be completely filled.</p>
+<h2>5. Consortium-scale design references</h2>
+<h3>MoTrPAC</h3>
+<p>MoTrPAC&#x27;s published human protocol describes a multicenter effort designed to characterize molecular responses to acute exercise and exercise training. It includes structured exercise phenotyping and collection of blood, skeletal muscle, and adipose tissue in defined protocol contexts. Use the protocol as an example of how modality, dose, tissue, and time are specified. Do not copy its timepoint labels onto <code>EXERCISE_ACCESSION</code>; retrieve the actual MW study protocol and factors.</p>
+<h3>Nutrition for Precision Health</h3>
+<p>NIH describes NPH as a modular study nested in All of Us. Public program documentation distinguishes a larger baseline/test-meal module from free-living and domiciled controlled-feeding modules. Use it as an example of how dietary exposure, test meals, and multimodal measures can be organized. Do not infer that <code>DIET_ACCESSION</code> follows the NPH design.</p>
+<p>These examples teach <strong>design transfer</strong>: recognize a structure, then verify whether it exists in the target data. They do not supply missing metadata for the MW case studies.</p>
+<h3>Accessible description of the comparison diagram</h3>
+<p>The diagram has two vertical lanes. The diet lane moves from diet assignment to adherence and feeding state, then to specimen collection. The exercise lane moves from exercise modality and dose to exertion and recovery, then to specimen collection. Both lanes feed into a shared assay box, but each arrow carries its own time, specimen, and protocol tags. A dashed line between the lanes is labeled <code>compare metadata</code>; there is no arrow labeled <code>pool values</code>.</p>
+<h2>6. Hands-on activity: complete the cohort-comparison worksheet</h2>
+<p>Use <code>module/templates/cohort_comparison_worksheet_learner.md</code>.</p>
+<h3>Step 1 - Resolve and document</h3>
+<p>For <code>DIET_ACCESSION = ST001521</code> and <code>EXERCISE_ACCESSION = ST003348</code>, record:</p>
+<ul>
+<li>Resolved study accession and all analysis identifiers used.</li>
+<li>Landing page, REST endpoints, retrieval timestamp, and public-release evidence.</li>
+<li>Publication or protocol link if the record provides one.</li>
+</ul>
+<p>If live retrieval fails, use only the versioned cached record supplied with the module, retain the configuration key in every source field, and mark the retrieval source as cached.</p>
+<h3>Step 2 - Extract independently</h3>
+<p>Complete each study column without looking at the other study. This reduces the temptation to translate a field into whatever appears in the comparison study.</p>
+<p>For every cell, use one of:</p>
+<ul>
+<li>A value plus source location.</li>
+<li><code>NR</code> for not reported after a documented search.</li>
+<li><code>NA</code> for not applicable.</li>
+<li><code>UNRESOLVED</code> when the accession, analysis selection, or meaning is pending.</li>
+</ul>
+<h3>Step 3 - State the purpose</h3>
+<p>Choose one comparison purpose:</p>
+<ol>
+<li>Metadata inventory.</li>
+<li>Metabolite-name overlap.</li>
+<li>Class-level presence or coverage.</li>
+<li>Within-study change followed by qualitative pattern comparison.</li>
+</ol>
+<p>Do not select pooled quantitative inference for this exercise.</p>
+<h3>Step 4 - Classify and justify</h3>
+<p>For at least eight rows, mark directly comparable, partially comparable, not comparable, or not yet assessable. Write a one-sentence evidence-based justification. A justification should name the relevant similarity or difference rather than merely repeat the category.</p>
+<h3>Step 5 - Write an exclusion statement</h3>
+<p>Complete:</p>
+<blockquote>
+<p>We will not combine ________ across the two studies because ________. We can still compare ________ by ________.</p>
+</blockquote>
+<h3>Completion criteria</h3>
+<p>Your worksheet is complete when:</p>
+<ul>
+<li>Every substantive entry has a source or an explicit missingness code.</li>
+<li>Participant and sample counts are not conflated.</li>
+<li>Timepoints have physiological anchors or are flagged.</li>
+<li>Assay identifiers and units are recorded.</li>
+<li>At least one field is intentionally not harmonized.</li>
+</ul>
+<h2>7. Interpretation guardrails</h2>
+<ul>
+<li>A shared label is a hypothesis of equivalence, not proof.</li>
+<li>Missing metadata does not mean the protocols were identical.</li>
+<li>Recoding to a broader category trades detail for compatibility; document the loss.</li>
+<li>A crossover period, repeated sample, or technical replicate is not an independent participant.</li>
+<li>Do not use consortium documentation to fill gaps in a different MW study.</li>
+<li>Do not select only the metadata that support a desired integration.</li>
+<li>Record the analysis identifier because one accession may contain multiple assays.</li>
+</ul>
+<h2>8. Knowledge check</h2>
+<p><strong>KC2-01.</strong> One study records fasting duration in hours and another records only yes/no fasting status. For a binary fasted-versus-not-fasted description, how should the fields be classified?</p>
+<p>A. Directly comparable with no documentation.</p>
+<p>B. Partially comparable after a documented derivation and loss of detail.</p>
+<p>C. Not comparable for any purpose.</p>
+<p>D. Directly comparable for modeling fasting duration.</p>
+<p><strong>KC2-02.</strong> What is the best evidence that two rows at three timepoints come from the same participant?</p>
+<p>A. Similar metabolite profiles.</p>
+<p>B. Adjacent sample identifiers.</p>
+<p>C. A documented subject-sample relationship in the deposited metadata.</p>
+<p>D. The word <code>longitudinal</code> in the publication title.</p>
+<p><strong>KC2-03.</strong> Why is <code>post</code> insufficient as a harmonized timepoint?</p>
+<p>A. Post-intervention samples are never useful.</p>
+<p>B. It lacks an intervention anchor, offset, and physiological state.</p>
+<p>C. It cannot appear in mwTab.</p>
+<p>D. It always means immediate recovery.</p>
+<h2>Take-home message</h2>
+<p>Study comparison is a purpose-specific evidence exercise. Define the intended comparison, extract each record on its own terms, preserve protocol meaning, and classify compatibility with reasons. Only then should analyte-level harmonization begin.</p>
+<h2>Primary sources and first-party documentation</h2>
+<ol>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/tutorials.php">mwTab file specification, version 1.7, and tutorials</a>. Accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/tools/mw_rest.php">REST study-context endpoints</a>. Accessed August 10, 2026.</li>
+<li>MoTrPAC Study Group, Jakicic JM, Kohrt WM, et al. <a href="https://doi.org/10.1152/japplphysiol.00102.2024">Molecular Transducers of Physical Activity Consortium (MoTrPAC): human studies design and protocol</a>. <em>Journal of Applied Physiology</em>. 2024;137(3):473-493.</li>
+<li>MoTrPAC. <a href="https://d1yw74buhe0ts0.cloudfront.net/docs/MoTrPAC_Adult_Study_Protocol.pdf">Adult Study Protocol, version 3.0</a>. August 22, 2023.</li>
+<li>NIH Common Fund. <a href="https://commonfund.nih.gov/nutritionforprecisionhealth">Nutrition for Precision Health</a> and <a href="https://commonfund.nih.gov/nutritionforprecisionhealth/frequently-asked-questions">program FAQ</a>. Accessed August 10, 2026.</li>
+<li>All of Us Research Program. <a href="https://support.researchallofus.org/hc/en-us/articles/41981123613716-Researcher-Workbench">Researcher Workbench</a>. Accessed August 10, 2026.</li>
+</ol>
+</article>
+<div class="actions">
+  <button type="button" data-complete-lesson aria-pressed="false">Mark lesson complete</button>
+  <a class="button secondary" href="lesson_01.html">Previous</a>
+  <a class="button secondary" href="lesson_03.html">Next</a>
+</div>
+<p id="completion-notice" class="callout" tabindex="-1" aria-live="polite"></p>
+
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Metabo-Diet release 1.0 | Public Metabolomics Workbench case studies ST001521 and ST003348</p>
+      <p>Scientific boundary: no cross-study pooling of uncalibrated quantitative values.</p>
+    </div>
+  </footer>
+  <script src="assets/course.js"></script>
+  
+</body>
+</html>

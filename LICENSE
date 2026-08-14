@@ -1,0 +1,33 @@
+Creative Commons Attribution 4.0 International Public License (CC BY 4.0)
+
+Except for third-party material identified below, the original Metabo-Diet
+training materials in this repository - including lesson text, assessments,
+templates, notebook narrative and code, scripts, and original figures - are
+licensed under the Creative Commons Attribution 4.0 International Public
+License.
+
+You may share and adapt the licensed material for any purpose, including
+commercial purposes, provided that you give appropriate credit, link to the
+license, and indicate whether changes were made. You may not imply endorsement
+by the licensors or apply legal or technological restrictions that prevent
+others from exercising the rights granted by the license.
+
+Canonical license: https://creativecommons.org/licenses/by/4.0/
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Suggested attribution:
+
+  Metabo-Diet Training Module contributors, "Metabo-Diet: Harmonizing Dietary
+  and Exercise Phenotypes with Metabolomics Across CFDE Resources," CC BY 4.0.
+  Changes, if any, must be identified.
+
+Third-party exclusions
+
+This license does not relicense third-party datasets, repository records,
+software dependencies, trademarks, logos, or other material that the
+repository contributors do not have authority to license. Cached public data
+and derived artifacts retain the source licenses and attribution requirements
+documented in module/ATTRIBUTION.md and module/data/provenance.json.
+
+No warranties are given. Other rights, including privacy, publicity, patent,
+trademark, and moral rights, may limit a particular reuse.

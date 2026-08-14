@@ -1,0 +1,3 @@
+study_id,analysis_id,samples,input_feature_rows,pca_features,missingness_threshold,transform,imputation,scaling,PC1_variance_percent,PC2_variance_percent
+ST001521,AN002534,150,224,212,0.2,log2(peak area + 1),feature median after log2 transform,"feature autoscaling (mean 0, SD 1)",34.35913758869171,11.623835248561047
+ST003348,AN005483,76,319,313,0.2,log2(peak area + 1),feature median after log2 transform,"feature autoscaling (mean 0, SD 1)",16.114679585087636,8.41749021753638

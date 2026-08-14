@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Lesson 4 - Guided analysis and interpretation | Metabo-Diet</title>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body data-page-id="lesson_04">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand">METABO-DIET</p>
+      <p class="mode">Harmonizing dietary and exercise phenotypes with metabolomics</p>
+    </div>
+  </header>
+  <div class="page-shell">
+    
+<nav class="course-nav" aria-label="Course navigation">
+  <h2>Course navigation</h2>
+  <ul><li><a href="index.html">Course home</a></li>
+<li><a href="pretest.html">Pretest</a></li>
+<li><a href="lesson_01.html">Lesson 1 - Why harmonization matters</a></li>
+<li><a href="lesson_02.html">Lesson 2 - Comparing study design</a></li>
+<li><a href="lesson_03.html">Lesson 3 - Harmonizing metabolomics and metadata</a></li>
+<li><a href="lesson_04.html">Lesson 4 - Guided analysis and interpretation</a></li>
+<li><a href="lesson_05.html">Lesson 5 - Access tiers and transfer</a></li>
+<li><a href="posttest.html">Posttest</a></li></ul>
+  <p class="status" id="lms-mode">Checking LMS connection...</p>
+  <p class="status" id="course-status">Course status: not attempted</p>
+</nav>
+
+    <main id="main-content" tabindex="-1">
+      
+<article>
+<h1>Lesson 4 - Guided analysis and biological interpretation</h1>
+<p><strong>Estimated time:</strong> 40 minutes</p>
+<p><strong>Bloom levels:</strong> Apply, analyze, evaluate</p>
+<p><strong>Module objectives addressed:</strong> LO2, LO4</p>
+<h2>Learning objectives</h2>
+<p>By the end of this lesson, you will be able to:</p>
+<ol>
+<li>Retrieve and validate study summaries, factors, analyses, metabolites, and data through the Metabolomics Workbench REST API.</li>
+<li>Apply the reviewed crosswalk without losing study, analysis, sample, specimen, or timepoint provenance.</li>
+<li>Quantify name-level overlap and summarize chemical classes with explicit eligibility rules.</li>
+<li>Run and interpret principal component analysis within each study as an exploratory diagnostic.</li>
+<li>Separate observations supported by the output from explanations that remain biologically or technically ambiguous.</li>
+</ol>
+<h2>Lesson map</h2>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Activity</th>
+<th scope="col">Minutes</th>
+</tr></thead><tbody>
+<tr>
+<td>Configure, retrieve, and validate</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Join and audit the crosswalk</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Overlap and class summaries</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Within-study PCA</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Interpretation challenge</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Knowledge check</td>
+<td>3</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>Notebook connection - <code>NB-L4</code>.</strong> Open <strong>Lesson 4 - Guided analysis and biological interpretation (<code>NB-L4</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Run <code>NB-L4-CLASS</code>, then <code>NB-L4-PCA-DIET</code> and <code>NB-L4-PCA-EXERCISE</code> separately. Complete the shared-class learner-edit cell and the four-sentence interpretation before viewing the sample answer. The worked PCA figures are reproduced in the guide&#x27;s <strong>Appendix - PCA worked examples</strong>.</p>
+</blockquote>
+<h2>1. Locked case-study configuration</h2>
+<p>The release configuration is:</p>
+<pre><code>DIET_ACCESSION = ST001521
+EXERCISE_ACCESSION = ST003348</code></pre>
+<p>Keep the variable names in code and prose even though the accessions are now locked. This preserves the proposal&#x27;s one-cell substitution design and makes a fallback pair possible.</p>
+<h3>Diet case: <code>ST001521</code></h3>
+<p>Metabolomics Workbench describes this FARMM study as a longitudinal human feeding study with three diet groups and plasma metabolomics. The study record reports 30 volunteers and five biological collection times. The factor response contains 160 rows: 150 participant-timepoint rows plus 10 pooled quality-control rows labeled <code>QPP...</code> with diet, sex, and time recorded as <code>NA</code>. Four analysis records cover different chromatography and ion-mode combinations and report unitless peak areas.</p>
+<p>The design is richer than a simple three-arm diet contrast. The study summary states that participants underwent an antibiotic and polyethylene glycol intervention during the time course; the vegan group continued its usual diet as outpatients, while 20 omnivores were randomized to an omnivore diet or exclusive enteral nutrition in an inpatient unit. Consequently, a change across study days cannot be attributed to diet alone without a design-appropriate model and assumptions.</p>
+<h3>Exercise case: <code>ST003348</code></h3>
+<p>Metabolomics Workbench describes an endurance exercise study of race walkers with 76 samples: 19 athletes at four timepoints. The project record defines <code>REST</code> as pre-exercise, <code>STAT</code> as immediately post-exercise, <code>REC3</code> as 3 hours into recovery, and <code>REC22</code> as 22 hours post-exercise. Two analysis records cover reversed-phase positive- and negative-ion modes and report peak area.</p>
+<p>The factors endpoint uses the broad sample-source label <code>blood</code>, while the collection record specifies <code>Blood (serum)</code> and describes clotting and serum preparation. This apparent discrepancy is instructive: use the more specific supported matrix for analysis, preserve the broad submitted factor, and cite both sources in the decision log.</p>
+<h3>Cross-study compatibility decision</h3>
+<p>The diet study uses plasma; the exercise study uses serum. Their time axes also represent different processes: study days spanning feeding and microbiota-depletion procedures versus minutes to hours after an endurance exercise bout. Treat both domains as partially comparable for broad discovery and not directly comparable for a pooled quantitative effect.</p>
+<h2>2. Open the notebook safely</h2>
+<p>Open <code>module/notebooks/metabo_diet_harmonization.ipynb</code> in a fresh <strong>Python 3 (Metabo-Diet)</strong> kernel. Complete <code>NB-SETUP</code> and run <code>NB-L1</code> through <code>NB-L3</code> before starting this lesson; the Lesson 4 cells depend on those validated objects. Then follow this order:</p>
+<ol>
+<li>Run <code>NB-L4-CLASS</code> and confirm that the class counts sum to 145.</li>
+<li>Run <code>NB-L4-PCA-DIET</code> and record its sample/feature counts and explained variance.</li>
+<li>Run <code>NB-L4-PCA-EXERCISE</code> and record the same fields without comparing coordinate values across models.</li>
+<li>Complete the shared-class and sensitivity learner-edit cells.</li>
+<li>Write the bounded interpretation before revealing the sample answer.</li>
+</ol>
+<p>Confirm the configuration cell shows the locked accessions above. The release manifest should also provide:</p>
+<ul>
+<li>Selected analysis IDs or the rule used to include multiple analyses.</li>
+<li>Retrieval date and API base URL.</li>
+<li>Cached-file paths and checksums.</li>
+<li>Dependency versions.</li>
+<li>Crosswalk version.</li>
+</ul>
+<p>Do not continue if the displayed accession differs from the provenance manifest.</p>
+<h3>Live retrieval and cached fallback</h3>
+<p>For each accession, the notebook requests:</p>
+<ul>
+<li><code>summary</code></li>
+<li><code>factors</code></li>
+<li><code>analysis</code></li>
+<li><code>metabolites</code></li>
+<li><code>data</code></li>
+</ul>
+<p>The release notebook defaults to the validated cache so every learner receives a deterministic run. Set <code>METABO_DIET_LIVE=1</code> to attempt live retrieval first. The live path falls back endpoint-by-endpoint only after recording:</p>
+<ul>
+<li>The failed endpoint and status.</li>
+<li>The cached retrieval timestamp.</li>
+<li>A checksum match.</li>
+<li>A visible source entry of <code>validated cache</code> in the input source log.</li>
+</ul>
+<p>Cached data keep the lesson runnable; they do not establish current public availability. Record the outage and re-verify access later.</p>
+<h2>3. Validate before analyzing</h2>
+<p>An HTTP <code>200</code> is not sufficient validation. The notebook&#x27;s audit table should answer:</p>
+<ol>
+<li>Did every response parse in the expected format?</li>
+<li>Does each record contain the requested study or analysis identifier?</li>
+<li>Are sample identifiers unique at the expected level?</li>
+<li>How many biological, pooled QC, blank, and unknown rows are present?</li>
+<li>Do factor counts agree with the documented repeated-measures structure?</li>
+<li>Are all matrix columns represented in the factor table?</li>
+<li>Are metabolite labels unique after applying the chosen feature key?</li>
+<li>Are units and analytical modes explicit?</li>
+</ol>
+<h3>Expected structural checks for this release</h3>
+<p>These are validation targets, not biological results:</p>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Check</th>
+<th scope="col"><code>ST001521</code></th>
+<th scope="col"><code>ST003348</code></th>
+</tr></thead><tbody>
+<tr>
+<td>Factor rows</td>
+<td>160</td>
+<td>76</td>
+</tr>
+<tr>
+<td>Biological participant-timepoint rows expected</td>
+<td>150</td>
+<td>76</td>
+</tr>
+<tr>
+<td>Pooled <code>QPP...</code> rows expected</td>
+<td>10</td>
+<td>0 identified from the factor table</td>
+</tr>
+<tr>
+<td>Biological participants described</td>
+<td>30</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Biological timepoints per participant</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Analysis records</td>
+<td>4</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td>Plasma</td>
+<td>Serum, supported by collection metadata</td>
+</tr>
+</tbody></table></div>
+<p>If the live response differs, stop and inspect. A repository revision may be legitimate, but silently forcing current data to match old expectations defeats provenance tracking.</p>
+<h2>4. Separate analytical roles before filtering</h2>
+<p>Create a <code>sample_role</code> field with evidence. At minimum:</p>
+<ul>
+<li><code>biological</code></li>
+<li><code>pooled_qc</code></li>
+<li><code>blank</code></li>
+<li><code>technical_standard</code></li>
+<li><code>unknown</code></li>
+</ul>
+<p>For <code>ST001521</code>, rows with local identifiers beginning <code>QPP</code> and missing diet, sex, and time are pooled QC candidates supported by the record. The notebook should keep them for assay diagnostics but exclude them from biological PCA and participant counts. Never discard QC rows before confirming their role; their clustering and drift can reveal analytical problems.</p>
+<p>For <code>ST003348</code>, identifiers encode an apparent participant and time suffix, but the notebook must derive repeated-measures links using a documented rule and validate the expected 19 by 4 structure. A string pattern is a parsing hypothesis until confirmed against study metadata.</p>
+<h2>5. Join the reviewed crosswalk</h2>
+<p>Join within study and analysis first, using the most specific stable keys available. Avoid joining solely on submitted metabolite name because:</p>
+<ul>
+<li>The same name may occur in multiple analytical modes.</li>
+<li>Different features can map to the same broad RefMet name.</li>
+<li>Duplicate labels can create a many-to-many join and inflate rows.</li>
+</ul>
+<p>After each join, report:</p>
+<ul>
+<li>Rows before and after.</li>
+<li>Matched, unmatched, and multiply matched source features.</li>
+<li>Duplicate join keys.</li>
+<li>Counts by mapping status and annotation resolution.</li>
+<li>Exclusions and reasons.</li>
+</ul>
+<p>The learner should be able to trace any harmonized value back to accession, analysis, sample, and original feature.</p>
+<blockquote>
+<p><strong>Stop condition:</strong> If a join unexpectedly increases the number of measurement rows, diagnose the key cardinality before continuing. Do not remove duplicates merely to restore the expected size.</p>
+</blockquote>
+<h2>6. Worked example: metabolite overlap as a defined set operation</h2>
+<p>An overlap count is meaningful only after defining the eligible universe and key.</p>
+<p>The current build found <strong>153 shared nonblank exact RefMet strings before artifact and eligibility exclusions</strong>. Eight <code>ST003348</code> isotope-labeled or internal-standard rows mapped to ordinary RefMet labels; excluding those nonbiological rows yielded a <strong>conservative biological overlap of 145</strong>. Treat both numbers as versioned audit results: 153 tests the raw string-intersection step, while 145 tests the stated artifact filter. Neither is a shared-response count. The accepted overlap can change when:</p>
+<ul>
+<li>Internal standards, contaminants, or artifacts are excluded.</li>
+<li>Duplicate features mapping to the same RefMet name are collapsed.</li>
+<li>Annotation-resolution rules are applied.</li>
+<li>Review-required mappings are removed.</li>
+<li>Analysis modes are combined or kept separate.</li>
+<li>A repository or RefMet record is revised.</li>
+</ul>
+<h3>Required overlap report</h3>
+<p>Report a flow rather than one unexplained number:</p>
+<ol>
+<li>Distinct submitted labels in each study.</li>
+<li>Nonblank RefMet results.</li>
+<li>Reviewed and accepted RefMet mappings.</li>
+<li>Eligible mappings after artifact and feature-role rules.</li>
+<li>Unique exact-name keys in each study.</li>
+<li>Intersection size.</li>
+<li>Diet-only and exercise-only sizes.</li>
+<li>Duplicate-to-key counts.</li>
+<li>Isotope/internal-standard exclusions, expected to reduce 153 to 145 in the audited build.</li>
+</ol>
+<p>Also report the denominator used for percentages. <code>Intersection / diet set</code>, <code>intersection / exercise set</code>, and Jaccard similarity answer different questions.</p>
+<h3>What overlap does and does not mean</h3>
+<p>A shared standardized name shows that both studies reported an eligible feature under the selected key. It does not show:</p>
+<ul>
+<li>Equal concentration.</li>
+<li>Equal detectability or coverage.</li>
+<li>Equal identification confidence.</li>
+<li>Equal structural resolution.</li>
+<li>A shared intervention response.</li>
+<li>A pathway effect.</li>
+</ul>
+<p>Absence from one study can reflect biological absence, platform coverage, annotation, filtering, ionization, detection limit, or reporting choices.</p>
+<h2>7. Class-level summaries</h2>
+<p>RefMet classifications can support a broad view of the reviewed shared-name set. Use counts or proportions of eligible unique names, not pooled peak areas. State how unclassified records and multi-mapped features are handled.</p>
+<p>A defensible summary might say:</p>
+<blockquote>
+<p>The 145-name conservative overlap has RefMet class annotations for all 145 names. Amino acids and peptides, fatty acids, and fatty esters are the three largest classes in this shared-name set. These counts describe nomenclature coverage of the overlap and should not be interpreted as class abundance in plasma or serum.</p>
+</blockquote>
+<h3>Accessible description of the class-summary figure</h3>
+<p>One horizontal bar chart shows the 12 most frequent RefMet main classes among the 145 conservative shared names. The leading bars are amino acids and peptides (37), fatty acids (25), fatty esters (15), purines (11), bile acids (8), and pyridine alkaloids (7); the remaining six displayed classes have four or fewer names each. The x-axis is <code>Conservative shared RefMet names</code>. Bars are counts of standardized names, not metabolite concentrations or biological class abundance, and 24 names in less frequent classes are not shown in this top-12 view.</p>
+<h2>8. Principal component analysis: within each study</h2>
+<p>PCA summarizes directions of variation in a numeric matrix. It is sensitive to scale, skew, missingness, outliers, preprocessing, and feature selection. The notebook should create separate PCA models for each study or compatible analysis block.</p>
+<h3>Pre-PCA audit</h3>
+<p>For each PCA, record:</p>
+<ul>
+<li>Included study, analysis modes, samples, and features.</li>
+<li>Biological versus QC sample roles.</li>
+<li>Missingness threshold and handling.</li>
+<li>Zero and near-zero variance removal.</li>
+<li>Transformation, centering, and scaling.</li>
+<li>Treatment of duplicate RefMet mappings.</li>
+<li>Explained variance for displayed components.</li>
+</ul>
+<p>Use transformations only when compatible with the measurement scale and documented. Do not add an arbitrary pseudocount without recording its value and evaluating sensitivity. Fit imputation and scaling rules within the analyzed study; a combined fit across studies can transmit study-specific scale information.</p>
+<h3>Diet-study PCA</h3>
+<p>Color or facet the biological samples by diet and shape them by timepoint, while keeping the concurrent antibiotic/PEG intervention visible in the caption or an annotated time axis. Display pooled QC samples separately if they are used diagnostically. A visible time pattern is not automatically a diet effect.</p>
+<p>Questions to ask:</p>
+<ul>
+<li>Do pooled QC samples cluster more tightly than biological samples?</li>
+<li>Are extreme points associated with missingness or a specific analytical mode?</li>
+<li>Is variation aligned with time, diet, sex, participant, or batch metadata?</li>
+<li>Does the pattern change after reasonable sensitivity checks?</li>
+<li>Can diet be separated from setting and assignment differences for all groups? Not without additional assumptions.</li>
+</ul>
+<h3>Exercise-study PCA</h3>
+<p>Color samples by <code>REST</code>, <code>STAT</code>, <code>REC3</code>, and <code>REC22</code>, and connect repeated observations from the same athlete only after participant linkage is validated. The four labels describe an acute and recovery trajectory; they are not interchangeable with diet-study days.</p>
+<p>Questions to ask:</p>
+<ul>
+<li>Is any separation ordered along the known recovery sequence?</li>
+<li>Are trajectories consistent across athletes or driven by a subset?</li>
+<li>Do positive- and negative-ion analysis blocks behave differently?</li>
+<li>Could collection clock time, fasting status, or processing contribute?</li>
+</ul>
+<h3>Why this module omits a combined PCA</h3>
+<p>Study identity is perfectly associated with diet-versus-exercise context and also differs in matrix, platform implementation, units, laboratory, population, and protocol. A PCA of the stacked raw matrices would primarily encode those inseparable study-of-origin differences. This module therefore omits that plot and teaches the confounding problem through the metadata audit plus two independent within-study PCA figures whose numeric axes are not compared.</p>
+<h3>Accessible descriptions of the PCA figures</h3>
+<p>The diet figure is titled <code>ST001521 / AN002534: within-study PCA</code> and contains 150 biological plasma samples; the 10 pooled QPP samples are excluded. Color represents Western, Vegan, or Modulen, and marker shape represents Baseline, Day 5, Day 9, Day 12, or Day 15. PC1 explains 34.4% and PC2 explains 11.6% of variance.</p>
+<p>The exercise figure is titled <code>ST003348 / AN005483: within-study PCA</code> and contains 76 serum samples. Color represents Rest, Immediate post, 3 h recovery, or 22 h recovery; the plot does not draw participant-trajectory lines. PC1 explains 16.1% and PC2 explains 8.4% of variance. The two PCA models have independent coordinate systems, so point distances and axis values must not be compared between figures.</p>
+<h2>9. Hands-on notebook activity</h2>
+<h3>Part A - Retrieval audit</h3>
+<ol>
+<li>Review <code>NB-L1</code> and run the <code>NB-L2</code> retrieval cells if they have not already been executed in this fresh kernel.</li>
+<li>Confirm both locked accessions in the output.</li>
+<li>Record live or cached status for each endpoint.</li>
+<li>Compare the structural audit with the expected checks above.</li>
+<li>Investigate any discrepancy before continuing.</li>
+</ol>
+<h3>Part B - Sample-role and time audit</h3>
+<ol>
+<li>In <code>NB-L2</code>, identify the 10 <code>QPP...</code> rows in <code>ST001521</code> and verify that they are not counted as participants.</li>
+<li>Create explicit physiological labels for the exercise study: pre-exercise, immediate post-exercise, 3-hour recovery, and 22-hour recovery.</li>
+<li>Preserve the diet-study days and annotate the antibiotic/PEG interval rather than mapping them to the exercise labels.</li>
+<li>Record plasma versus serum as a partial compatibility decision.</li>
+</ol>
+<h3>Part C - Crosswalk and overlap</h3>
+<ol>
+<li>In <code>NB-L3-CROSSWALK</code>, join the reviewed crosswalk using accession, analysis, and source-feature keys.</li>
+<li>Inspect the join-cardinality report.</li>
+<li>Reproduce the intermediate 153 shared nonblank exact RefMet strings if the same retrieval and preliminary rules are in use.</li>
+<li>Apply the nonbiological artifact rule and verify that eight <code>ST003348</code> isotope/internal-standard rows are excluded, producing 145 conservative biological overlaps in the audited build.</li>
+<li>Apply any additional mapping-status and annotation-resolution eligibility rules and record every exclusion count.</li>
+<li>In <code>NB-L4-CLASS</code>, produce the set summary and class-count figure.</li>
+</ol>
+<p>If 153 and then 145 are not reproduced, do not tune filters merely to make them appear. Check versions, retrieved analyses, missing-value definitions, isotope/internal-standard rules, duplicate collapse, and crosswalk state; document the reason for any legitimate difference.</p>
+<h3>Part D - PCA and sensitivity</h3>
+<ol>
+<li>Run <code>NB-L4-PCA-DIET</code> and <code>NB-L4-PCA-EXERCISE</code> separately.</li>
+<li>Confirm QC samples are excluded from biological inference but available for assay diagnostics.</li>
+<li>State the preprocessing choices in plain language.</li>
+<li>Repeat one reasonable sensitivity analysis, such as changing the missingness threshold or analyzing ion modes separately.</li>
+<li>Compare which observations persist and which change.</li>
+</ol>
+<h3>Part E - Write a bounded interpretation</h3>
+<p>Use this four-sentence scaffold:</p>
+<ol>
+<li><strong>Observation:</strong> &quot;Within <code>ST...</code>, the exploratory output shows...&quot;</li>
+<li><strong>Context:</strong> &quot;The relevant design and phenotype metadata indicate...&quot;</li>
+<li><strong>Alternative explanations:</strong> &quot;This pattern could also reflect...&quot;</li>
+<li><strong>Boundary:</strong> &quot;These data do not establish...&quot;</li>
+</ol>
+<p>Avoid the verbs <code>proves</code>, <code>causes</code>, <code>confirms</code>, or <code>demonstrates</code> unless the design and analysis truly support them.</p>
+<h2>10. Optional extension: MetENP</h2>
+<p>MetENP can be introduced as an optional pathway and enrichment resource supported through CFDE. Export only reviewed identifiers in a format the tool documents, retain the background universe, and record tool and database versions. Pathway output inherits all upstream identification and coverage limitations. It is hypothesis-generating, not validation of a diet-versus-exercise mechanism.</p>
+<h2>11. Interpretation challenge</h2>
+<p>For each statement, mark <code>supported</code>, <code>partially supported</code>, or <code>unsupported</code>, then revise it.</p>
+<ol>
+<li>&quot;The studies share 153 biologically identical metabolites.&quot;</li>
+<li>&quot;The diet study contains 160 participants.&quot;</li>
+<li>&quot;The exercise samples are blood, so they are the same matrix as diet plasma.&quot;</li>
+<li>&quot;PCA separates exercise timepoints, proving the race walk caused every measured change.&quot;</li>
+<li>&quot;An apparent class difference may reflect assay coverage as well as biology.&quot;</li>
+</ol>
+<p>Suggested revisions are in the answer key.</p>
+<h2>12. Interpretation guardrails</h2>
+<ul>
+<li>Exclude pooled QC samples from biological sample counts and participant-level inference.</li>
+<li>Preserve plasma versus serum; do not call both simply blood in the analysis matrix.</li>
+<li>Diet-study time includes microbiota-depletion procedures; it is not a pure duration-of-diet axis.</li>
+<li>Analyze repeated measures with participant structure; do not treat 150 or 76 rows as independent people.</li>
+<li>A raw exact-name overlap is an intermediate audit value until artifacts, ambiguity, and duplicates are addressed.</li>
+<li>PCA is exploratory and does not assign causes to components.</li>
+<li>Do not compare coordinates or loadings from separately fit PCAs as if they shared a coordinate system.</li>
+<li>Do not quantitatively pool the two studies in this module.</li>
+<li>Report sensitivity to preprocessing and missingness choices.</li>
+<li>Phrase class summaries as coverage of reported eligible names, not class concentration.</li>
+</ul>
+<h2>13. Knowledge check</h2>
+<p><strong>KC4-01.</strong> Why should the <code>QPP...</code> rows in <code>ST001521</code> not be included in biological PCA?</p>
+<p>A. They are pooled quality-control samples rather than participant-timepoint observations.</p>
+<p>B. PCA cannot use plasma.</p>
+<p>C. Their identifiers contain letters.</p>
+<p>D. Quality-control samples must always be deleted from the repository.</p>
+<p><strong>KC4-02.</strong> What does the intermediate overlap of 153 represent?</p>
+<p>A. 153 metabolites proven to respond to both diet and exercise.</p>
+<p>B. 153 shared nonblank exact RefMet strings before artifact and eligibility exclusions under a specific build.</p>
+<p>C. 153 directly comparable concentrations.</p>
+<p>D. A permanent repository constant.</p>
+<p><strong>KC4-03.</strong> Which PCA interpretation is defensible?</p>
+<p>A. A separate within-study PCA is an exploratory view whose pattern must be interpreted with preprocessing, repeated measures, and design context.</p>
+<p>B. Separation between the two studies proves a diet-versus-exercise mechanism.</p>
+<p>C. Scaling removes plasma-versus-serum differences.</p>
+<p>D. PCA automatically corrects batch effects.</p>
+<h2>Take-home message</h2>
+<p>The analysis is a chain of evidence: retrieve, validate, classify sample roles, join with audited keys, define eligibility, summarize, test sensitivity, and interpret within design boundaries. A reproducible number is not necessarily a biologically interpretable effect; the metadata determine which claims the number can support.</p>
+<h2>Primary sources and first-party documentation</h2>
+<ol>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST001521"><code>ST001521</code> study record</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary">REST summary</a>. Accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST003348"><code>ST003348</code> study record</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary">REST summary</a>. Accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/tools/mw_rest.php">REST Service, version 1.2</a>. Updated July 22, 2025; accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/databases/refmet/index.php">RefMet database</a>. Accessed August 10, 2026.</li>
+<li>Jolliffe IT, Cadima J. <a href="https://doi.org/10.1098/rsta.2015.0202">Principal component analysis: a review and recent developments</a>. <em>Philosophical Transactions of the Royal Society A</em>. 2016;374:20150202.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/MW-MetENP-demo.pdf">MetENP demonstration and documentation</a>. Accessed August 10, 2026.</li>
+</ol>
+</article>
+<div class="actions">
+  <button type="button" data-complete-lesson aria-pressed="false">Mark lesson complete</button>
+  <a class="button secondary" href="lesson_03.html">Previous</a>
+  <a class="button secondary" href="lesson_05.html">Next</a>
+</div>
+<p id="completion-notice" class="callout" tabindex="-1" aria-live="polite"></p>
+
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Metabo-Diet release 1.0 | Public Metabolomics Workbench case studies ST001521 and ST003348</p>
+      <p>Scientific boundary: no cross-study pooling of uncalibrated quantitative values.</p>
+    </div>
+  </footer>
+  <script src="assets/course.js"></script>
+  
+</body>
+</html>

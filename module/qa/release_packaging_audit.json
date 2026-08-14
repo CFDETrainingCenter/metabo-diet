@@ -1,0 +1,814 @@
+{
+  "passed": true,
+  "failures": [],
+  "checks": [
+    {
+      "label": "release file exists: module/scorm/metabo_diet_scorm_1_2.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_analysis_bundle.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_instructor_packet.docx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_instructor_packet.pdf",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_learner_guide.docx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_learner_guide.pdf",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_scorm_1_2.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/site/public/downloads/metabo_diet_templates.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/support/metabo_diet_analysis_bundle.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/support/metabo_diet_instructor_packet.docx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/support/metabo_diet_instructor_packet.pdf",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/support/metabo_diet_learner_guide.docx",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/support/metabo_diet_learner_guide.pdf",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "release file exists: module/support/metabo_diet_templates.zip",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: nonempty title metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: letter page size",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: one-inch margins",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: compact-reference body type",
+      "passed": true,
+      "detail": "font=Calibri, size=11.0"
+    },
+    {
+      "label": "learner guide: Heading 1 preset tokens",
+      "passed": true,
+      "detail": "font=Calibri, size=16.0, color=2E74B5"
+    },
+    {
+      "label": "learner guide: Heading 2 preset tokens",
+      "passed": true,
+      "detail": "font=Calibri, size=13.0, color=2E74B5"
+    },
+    {
+      "label": "learner guide: Heading 3 preset tokens",
+      "passed": true,
+      "detail": "font=Calibri, size=12.0, color=1F4D78"
+    },
+    {
+      "label": "learner guide: semantic Word numbering present",
+      "passed": true,
+      "detail": "511"
+    },
+    {
+      "label": "learner guide: PAGE and NUMPAGES fields",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: running header",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: exact table geometry and pagination controls",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "learner guide: locked studies and overlap evidence",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: superseded combined-PCA and count text absent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: required learner sections",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: pre/posttests contain no answer keys",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: explicit five-lesson notebook cross-references",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "learner guide: two inline PCA figures with meaningful alt text",
+      "passed": true,
+      "detail": "{'inline_shapes': 2, 'alt_lengths': [278, 234]}"
+    },
+    {
+      "label": "learner guide: PCA figure captions present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner guide: no unresolved comments or tracked revisions",
+      "passed": true,
+      "detail": "{'review_markup': False, 'comments_part': False, 'track_revisions': False}"
+    },
+    {
+      "label": "instructor packet: nonempty title metadata",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: letter page size",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: one-inch margins",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: compact-reference body type",
+      "passed": true,
+      "detail": "font=Calibri, size=11.0"
+    },
+    {
+      "label": "instructor packet: Heading 1 preset tokens",
+      "passed": true,
+      "detail": "font=Calibri, size=16.0, color=2E74B5"
+    },
+    {
+      "label": "instructor packet: Heading 2 preset tokens",
+      "passed": true,
+      "detail": "font=Calibri, size=13.0, color=2E74B5"
+    },
+    {
+      "label": "instructor packet: Heading 3 preset tokens",
+      "passed": true,
+      "detail": "font=Calibri, size=12.0, color=1F4D78"
+    },
+    {
+      "label": "instructor packet: semantic Word numbering present",
+      "passed": true,
+      "detail": "188"
+    },
+    {
+      "label": "instructor packet: PAGE and NUMPAGES fields",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: running header",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: exact table geometry and pagination controls",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "instructor packet: locked studies and overlap evidence",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: superseded combined-PCA and count text absent",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: required instructor sections",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: answer/rationale keys present",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "instructor packet: no unresolved comments or tracked revisions",
+      "passed": true,
+      "detail": "{'review_markup': False, 'comments_part': False, 'track_revisions': False}"
+    },
+    {
+      "label": "metabo_diet_learner_guide.pdf: nonempty PDF",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "metabo_diet_learner_guide.pdf: title metadata",
+      "passed": true,
+      "detail": "Metabo-Diet Learner Guide"
+    },
+    {
+      "label": "metabo_diet_learner_guide.pdf: tagged PDF",
+      "passed": true,
+      "detail": "yes"
+    },
+    {
+      "label": "metabo_diet_learner_guide.pdf: no PDF suspects",
+      "passed": true,
+      "detail": "no"
+    },
+    {
+      "label": "metabo_diet_learner_guide.pdf: letter pages",
+      "passed": true,
+      "detail": "612 x 792 pts (letter)"
+    },
+    {
+      "label": "metabo_diet_learner_guide.pdf: extractable reading text",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "metabo_diet_instructor_packet.pdf: nonempty PDF",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "metabo_diet_instructor_packet.pdf: title metadata",
+      "passed": true,
+      "detail": "Metabo-Diet Instructor Packet"
+    },
+    {
+      "label": "metabo_diet_instructor_packet.pdf: tagged PDF",
+      "passed": true,
+      "detail": "yes"
+    },
+    {
+      "label": "metabo_diet_instructor_packet.pdf: no PDF suspects",
+      "passed": true,
+      "detail": "no"
+    },
+    {
+      "label": "metabo_diet_instructor_packet.pdf: letter pages",
+      "passed": true,
+      "detail": "612 x 792 pts (letter)"
+    },
+    {
+      "label": "metabo_diet_instructor_packet.pdf: extractable reading text",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "learner_guide_a11y.json: zero accessibility findings",
+      "passed": true,
+      "detail": "{'high': 0, 'medium': 0, 'low': 0}"
+    },
+    {
+      "label": "instructor_packet_a11y.json: zero accessibility findings",
+      "passed": true,
+      "detail": "{'high': 0, 'medium': 0, 'low': 0}"
+    },
+    {
+      "label": "templates ZIP: CRC",
+      "passed": true,
+      "detail": "pass"
+    },
+    {
+      "label": "templates ZIP: learner worksheet set",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "templates ZIP: worksheet-focused",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "templates ZIP: provenance and append-only decision-log CSV fields",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "templates ZIP: points to runnable analysis bundle",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "analysis ZIP: CRC",
+      "passed": true,
+      "detail": "pass"
+    },
+    {
+      "label": "analysis ZIP: runnable module tree",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "analysis ZIP: no absolute/traversal paths",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "analysis ZIP: deterministic clean-run command",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "analysis ZIP: saved notebook has five-lesson structure and stable IDs",
+      "passed": true,
+      "detail": "{'cells': 58, 'code_cells': 18, 'execution_counts': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 'error_outputs': 0, 'cell_ids': ['nb-overview', 'nb-guide-crosswalk', 'nb-setup', 'nb-setup-action', 'nb-setup-check', 'nb-l1', 'nb-l1-config-action', 'nb-l1-config', 'nb-l2', 'nb-l2-load-action', 'nb-l2-load', 'nb-l2-endpoint-action', 'nb-l2-endpoint-audit', 'md-63016451f07f', 'nb-l2-factors', 'nb-l2-factor-action', 'nb-l2-factor-table', 'nb-l2-time-action', 'nb-l2-time-audit', 'nb-l2-learner-prompt', 'nb-l2-learner-edit', 'md-c86a8845410c', 'nb-l3', 'nb-l3-build-action', 'nb-l3-crosswalk', 'nb-l3-standard-action', 'nb-l3-standard-audit', 'nb-l3-overlap-action', 'nb-l3-overlap-plot', 'nb-l3-overlap-figure', 'nb-l3-learner-prompt', 'nb-l3-learner-edit', 'nb-l3-complete', 'nb-l4', 'nb-l4-class-action', 'nb-l4-class-summary', 'nb-l4-class-figure', 'nb-l4-pca-method', 'nb-l4-pca-diet-action', 'nb-l4-pca-diet', 'nb-l4-pca-diet-figure', 'nb-l4-pca-exercise-action', 'nb-l4-pca-exercise', 'nb-l4-pca-exercise-figure', 'nb-l4-pca-guardrail', 'nb-l4-exercise-prompt', 'nb-l4-exercise', 'nb-l4-sensitivity-prompt', 'nb-l4-sensitivity-edit', 'md-ce88743ee60b', 'md-1255a8267b47', 'md-3418772b2efe', 'nb-l4-complete', 'nb-l5', 'nb-l5-transfer-edit', 'nb-repro-action', 'nb-repro', 'nb-l5-complete']}"
+    },
+    {
+      "label": "analysis ZIP: saved notebook has sequential execution evidence",
+      "passed": true,
+      "detail": "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]"
+    },
+    {
+      "label": "analysis ZIP: saved notebook has no error outputs",
+      "passed": true,
+      "detail": "0"
+    },
+    {
+      "label": "analysis ZIP: clean extraction cached Python execution",
+      "passed": true,
+      "detail": "{'requested': True, 'passed': True, 'python_executable': '/private/tmp/metabo_diet_clean_8KF04e/.venv/bin/python', 'returncode': 0, 'elapsed_seconds': 11.641, 'stdout': 'Executed metabo_diet_harmonization.ipynb -> /private/var/folders/dl/jft0mwsj55jc3gbpd2718hs80000gn/T/metabo_diet_bundle_audit_de7y5jbo/module/notebooks/metabo_diet_harmonization.ipynb: 18 code cells, last execution_count=18', 'stderr_tail': '', 'notebook': {'cells': 58, 'code_cells': 18, 'execution_counts': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 'error_outputs': 0, 'cell_ids': ['nb-overview', 'nb-guide-crosswalk', 'nb-setup', 'nb-setup-action', 'nb-setup-check', 'nb-l1', 'nb-l1-config-action', 'nb-l1-config', 'nb-l2', 'nb-l2-load-action', 'nb-l2-load', 'nb-l2-endpoint-action', 'nb-l2-endpoint-audit', 'md-63016451f07f', 'nb-l2-factors', 'nb-l2-factor-action', 'nb-l2-factor-table', 'nb-l2-time-action', 'nb-l2-time-audit', 'nb-l2-learner-prompt', 'nb-l2-learner-edit', 'md-c86a8845410c', 'nb-l3', 'nb-l3-build-action', 'nb-l3-crosswalk', 'nb-l3-standard-action', 'nb-l3-standard-audit', 'nb-l3-overlap-action', 'nb-l3-overlap-plot', 'nb-l3-overlap-figure', 'nb-l3-learner-prompt', 'nb-l3-learner-edit', 'nb-l3-complete', 'nb-l4', 'nb-l4-class-action', 'nb-l4-class-summary', 'nb-l4-class-figure', 'nb-l4-pca-method', 'nb-l4-pca-diet-action', 'nb-l4-pca-diet', 'nb-l4-pca-diet-figure', 'nb-l4-pca-exercise-action', 'nb-l4-pca-exercise', 'nb-l4-pca-exercise-figure', 'nb-l4-pca-guardrail', 'nb-l4-exercise-prompt', 'nb-l4-exercise', 'nb-l4-sensitivity-prompt', 'nb-l4-sensitivity-edit', 'md-ce88743ee60b', 'md-1255a8267b47', 'md-3418772b2efe', 'nb-l4-complete', 'nb-l5', 'nb-l5-transfer-edit', 'nb-repro-action', 'nb-repro', 'nb-l5-complete']}}"
+    },
+    {
+      "label": "SCORM: builder validation passed",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "SCORM: validation hash matches archive",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "SCORM: root imsmanifest.xml",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "SCORM: archive CRC",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "SCORM: manifest enumerates every payload",
+      "passed": true,
+      "detail": "[]"
+    },
+    {
+      "label": "SCORM: LMS completion and score calls",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "SCORM: local progress fallback",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "SCORM: bounded opener API traversal",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "label": "SCORM: embedded learner downloads are byte-synchronized",
+      "passed": true,
+      "detail": "{'metabo_diet_learner_guide.pdf': True, 'metabo_diet_templates.zip': True, 'metabo_diet_analysis_bundle.zip': True}"
+    },
+    {
+      "label": "support/SCORM and site downloads are byte-synchronized",
+      "passed": true,
+      "detail": "{'metabo_diet_learner_guide.docx': True, 'metabo_diet_learner_guide.pdf': True, 'metabo_diet_instructor_packet.docx': True, 'metabo_diet_instructor_packet.pdf': True, 'metabo_diet_templates.zip': True, 'metabo_diet_analysis_bundle.zip': True, 'metabo_diet_scorm_1_2.zip': True}"
+    },
+    {
+      "label": "learner_guide: one final PNG per PDF page",
+      "passed": true,
+      "detail": "{'pdf_pages': 87, 'png_pages': 87}"
+    },
+    {
+      "label": "instructor_packet: one final PNG per PDF page",
+      "passed": true,
+      "detail": "{'pdf_pages': 34, 'png_pages': 34}"
+    },
+    {
+      "label": "all final rendered pages manually inspected",
+      "passed": true,
+      "detail": "{'method': 'manual full-page visual inspection of final PNG renders', 'pages': 121, 'focused_rechecks': ['four-column label widths', 'cached-source checksum row pagination', 'attribution heading/list separation']}"
+    }
+  ],
+  "documents": [
+    {
+      "path": "module/support/metabo_diet_learner_guide.docx",
+      "sha256": "c5527e07e783785caf27dc9ec5898147a0f93c9339cfb961e6c8cdbc050809d5",
+      "bytes": 343987,
+      "paragraphs": 1460,
+      "tables": 36,
+      "numbered_paragraphs": 511
+    },
+    {
+      "path": "module/support/metabo_diet_instructor_packet.docx",
+      "sha256": "62e73021b1654d639aeb028340ff35f86c51e9dc4fb7549f68928d23a8e6b36c",
+      "bytes": 75555,
+      "paragraphs": 455,
+      "tables": 25,
+      "numbered_paragraphs": 188
+    }
+  ],
+  "pdfs": [
+    {
+      "path": "module/support/metabo_diet_learner_guide.pdf",
+      "sha256": "db566e675c70e68994639e1ce270fec42ad79e1d3701159a64219c5375505d9a",
+      "bytes": 1852160,
+      "pages": 87,
+      "tagged": "yes",
+      "suspects": "no"
+    },
+    {
+      "path": "module/support/metabo_diet_instructor_packet.pdf",
+      "sha256": "cef37125d7cac69b53e99e7234ed85a41c55f0e6bd1604a0f8753a04db8002e5",
+      "bytes": 829177,
+      "pages": 34,
+      "tagged": "yes",
+      "suspects": "no"
+    }
+  ],
+  "accessibility": [
+    {
+      "file": "module/support/metabo_diet_learner_guide.docx",
+      "counts": {
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "findings": []
+    },
+    {
+      "file": "module/support/metabo_diet_instructor_packet.docx",
+      "counts": {
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "findings": []
+    }
+  ],
+  "templates_zip": {
+    "path": "module/support/metabo_diet_templates.zip",
+    "sha256": "b241e0a335f86b0f797dfc862f0aa2c12e85105a7010aad12282890699ccf0ee",
+    "bytes": 13096,
+    "file_count": 12,
+    "files": [
+      "DATA_ATTRIBUTION.md",
+      "LICENSE",
+      "README.md",
+      "worksheets/access_tier_transfer_checklist.csv",
+      "worksheets/access_tier_transfer_checklist.md",
+      "worksheets/cohort_comparison_worksheet.csv",
+      "worksheets/cohort_comparison_worksheet.md",
+      "worksheets/metabolite_metadata_crosswalk.csv",
+      "worksheets/metabolite_metadata_crosswalk.md",
+      "worksheets/metadata_crosswalk.csv",
+      "worksheets/refmet_overlap_audit.csv",
+      "worksheets/unit_compatibility_audit.csv"
+    ]
+  },
+  "analysis_bundle": {
+    "path": "module/support/metabo_diet_analysis_bundle.zip",
+    "sha256": "e8d280c135441eb6e59cb2eca57904490f17b5766da15314461740907d8fa5b0",
+    "bytes": 3901522,
+    "file_count": 54,
+    "notebook": {
+      "cells": 58,
+      "code_cells": 18,
+      "execution_counts": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "error_outputs": 0,
+      "cell_ids": [
+        "nb-overview",
+        "nb-guide-crosswalk",
+        "nb-setup",
+        "nb-setup-action",
+        "nb-setup-check",
+        "nb-l1",
+        "nb-l1-config-action",
+        "nb-l1-config",
+        "nb-l2",
+        "nb-l2-load-action",
+        "nb-l2-load",
+        "nb-l2-endpoint-action",
+        "nb-l2-endpoint-audit",
+        "md-63016451f07f",
+        "nb-l2-factors",
+        "nb-l2-factor-action",
+        "nb-l2-factor-table",
+        "nb-l2-time-action",
+        "nb-l2-time-audit",
+        "nb-l2-learner-prompt",
+        "nb-l2-learner-edit",
+        "md-c86a8845410c",
+        "nb-l3",
+        "nb-l3-build-action",
+        "nb-l3-crosswalk",
+        "nb-l3-standard-action",
+        "nb-l3-standard-audit",
+        "nb-l3-overlap-action",
+        "nb-l3-overlap-plot",
+        "nb-l3-overlap-figure",
+        "nb-l3-learner-prompt",
+        "nb-l3-learner-edit",
+        "nb-l3-complete",
+        "nb-l4",
+        "nb-l4-class-action",
+        "nb-l4-class-summary",
+        "nb-l4-class-figure",
+        "nb-l4-pca-method",
+        "nb-l4-pca-diet-action",
+        "nb-l4-pca-diet",
+        "nb-l4-pca-diet-figure",
+        "nb-l4-pca-exercise-action",
+        "nb-l4-pca-exercise",
+        "nb-l4-pca-exercise-figure",
+        "nb-l4-pca-guardrail",
+        "nb-l4-exercise-prompt",
+        "nb-l4-exercise",
+        "nb-l4-sensitivity-prompt",
+        "nb-l4-sensitivity-edit",
+        "md-ce88743ee60b",
+        "md-1255a8267b47",
+        "md-3418772b2efe",
+        "nb-l4-complete",
+        "nb-l5",
+        "nb-l5-transfer-edit",
+        "nb-repro-action",
+        "nb-repro",
+        "nb-l5-complete"
+      ]
+    },
+    "clean_execution": {
+      "requested": true,
+      "passed": true,
+      "python_executable": "/private/tmp/metabo_diet_clean_8KF04e/.venv/bin/python",
+      "returncode": 0,
+      "elapsed_seconds": 11.641,
+      "stdout": "Executed metabo_diet_harmonization.ipynb -> /private/var/folders/dl/jft0mwsj55jc3gbpd2718hs80000gn/T/metabo_diet_bundle_audit_de7y5jbo/module/notebooks/metabo_diet_harmonization.ipynb: 18 code cells, last execution_count=18",
+      "stderr_tail": "",
+      "notebook": {
+        "cells": 58,
+        "code_cells": 18,
+        "execution_counts": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18
+        ],
+        "error_outputs": 0,
+        "cell_ids": [
+          "nb-overview",
+          "nb-guide-crosswalk",
+          "nb-setup",
+          "nb-setup-action",
+          "nb-setup-check",
+          "nb-l1",
+          "nb-l1-config-action",
+          "nb-l1-config",
+          "nb-l2",
+          "nb-l2-load-action",
+          "nb-l2-load",
+          "nb-l2-endpoint-action",
+          "nb-l2-endpoint-audit",
+          "md-63016451f07f",
+          "nb-l2-factors",
+          "nb-l2-factor-action",
+          "nb-l2-factor-table",
+          "nb-l2-time-action",
+          "nb-l2-time-audit",
+          "nb-l2-learner-prompt",
+          "nb-l2-learner-edit",
+          "md-c86a8845410c",
+          "nb-l3",
+          "nb-l3-build-action",
+          "nb-l3-crosswalk",
+          "nb-l3-standard-action",
+          "nb-l3-standard-audit",
+          "nb-l3-overlap-action",
+          "nb-l3-overlap-plot",
+          "nb-l3-overlap-figure",
+          "nb-l3-learner-prompt",
+          "nb-l3-learner-edit",
+          "nb-l3-complete",
+          "nb-l4",
+          "nb-l4-class-action",
+          "nb-l4-class-summary",
+          "nb-l4-class-figure",
+          "nb-l4-pca-method",
+          "nb-l4-pca-diet-action",
+          "nb-l4-pca-diet",
+          "nb-l4-pca-diet-figure",
+          "nb-l4-pca-exercise-action",
+          "nb-l4-pca-exercise",
+          "nb-l4-pca-exercise-figure",
+          "nb-l4-pca-guardrail",
+          "nb-l4-exercise-prompt",
+          "nb-l4-exercise",
+          "nb-l4-sensitivity-prompt",
+          "nb-l4-sensitivity-edit",
+          "md-ce88743ee60b",
+          "md-1255a8267b47",
+          "md-3418772b2efe",
+          "nb-l4-complete",
+          "nb-l5",
+          "nb-l5-transfer-edit",
+          "nb-repro-action",
+          "nb-repro",
+          "nb-l5-complete"
+        ]
+      }
+    }
+  },
+  "scorm": {
+    "path": "module/scorm/metabo_diet_scorm_1_2.zip",
+    "sha256": "d78629648a4409632a2804906d2770f2754eda9d14eb1b0e52640011ade3c2c6",
+    "bytes": 4619617,
+    "validation": {
+      "passed": true,
+      "failures": [],
+      "archive_file_count": 16,
+      "manifest_file_count": 15,
+      "required_pages_present": true,
+      "required_downloads_present": true,
+      "crc_passed": true,
+      "lms_calls_present": true,
+      "accessibility_shell_checks": {
+        "index.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "lesson_01.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "lesson_02.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "lesson_03.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "lesson_04.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "lesson_05.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "posttest.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        },
+        "pretest.html": {
+          "lang": true,
+          "skip_link": true,
+          "main": true,
+          "title": true,
+          "viewport": true
+        }
+      },
+      "sha256": "d78629648a4409632a2804906d2770f2754eda9d14eb1b0e52640011ade3c2c6",
+      "bytes": 4619617
+    }
+  },
+  "byte_sync": {
+    "metabo_diet_learner_guide.docx": true,
+    "metabo_diet_learner_guide.pdf": true,
+    "metabo_diet_instructor_packet.docx": true,
+    "metabo_diet_instructor_packet.pdf": true,
+    "metabo_diet_templates.zip": true,
+    "metabo_diet_analysis_bundle.zip": true,
+    "metabo_diet_scorm_1_2.zip": true
+  },
+  "visual_inspection": {
+    "complete": true,
+    "render_counts": {
+      "learner_guide": {
+        "pdf_pages": 87,
+        "png_pages": 87
+      },
+      "instructor_packet": {
+        "pdf_pages": 34,
+        "png_pages": 34
+      }
+    }
+  },
+  "manifest": {
+    "path": "module/qa/release_manifest.json",
+    "sha256_path": "module/qa/MANIFEST.sha256",
+    "file_count": 20
+  }
+}

@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Lesson 3 - Harmonizing metabolomics and metadata | Metabo-Diet</title>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body data-page-id="lesson_03">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand">METABO-DIET</p>
+      <p class="mode">Harmonizing dietary and exercise phenotypes with metabolomics</p>
+    </div>
+  </header>
+  <div class="page-shell">
+    
+<nav class="course-nav" aria-label="Course navigation">
+  <h2>Course navigation</h2>
+  <ul><li><a href="index.html">Course home</a></li>
+<li><a href="pretest.html">Pretest</a></li>
+<li><a href="lesson_01.html">Lesson 1 - Why harmonization matters</a></li>
+<li><a href="lesson_02.html">Lesson 2 - Comparing study design</a></li>
+<li><a href="lesson_03.html">Lesson 3 - Harmonizing metabolomics and metadata</a></li>
+<li><a href="lesson_04.html">Lesson 4 - Guided analysis and interpretation</a></li>
+<li><a href="lesson_05.html">Lesson 5 - Access tiers and transfer</a></li>
+<li><a href="posttest.html">Posttest</a></li></ul>
+  <p class="status" id="lms-mode">Checking LMS connection...</p>
+  <p class="status" id="course-status">Course status: not attempted</p>
+</nav>
+
+    <main id="main-content" tabindex="-1">
+      
+<article>
+<h1>Lesson 3 - Harmonizing metabolomics and metadata</h1>
+<p><strong>Estimated time:</strong> 35 minutes</p>
+<p><strong>Bloom level:</strong> Apply</p>
+<p><strong>Module objectives addressed:</strong> LO2, LO3</p>
+<h2>Learning objectives</h2>
+<p>By the end of this lesson, you will be able to:</p>
+<ol>
+<li>Build a provenance-preserving crosswalk from submitted metabolite labels to RefMet candidates.</li>
+<li>Distinguish a naming match from evidence of chemical identification and analytical equivalence.</li>
+<li>Align specimen, timepoint, variable, and unit metadata without concealing information loss.</li>
+<li>Flag ambiguous or unresolved mappings instead of forcing a one-to-one result.</li>
+<li>Evaluate whether a crosswalk is reproducible enough for downstream use.</li>
+</ol>
+<p>The locked configuration is <code>DIET_ACCESSION = ST001521</code> and <code>EXERCISE_ACCESSION = ST003348</code>. Continue using the variable names in the crosswalk so the source accession remains explicit and a fallback pair can be substituted transparently.</p>
+<h2>Lesson map</h2>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Activity</th>
+<th scope="col">Minutes</th>
+</tr></thead><tbody>
+<tr>
+<td>Identifier problem and RefMet</td>
+<td>8</td>
+</tr>
+<tr>
+<td>mwTab and provenance</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Specimen, time, variables, and units</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Crosswalk activity</td>
+<td>12</td>
+</tr>
+<tr>
+<td>Knowledge check</td>
+<td>3</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>Notebook connection - <code>NB-L3</code>.</strong> Open <strong>Lesson 3 - Harmonizing metabolomics and metadata (<code>NB-L3</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Run <code>NB-L3-CROSSWALK</code>, inspect the labeled-standard audit, and confirm the 153 raw and 145 conservative counts. In the learner-edit cell, trace one retained RefMet name to both studies and record the mapping evidence and limitation in the crosswalk worksheet before continuing to <code>NB-L4</code>.</p>
+</blockquote>
+<h2>1. Identifier systems answer different questions</h2>
+<p>Metabolomics records can contain common names, vendor labels, abbreviations, database identifiers, formulas, masses, or structural keys. These are not interchangeable fields.</p>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Field</th>
+<th scope="col">What it can help represent</th>
+<th scope="col">Important limitation</th>
+</tr></thead><tbody>
+<tr>
+<td>Submitted name</td>
+<td>What the depositor reported</td>
+<td>Synonyms, punctuation, adducts, and uncertain annotation can vary</td>
+</tr>
+<tr>
+<td>RefMet name</td>
+<td>Standardized analytical-chemistry nomenclature for a structure or metabolite species</td>
+<td>A name match does not prove the underlying feature identification or equal structural resolution</td>
+</tr>
+<tr>
+<td>InChIKey</td>
+<td>Hash derived from a chemical structure representation</td>
+<td>Layers encode different degrees of specificity; salts, protonation, tautomer, and stereochemical representation can differ</td>
+</tr>
+<tr>
+<td>PubChem CID</td>
+<td>Record identifier in PubChem</td>
+<td>Different records may reflect different forms or levels of structural detail</td>
+</tr>
+<tr>
+<td>HMDB ID</td>
+<td>Record identifier in the Human Metabolome Database</td>
+<td>Coverage and record relationships differ from other resources</td>
+</tr>
+<tr>
+<td>KEGG compound ID</td>
+<td>Identifier in KEGG&#x27;s compound representation</td>
+<td>Useful for pathway linking but not a universal metabolite identity key</td>
+</tr>
+<tr>
+<td>Formula or exact mass</td>
+<td>Composition or mass evidence</td>
+<td>Isomers can share formula or mass; mass alone is not an identification</td>
+</tr>
+</tbody></table></div>
+<p>RefMet is the module&#x27;s <strong>nomenclature spine</strong> because it is designed for metabolomics naming and includes both discrete structures and analytically reported species, including lipid sum compositions. The spine metaphor matters: it organizes the crosswalk while the original labels and other identifiers remain attached. It should not replace all evidence with a single clean-looking name.</p>
+<h2>2. Annotation resolution must be preserved</h2>
+<p>Suppose one study reports <code>PC 34:1</code> and another reports a phosphatidylcholine with two specified acyl chains. Even if a database relationship connects them, the annotations have different structural resolution. Collapsing both to the more specific structure would manufacture information. Collapsing to a broader class may be defensible for a class-level presence summary, but that is a derived analysis decision that must be recorded.</p>
+<p>For each candidate match, record an <strong>annotation-resolution status</strong> such as:</p>
+<ul>
+<li><code>discrete_structure</code></li>
+<li><code>stereochemistry_unspecified</code></li>
+<li><code>lipid_molecular_species</code></li>
+<li><code>lipid_sum_composition</code></li>
+<li><code>compound_class_only</code></li>
+<li><code>unknown</code></li>
+</ul>
+<p>Also record the identification evidence reported by the study when available. The Metabolomics Standards Initiative distinguishes levels of identification confidence; a standardized label does not upgrade that confidence.</p>
+<blockquote>
+<p><strong>Core guardrail:</strong> Normalize a label only to the level supported by the deposited analytical evidence. Never infer a specific isomer, stereoisomer, lipid chain arrangement, or identification level from a fuzzy name match.</p>
+</blockquote>
+<h2>3. A reproducible mapping workflow</h2>
+<p>Use the following sequence for every distinct submitted analyte label.</p>
+<h3>Step 1 - Preserve source identity</h3>
+<p>Record:</p>
+<ul>
+<li>Study accession: <code>DIET_ACCESSION</code> or <code>EXERCISE_ACCESSION</code>, resolved in the release manifest.</li>
+<li>Analysis identifier.</li>
+<li>Original analyte label exactly as deposited.</li>
+<li>Original metabolite or feature identifier.</li>
+<li>Original database identifiers and units.</li>
+<li>Source endpoint, retrieval timestamp, and source-table location.</li>
+</ul>
+<p>Never overwrite the original label.</p>
+<h3>Step 2 - Apply transparent normalization for lookup</h3>
+<p>Create a separate lookup string. Permissible preprocessing may include trimming whitespace or standardizing obvious delimiter characters. Record each transformation. Do not remove stereochemical markers, lipid chain details, charge, adduct, isotope label, or derivatization information merely to obtain a match.</p>
+<h3>Step 3 - Query RefMet</h3>
+<p>The documented REST pattern for matching a name is:</p>
+<pre><code>https://www.metabolomicsworkbench.org/rest/refmet/match/{URL_ENCODED_NAME}/name/</code></pre>
+<p>The exact response must be captured by the module notebook. A manual web conversion is acceptable for a small exercise, but record the query date and string.</p>
+<h3>Step 4 - Validate the candidate</h3>
+<p>Compare all available evidence:</p>
+<ul>
+<li>Submitted and standardized names.</li>
+<li>Formula and mass.</li>
+<li>InChIKey or external IDs.</li>
+<li>Annotation resolution.</li>
+<li>Analytical method and identification evidence.</li>
+<li>Whether the candidate represents an adduct, derivative, isotope-labeled standard, or unresolved mixture.</li>
+</ul>
+<p>The absence of a contradiction is not proof of identity. Use the confidence and decision fields.</p>
+<h3>Step 5 - Assign mapping status</h3>
+<p>Recommended statuses are:</p>
+<ul>
+<li><code>accepted_exact</code>: evidence supports the same standardized name and resolution.</li>
+<li><code>accepted_broader</code>: a broader representation is intentionally used for a stated analysis.</li>
+<li><code>review_required</code>: more than one candidate or conflicting evidence remains.</li>
+<li><code>unmapped</code>: no supported RefMet candidate was found.</li>
+<li><code>excluded_nonbiological</code>: internal standard, contaminant, adduct-only label, or other intentionally excluded feature, with a reason.</li>
+<li><code>not_evaluated</code>: mapping has not been reviewed.</li>
+</ul>
+<p>Automated output should begin as <code>not_evaluated</code> or <code>review_required</code>, not <code>accepted_exact</code>, unless the validation rule and evidence are explicit.</p>
+<h3>Step 6 - Preserve the decision</h3>
+<p>Record reviewer, date, rule or evidence, decision reason, and downstream eligibility. If a decision changes, append a new record or version the table; do not erase the earlier rationale.</p>
+<h3>Accessible description of the mapping workflow</h3>
+<p>Imagine a six-column ledger read from left to right. The deposited feature and exact label stay fixed in the first column. A separate lookup string and RefMet response occupy the next two columns. Evidence and annotation resolution appear in the fourth column. A human or versioned rule records an accepted, broader, review-required, unmapped, or excluded decision in the fifth. The final column contains separate yes/no/review flags for exact-name overlap, class summary, within-study analysis, and cross-study analysis. Arrows never replace the first column; they add traceable decisions beside it.</p>
+<h2>4. Worked mapping example</h2>
+<p>These source and RefMet strings appear in the current public metabolite responses. The review decisions are instructional and must be regenerated if the repository record changes.</p>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Source/analysis</th>
+<th scope="col">Deposited label</th>
+<th scope="col">Source RefMet string</th>
+<th scope="col">Evidence question</th>
+<th scope="col">Safe decision</th>
+</tr></thead><tbody>
+<tr>
+<td><code>DIET_ACCESSION</code>, AN002533</td>
+<td><code>2-Aminooctanoic acid</code></td>
+<td><code>2-Aminocaprylic acid</code></td>
+<td>Do synonym and identifier evidence support the same structure?</td>
+<td><code>review_required</code>, then potentially <code>accepted_exact</code></td>
+</tr>
+<tr>
+<td><code>DIET_ACCESSION</code>, AN002533</td>
+<td><code>LPE(18:0)_A</code></td>
+<td><code>LPE 18:0</code></td>
+<td>Does <code>_A</code> distinguish a separate source feature, and is sum composition the supported resolution?</td>
+<td>Preserve feature; accepted set key only after review</td>
+</tr>
+<tr>
+<td><code>DIET_ACCESSION</code>, AN002533</td>
+<td><code>LPC(P-18:0)/LPC(O-18:1)_A</code></td>
+<td><code>LPC P-18:0 or LPC O-18:1</code></td>
+<td>Is the unresolved ether-lipid alternative preserved?</td>
+<td><code>accepted_broader</code> for class/species purposes, not a unique structure</td>
+</tr>
+<tr>
+<td><code>EXERCISE_ACCESSION</code>, AN005484</td>
+<td><code>Mannitol+Sorbitol</code></td>
+<td><code>Mannitol</code></td>
+<td>Has a composite/isomeric label been narrowed without support?</td>
+<td><code>review_required</code></td>
+</tr>
+<tr>
+<td><code>EXERCISE_ACCESSION</code>, AN005484</td>
+<td><code>NegX-RT295MZ165</code></td>
+<td>blank</td>
+<td>Is this an unidentified feature?</td>
+<td><code>unmapped</code>; do not name from mass alone</td>
+</tr>
+<tr>
+<td><code>EXERCISE_ACCESSION</code>, AN005484</td>
+<td><code>Palmitic acid-[13C]16</code></td>
+<td><code>Palmitic acid</code></td>
+<td>Is the source an isotope-labeled analytical standard rather than endogenous palmitic acid?</td>
+<td><code>excluded_nonbiological</code> for biological overlap</td>
+</tr>
+</tbody></table></div>
+<p>The last row shows why a nonblank standardized field is not automatically eligible. In the audited build, eight <code>ST003348</code> isotope/internal-standard rows map to ordinary RefMet labels; excluding them reduces the raw exact-name overlap from 153 to a conservative biological overlap of 145.</p>
+<h2>5. mwTab as an evidence map</h2>
+<p>An mwTab record is sectioned rather than a single flat data frame. Typical content includes project and study descriptions; subject and sample factors; collection and sample-preparation protocols; chromatography and instrument metadata; and a metabolite-data block. Presence and completeness vary by record and analysis.</p>
+<p>For the configured studies, retrieve at least the following after substituting each variable&#x27;s locked value:</p>
+<pre><code>/rest/study/study_id/{DIET_ACCESSION}/summary
+/rest/study/study_id/{DIET_ACCESSION}/factors
+/rest/study/study_id/{DIET_ACCESSION}/analysis
+/rest/study/study_id/{DIET_ACCESSION}/metabolites
+/rest/study/study_id/{DIET_ACCESSION}/data</code></pre>
+<p>Repeat with <code>{EXERCISE_ACCESSION}</code>. Retrieve each selected analysis as mwTab when analysis-specific evidence is needed:</p>
+<pre><code>/rest/study/analysis_id/{ANALYSIS_ID}/mwtab</code></pre>
+<p>Do not assume the shape of a response from the endpoint name. Inspect the returned keys, status code, and content type. A successful HTTP response can still contain an unexpected schema or an error message encoded as text.</p>
+<h3>Provenance minimum</h3>
+<p>Every crosswalk row must be traceable to:</p>
+<ul>
+<li>Repository and base URL.</li>
+<li>Study accession and analysis identifier.</li>
+<li>Exact endpoint or source file.</li>
+<li>Retrieval timestamp in UTC.</li>
+<li>Original label and source identifier.</li>
+<li>Mapping service and query string.</li>
+<li>Mapping result and review decision.</li>
+<li>Reviewer or automated rule version.</li>
+</ul>
+<p>These fields make the crosswalk reusable and support FAIR principles of findability, interoperability, and reuse.</p>
+<h2>6. Harmonizing specimen and time metadata</h2>
+<p>Metabolite-name mapping is only one part of the crosswalk.</p>
+<h3>Specimen crosswalk</h3>
+<p>Keep at least three fields:</p>
+<ol>
+<li><code>source_specimen_label</code>: exact deposited value.</li>
+<li><code>normalized_specimen_category</code>: a controlled broader category used for a specific purpose.</li>
+<li><code>specimen_compatibility_note</code>: pre-analytical differences and any information loss.</li>
+</ol>
+<p>For example, plasma and serum could both receive a broad <code>blood_derived_fluid</code> category for discovery, while remaining distinct in the exact matrix field. That category does not authorize quantitative pooling.</p>
+<h3>Timepoint crosswalk</h3>
+<p>Keep the source label and derive structured fields only when evidence supports them:</p>
+<ul>
+<li><code>anchor_event</code></li>
+<li><code>offset_value</code></li>
+<li><code>offset_unit</code></li>
+<li><code>physiological_state</code></li>
+<li><code>visit_or_period</code></li>
+<li><code>within_subject_order</code></li>
+<li><code>derivation_source</code></li>
+</ul>
+<p>If the label is <code>T2</code> and the protocol needed to decode it is missing, use <code>UNRESOLVED</code>; do not guess.</p>
+<h3>Variable crosswalk</h3>
+<p>Separate:</p>
+<ul>
+<li>Source field and coding.</li>
+<li>Construct definition.</li>
+<li>Harmonized field and coding.</li>
+<li>Transformation rule.</li>
+<li>Information lost.</li>
+<li>Eligibility by analysis purpose.</li>
+</ul>
+<p>For categorical variables, document reference levels and distinguish missing, unknown, not applicable, and structurally absent.</p>
+<h2>7. Unit reconciliation</h2>
+<p>Convert units only when all of the following are true:</p>
+<ol>
+<li>The values measure the same quantity.</li>
+<li>Units are known and convertible.</li>
+<li>Specimen basis and denominator match or can be validly transformed.</li>
+<li>Calibration and quantification type support the intended comparison.</li>
+<li>The conversion formula is recorded and tested.</li>
+</ol>
+<p>Examples of different situations:</p>
+<ul>
+<li><code>umol/L</code> and <code>mmol/L</code> are dimensionally convertible for the same quantified analyte and compatible matrix, subject to the remaining checks.</li>
+<li>Peak area and <code>umol/L</code> are not made comparable by rescaling.</li>
+<li>Relative abundance normalized within one study and raw area in another are not a common measurement scale.</li>
+<li>Log-transformed and untransformed measurements can be reconciled only if the transform base, offset, and original scale are known and the comparison is otherwise valid.</li>
+</ul>
+<p>Keep <code>source_value</code> and <code>source_unit</code> even after a justified conversion. Store the converted field separately.</p>
+<h2>8. Hands-on activity: build and audit the crosswalk</h2>
+<p>Use <code>module/templates/metabolite_metadata_crosswalk_learner.md</code>.</p>
+<h3>Part A - Metabolites</h3>
+<ol>
+<li>Select at least six submitted labels from the chosen analysis in <code>DIET_ACCESSION</code> and six from <code>EXERCISE_ACCESSION</code>.</li>
+<li>Include at least one apparent overlap, one lipid label if present, one unmapped or unidentified feature if present, and one label requiring manual review. If a requested case does not occur, document that rather than fabricating it.</li>
+<li>Preserve original labels and identifiers.</li>
+<li>Run or inspect the RefMet query for each distinct label.</li>
+<li>Assign mapping and annotation-resolution statuses.</li>
+<li>Mark eligibility separately for exact-name overlap, broad-class summary, and quantitative comparison.</li>
+</ol>
+<h3>Part B - Metadata</h3>
+<p>Add at least:</p>
+<ul>
+<li>Two specimen fields.</li>
+<li>Three timepoint values.</li>
+<li>One participant or sample identifier relationship.</li>
+<li>One phenotype field.</li>
+<li>One unit or scale field.</li>
+</ul>
+<h3>Part C - Reproducibility audit</h3>
+<p>Exchange the crosswalk with a partner or use the self-audit prompts:</p>
+<ul>
+<li>Can another analyst find the exact source row?</li>
+<li>Can they reproduce the lookup string?</li>
+<li>Can they tell which output was automated and which was reviewed?</li>
+<li>Is information loss stated?</li>
+<li>Are unresolved cases preserved?</li>
+<li>Is downstream eligibility purpose-specific?</li>
+<li>Could the table be regenerated after a study update?</li>
+</ul>
+<p>Flag any row that fails one of these checks. The goal is an auditable table, not a maximum mapping rate.</p>
+<h2>9. Interpretation guardrails</h2>
+<ul>
+<li>RefMet standardizes nomenclature; it does not retroactively validate compound identification.</li>
+<li>A one-to-many or many-to-one mapping is not automatically an error; it may reflect different resolution.</li>
+<li>Do not choose a candidate solely because it creates more overlap.</li>
+<li>Never convert unidentified features into named metabolites using mass alone.</li>
+<li>Preserve exact specimen and time labels alongside broader categories.</li>
+<li>Do not treat unit conversion as batch correction.</li>
+<li>Exclude internal standards and nonbiological features by explicit rule, not by silently deleting inconvenient rows.</li>
+<li>Version mapping decisions because repositories and reference databases evolve.</li>
+</ul>
+<h2>10. Knowledge check</h2>
+<p><strong>KC3-01.</strong> A fuzzy RefMet lookup returns two plausible candidates and the deposited record has no formula or external identifier. What should you do?</p>
+<p>A. Select the first candidate.</p>
+<p>B. Select whichever candidate appears in the other study.</p>
+<p>C. Mark the row <code>review_required</code> or <code>unmapped</code>, preserve both candidates, and exclude it from exact overlap until resolved.</p>
+<p>D. Replace it with a chemical class label and call it exact.</p>
+<p><strong>KC3-02.</strong> When can <code>umol/L</code> be converted to <code>mmol/L</code> for cross-study comparison?</p>
+<p>A. Whenever both unit strings are present.</p>
+<p>B. Only after confirming the same quantity, compatible matrix and denominator, quantification basis, and a recorded conversion.</p>
+<p>C. Only for lipids.</p>
+<p>D. Never.</p>
+<p><strong>KC3-03.</strong> Which crosswalk design is most reproducible?</p>
+<p>A. One column containing the final clean name.</p>
+<p>B. Original and standardized names, source and query provenance, mapping status, evidence, reviewer, decision reason, and purpose-specific eligibility.</p>
+<p>C. A list containing only mapped analytes.</p>
+<p>D. A table in which all ambiguities are manually forced to one value.</p>
+<h2>Take-home message</h2>
+<p>A good crosswalk is an auditable record of evidence and decisions. It standardizes what can be standardized, represents information loss explicitly, and protects unresolved cases from becoming false biological certainty.</p>
+<h2>Primary sources and first-party documentation</h2>
+<ol>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/databases/refmet/index.php">RefMet database and name-conversion resources</a>. Accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/databases/refmet/refmet_help.php">RefMet naming conventions</a>. Accessed August 10, 2026.</li>
+<li>Fahy E, Subramaniam S. <a href="https://doi.org/10.1038/s41592-020-01009-y">RefMet: a reference nomenclature for metabolomics</a>. <em>Nature Methods</em>. 2020;17:1173-1174.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/tools/mw_rest.php">REST Service, version 1.2</a>. Updated July 22, 2025; accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/tutorials.php">mwTab file specification and tutorials</a>. Accessed August 10, 2026.</li>
+<li>Powell CD, Moseley HNB. <a href="https://doi.org/10.3390/metabo11030163">The mwtab Python Library for RESTful access and enhanced quality control, deposition, and curation of the Metabolomics Workbench Data Repository</a>. <em>Metabolites</em>. 2021;11(3):163.</li>
+<li>Sumner LW, Amberg A, Barrett D, et al. <a href="https://doi.org/10.1007/s11306-007-0082-2">Proposed minimum reporting standards for chemical analysis</a>. <em>Metabolomics</em>. 2007;3:211-221.</li>
+</ol>
+</article>
+<div class="actions">
+  <button type="button" data-complete-lesson aria-pressed="false">Mark lesson complete</button>
+  <a class="button secondary" href="lesson_02.html">Previous</a>
+  <a class="button secondary" href="lesson_04.html">Next</a>
+</div>
+<p id="completion-notice" class="callout" tabindex="-1" aria-live="polite"></p>
+
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Metabo-Diet release 1.0 | Public Metabolomics Workbench case studies ST001521 and ST003348</p>
+      <p>Scientific boundary: no cross-study pooling of uncalibrated quantitative values.</p>
+    </div>
+  </footer>
+  <script src="assets/course.js"></script>
+  
+</body>
+</html>
