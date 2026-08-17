@@ -76,7 +76,7 @@
 </tr>
 </tbody></table></div>
 <blockquote>
-<p><strong>Notebook connection - <code>NB-L3</code>.</strong> Open <strong>Lesson 3 - Harmonizing metabolomics and metadata (<code>NB-L3</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Run <code>NB-L3-CROSSWALK</code>, inspect the labeled-standard audit, and confirm the 153 raw and 145 conservative counts. In the learner-edit cell, trace one retained RefMet name to both studies and record the mapping evidence and limitation in the crosswalk worksheet before continuing to <code>NB-L4</code>.</p>
+<p><strong>In the notebook (NB-L3):</strong> Run <code>NB-L3-CROSSWALK</code> and inspect the labeled-standard table. Confirm the 153 raw and 145 conservative counts. Then trace one retained RefMet name and record what the match does and does not show in Tab A of the crosswalk.</p>
 </blockquote>
 <h2>1. Identifier systems answer different questions</h2>
 <p>Metabolomics records can contain common names, vendor labels, abbreviations, database identifiers, formulas, masses, or structural keys. These are not interchangeable fields.</p>
@@ -122,7 +122,7 @@
 <td>Isomers can share formula or mass; mass alone is not an identification</td>
 </tr>
 </tbody></table></div>
-<p>RefMet is the module&#x27;s <strong>nomenclature spine</strong> because it is designed for metabolomics naming and includes both discrete structures and analytically reported species, including lipid sum compositions. The spine metaphor matters: it organizes the crosswalk while the original labels and other identifiers remain attached. It should not replace all evidence with a single clean-looking name.</p>
+<p>RefMet provides the common naming field in this crosswalk. It covers discrete structures and analytically reported species, including lipid sum compositions. Keep the submitted labels and other identifiers beside it; a standardized name should not replace the original evidence.</p>
 <h2>2. Annotation resolution must be preserved</h2>
 <p>Suppose one study reports <code>PC 34:1</code> and another reports a phosphatidylcholine with two specified acyl chains. Even if a database relationship connects them, the annotations have different structural resolution. Collapsing both to the more specific structure would manufacture information. Collapsing to a broader class may be defensible for a class-level presence summary, but that is a derived analysis decision that must be recorded.</p>
 <p>For each candidate match, record an <strong>annotation-resolution status</strong> such as:</p>
@@ -136,7 +136,7 @@
 </ul>
 <p>Also record the identification evidence reported by the study when available. The Metabolomics Standards Initiative distinguishes levels of identification confidence; a standardized label does not upgrade that confidence.</p>
 <blockquote>
-<p><strong>Core guardrail:</strong> Normalize a label only to the level supported by the deposited analytical evidence. Never infer a specific isomer, stereoisomer, lipid chain arrangement, or identification level from a fuzzy name match.</p>
+<p><strong>Mapping limit:</strong> Normalize a label only to the level supported by the deposited analytical evidence. Never infer a specific isomer, stereoisomer, lipid chain arrangement, or identification level from a fuzzy name match.</p>
 </blockquote>
 <h2>3. A reproducible mapping workflow</h2>
 <p>Use the following sequence for every distinct submitted analyte label.</p>
@@ -194,42 +194,42 @@
 <th scope="col">Safe decision</th>
 </tr></thead><tbody>
 <tr>
-<td><code>DIET_ACCESSION</code>, AN002533</td>
+<td><code>ST001521</code>, AN002533</td>
 <td><code>2-Aminooctanoic acid</code></td>
 <td><code>2-Aminocaprylic acid</code></td>
 <td>Do synonym and identifier evidence support the same structure?</td>
 <td><code>review_required</code>, then potentially <code>accepted_exact</code></td>
 </tr>
 <tr>
-<td><code>DIET_ACCESSION</code>, AN002533</td>
+<td><code>ST001521</code>, AN002533</td>
 <td><code>LPE(18:0)_A</code></td>
 <td><code>LPE 18:0</code></td>
 <td>Does <code>_A</code> distinguish a separate source feature, and is sum composition the supported resolution?</td>
 <td>Preserve feature; accepted set key only after review</td>
 </tr>
 <tr>
-<td><code>DIET_ACCESSION</code>, AN002533</td>
+<td><code>ST001521</code>, AN002533</td>
 <td><code>LPC(P-18:0)/LPC(O-18:1)_A</code></td>
 <td><code>LPC P-18:0 or LPC O-18:1</code></td>
 <td>Is the unresolved ether-lipid alternative preserved?</td>
 <td><code>accepted_broader</code> for class/species purposes, not a unique structure</td>
 </tr>
 <tr>
-<td><code>EXERCISE_ACCESSION</code>, AN005484</td>
+<td><code>ST003348</code>, AN005484</td>
 <td><code>Mannitol+Sorbitol</code></td>
 <td><code>Mannitol</code></td>
 <td>Has a composite/isomeric label been narrowed without support?</td>
 <td><code>review_required</code></td>
 </tr>
 <tr>
-<td><code>EXERCISE_ACCESSION</code>, AN005484</td>
+<td><code>ST003348</code>, AN005484</td>
 <td><code>NegX-RT295MZ165</code></td>
 <td>blank</td>
 <td>Is this an unidentified feature?</td>
 <td><code>unmapped</code>; do not name from mass alone</td>
 </tr>
 <tr>
-<td><code>EXERCISE_ACCESSION</code>, AN005484</td>
+<td><code>ST003348</code>, AN005484</td>
 <td><code>Palmitic acid-[13C]16</code></td>
 <td><code>Palmitic acid</code></td>
 <td>Is the source an isotope-labeled analytical standard rather than endogenous palmitic acid?</td>
@@ -313,9 +313,10 @@
 <p>Keep <code>source_value</code> and <code>source_unit</code> even after a justified conversion. Store the converted field separately.</p>
 <h2>8. Hands-on activity: build and audit the crosswalk</h2>
 <p>Use <code>module/templates/metabolite_metadata_crosswalk_learner.md</code>.</p>
+<p>For the timed course, complete three worked rows: one retained shared RefMet name, one isotope-labeled or internal-standard exclusion, and one ambiguous or unmapped example. The 12-row metabolite table and full metadata audit are a project extension. This smaller path lets a first-time learner practice each decision type before scaling up.</p>
 <h3>Part A - Metabolites</h3>
 <ol>
-<li>Select at least six submitted labels from the chosen analysis in <code>DIET_ACCESSION</code> and six from <code>EXERCISE_ACCESSION</code>.</li>
+<li>For the course path, select one retained shared name, one excluded standard, and one ambiguous or unmapped label. For the project extension, select at least six labels from each study.</li>
 <li>Include at least one apparent overlap, one lipid label if present, one unmapped or unidentified feature if present, and one label requiring manual review. If a requested case does not occur, document that rather than fabricating it.</li>
 <li>Preserve original labels and identifiers.</li>
 <li>Run or inspect the RefMet query for each distinct label.</li>
@@ -343,7 +344,7 @@
 <li>Could the table be regenerated after a study update?</li>
 </ul>
 <p>Flag any row that fails one of these checks. The goal is an auditable table, not a maximum mapping rate.</p>
-<h2>9. Interpretation guardrails</h2>
+<h2>9. Mapping rules</h2>
 <ul>
 <li>RefMet standardizes nomenclature; it does not retroactively validate compound identification.</li>
 <li>A one-to-many or many-to-one mapping is not automatically an error; it may reflect different resolution.</li>
@@ -370,8 +371,8 @@
 <p>B. Original and standardized names, source and query provenance, mapping status, evidence, reviewer, decision reason, and purpose-specific eligibility.</p>
 <p>C. A list containing only mapped analytes.</p>
 <p>D. A table in which all ambiguities are manually forced to one value.</p>
-<h2>Take-home message</h2>
-<p>A good crosswalk is an auditable record of evidence and decisions. It standardizes what can be standardized, represents information loss explicitly, and protects unresolved cases from becoming false biological certainty.</p>
+<h2>What the crosswalk should preserve</h2>
+<p>A good crosswalk preserves the source label, the proposed standardized name, the supporting record, and the decision. Keep unresolved rows marked as unresolved so later analyses do not treat them as confirmed matches.</p>
 <h2>Primary sources and first-party documentation</h2>
 <ol>
 <li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/databases/refmet/index.php">RefMet database and name-conversion resources</a>. Accessed August 10, 2026.</li>

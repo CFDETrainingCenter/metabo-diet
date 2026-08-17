@@ -25,7 +25,7 @@ By the end of this lesson, you will be able to:
 | Interpretation challenge | 7 |
 | Knowledge check | 3 |
 
-> **Notebook connection - `NB-L4`.** Open **Lesson 4 - Guided analysis and biological interpretation (`NB-L4`)** in `module/notebooks/metabo_diet_harmonization.ipynb`. Run `NB-L4-CLASS`, then `NB-L4-PCA-DIET` and `NB-L4-PCA-EXERCISE` separately. Complete the shared-class learner-edit cell and the four-sentence interpretation before viewing the sample answer. The worked PCA figures are reproduced in the guide's **Appendix - PCA worked examples**.
+> **In the notebook (NB-L4):** Run `NB-L4-CLASS`, `NB-L4-PCA-DIET`, and `NB-L4-PCA-EXERCISE` in order. Complete both learner-edit cells and the four-sentence note before reading the sample answer. The same PCA figures appear in the appendix.
 
 ## 1. Locked case-study configuration
 
@@ -42,13 +42,13 @@ Keep the variable names in code and prose even though the accessions are now loc
 
 Metabolomics Workbench describes this FARMM study as a longitudinal human feeding study with three diet groups and plasma metabolomics. The study record reports 30 volunteers and five biological collection times. The factor response contains 160 rows: 150 participant-timepoint rows plus 10 pooled quality-control rows labeled `QPP...` with diet, sex, and time recorded as `NA`. Four analysis records cover different chromatography and ion-mode combinations and report unitless peak areas.
 
-The design is richer than a simple three-arm diet contrast. The study summary states that participants underwent an antibiotic and polyethylene glycol intervention during the time course; the vegan group continued its usual diet as outpatients, while 20 omnivores were randomized to an omnivore diet or exclusive enteral nutrition in an inpatient unit. Consequently, a change across study days cannot be attributed to diet alone without a design-appropriate model and assumptions.
+`ST001521` is not a simple three-arm diet trial. Participants also underwent antibiotic and polyethylene glycol procedures during the time course; the vegan group continued its usual diet as outpatients, while 20 omnivores were randomized to an omnivore diet or exclusive enteral nutrition in an inpatient unit. Changes across days therefore cannot be attributed to diet alone without a design-appropriate model and assumptions.
 
 ### Exercise case: `ST003348`
 
 Metabolomics Workbench describes an endurance exercise study of race walkers with 76 samples: 19 athletes at four timepoints. The project record defines `REST` as pre-exercise, `STAT` as immediately post-exercise, `REC3` as 3 hours into recovery, and `REC22` as 22 hours post-exercise. Two analysis records cover reversed-phase positive- and negative-ion modes and report peak area.
 
-The factors endpoint uses the broad sample-source label `blood`, while the collection record specifies `Blood (serum)` and describes clotting and serum preparation. This apparent discrepancy is instructive: use the more specific supported matrix for analysis, preserve the broad submitted factor, and cite both sources in the decision log.
+The factors endpoint uses the broad sample-source label `blood`, while the collection record specifies `Blood (serum)` and describes clotting and serum preparation. Keep `blood` as the submitted factor value, use serum as the more specific matrix supported by the collection record, and cite both sources.
 
 ### Cross-study compatibility decision
 
@@ -64,7 +64,7 @@ Open `module/notebooks/metabo_diet_harmonization.ipynb` in a fresh **Python 3 (M
 4. Complete the shared-class and sensitivity learner-edit cells.
 5. Write the bounded interpretation before revealing the sample answer.
 
-Confirm the configuration cell shows the locked accessions above. The release manifest should also provide:
+Confirm the configuration cell shows the accessions above. The data provenance manifest at `module/data/provenance.json` should also provide:
 
 - Selected analysis IDs or the rule used to include multiple analyses.
 - Retrieval date and API base URL.
@@ -72,7 +72,7 @@ Confirm the configuration cell shows the locked accessions above. The release ma
 - Dependency versions.
 - Crosswalk version.
 
-Do not continue if the displayed accession differs from the provenance manifest.
+Do not continue if the displayed accession differs from `module/data/provenance.json`.
 
 ### Live retrieval and cached fallback
 
@@ -214,6 +214,8 @@ One horizontal bar chart shows the 12 most frequent RefMet main classes among th
 
 PCA summarizes directions of variation in a numeric matrix. It is sensitive to scale, skew, missingness, outliers, preprocessing, and feature selection. The notebook should create separate PCA models for each study or compatible analysis block.
 
+The notebook carries out the implementation for you. You are not expected to understand every line of code. Focus on which samples and features enter each PCA, how missing and large values are handled, and whether the interpretation stays within the study design.
+
 ### Pre-PCA audit
 
 For each PCA, record:
@@ -324,7 +326,7 @@ For each statement, mark `supported`, `partially supported`, or `unsupported`, t
 
 Suggested revisions are in the answer key.
 
-## 12. Interpretation guardrails
+## 12. Analysis boundaries
 
 - Exclude pooled QC samples from biological sample counts and participant-level inference.
 - Preserve plasma versus serum; do not call both simply blood in the analysis matrix.
@@ -360,14 +362,14 @@ B. Separation between the two studies proves a diet-versus-exercise mechanism.
 C. Scaling removes plasma-versus-serum differences.  
 D. PCA automatically corrects batch effects.
 
-## Take-home message
+## What the analysis can support
 
-The analysis is a chain of evidence: retrieve, validate, classify sample roles, join with audited keys, define eligibility, summarize, test sensitivity, and interpret within design boundaries. A reproducible number is not necessarily a biologically interpretable effect; the metadata determine which claims the number can support.
+Validate each step before interpreting the result. A count can be reproducible and still support only a narrow claim, so use the study metadata to state that claim clearly.
 
 ## Primary sources and first-party documentation
 
-1. Metabolomics Workbench. [`ST001521` study record](https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST001521) and [REST summary](https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary). Accessed August 10, 2026.
-2. Metabolomics Workbench. [`ST003348` study record](https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST003348) and [REST summary](https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary). Accessed August 10, 2026.
+1. Metabolomics Workbench. [ST001521 study record](https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST001521) and [REST summary](https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary). Accessed August 10, 2026.
+2. Metabolomics Workbench. [ST003348 study record](https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST003348) and [REST summary](https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary). Accessed August 10, 2026.
 3. Metabolomics Workbench. [REST Service, version 1.2](https://www.metabolomicsworkbench.org/tools/mw_rest.php). Updated July 22, 2025; accessed August 10, 2026.
 4. Metabolomics Workbench. [RefMet database](https://www.metabolomicsworkbench.org/databases/refmet/index.php). Accessed August 10, 2026.
 5. Jolliffe IT, Cadima J. [Principal component analysis: a review and recent developments](https://doi.org/10.1098/rsta.2015.0202). *Philosophical Transactions of the Royal Society A*. 2016;374:20150202.

@@ -25,18 +25,20 @@ By the end of this lesson, you will be able to:
 | **Instructional subtotal, excluding pretest** | **20** |
 | **Learner time with pretest** | **25** |
 
-> **Notebook connection - `NB-L1`.** First complete the pretest. Then open `module/notebooks/metabo_diet_harmonization.ipynb`, finish `NB-SETUP`, and go to **Lesson 1 - Why harmonization matters (`NB-L1`)**. Run the environment and configuration cells, confirm `ST001521`, `ST003348`, and the retrieval mode, then pause and record why the matrices must remain separate. Do not begin `NB-L2` until this lesson is complete.
+> **In the notebook (NB-L1):** Complete `NB-SETUP`, then run the Lesson 1 configuration cell. Confirm `ST001521`, `ST003348`, and the retrieval mode. In Section 1 of the cohort-comparison worksheet, record why the two quantitative matrices must stay separate.
 
 ## Before you begin
 
 Complete the pretest before opening the answer key. Its purpose is to establish a baseline, not to determine eligibility. Record your confidence separately from correctness; confidence and knowledge can change at different rates.
+
+Three terms appear throughout the module. **Harmonization** aligns records while keeping important differences visible. **Pooling** places measurements from separate studies into one analysis. **Provenance** records where a value came from and how it changed. The glossary defines these and other unfamiliar terms.
 
 This module keeps two configuration labels so a study pair can be replaced without rewriting the workflow. The release pair is now locked:
 
 - `DIET_ACCESSION = ST001521`: the public, human FARMM diet-anchored plasma study.
 - `EXERCISE_ACCESSION = ST003348`: the public, human race-walking exercise-anchored serum study.
 
-The variable names are not accession numbers and must never be sent to the REST API literally. The notebook configuration cell resolves them to the values above. Before teaching, the instructor confirms that both studies remain public and that the release manifest still matches the retrieved records.
+The variable names are not accession numbers and must never be sent to the REST API literally. The notebook configuration cell resolves them to the values above. The versioned source record is `module/data/provenance.json`. Before teaching, the instructor confirms that both studies remain public and that this record still matches the retrieved data.
 
 ## 1. A metabolite value is an observation in context
 
@@ -52,7 +54,7 @@ At least five layers shape what a metabolite value means:
 
 Harmonization makes these layers explicit. It does not erase them.
 
-> **Core guardrail:** Structural harmonization can make records easier to compare. It does not, by itself, make participants, interventions, specimens, timepoints, platforms, units, or quantitative values exchangeable.
+> **Keep this distinction:** Structural harmonization can make records easier to compare. It does not, by itself, make participants, interventions, specimens, timepoints, platforms, units, or quantitative values exchangeable.
 
 This distinction protects against a tempting but invalid workflow: matching metabolite names, stacking two intensity matrices, and interpreting the first principal component as a diet-versus-exercise biological effect. If study and phenotype are perfectly confounded, the observed separation may arise from platform, sample handling, units, batch, population, or other design differences. No statistical technique can identify a unique biological cause from that contrast alone.
 
@@ -77,13 +79,13 @@ It does **not** automatically support:
 - Inferring that an exposure caused a cross-study difference.
 - Increasing effective sample size by concatenating unrelated cohorts.
 
-The right output is sometimes a well-documented decision **not** to combine a field or analyte. A flagged incompatibility is a successful harmonization result.
+Sometimes the correct decision is to keep a field or analyte separate. Record the reason so another analyst can review it.
 
 ## 3. The resources in this module
 
 ### Metabolomics Workbench and NMDR
 
-The Metabolomics Workbench hosts the National Metabolomics Data Repository (NMDR). Its REST service can return study summaries, factors, analyses, metabolite annotations, measurement tables, and mwTab records. Public studies are the hands-on substrate for this module. The paired accessions are configurable so the module can survive a study revision or replacement without rewriting every lesson.
+The Metabolomics Workbench hosts the National Metabolomics Data Repository (NMDR). Its REST service can return study summaries, factors, analyses, metabolite annotations, measurement tables, and mwTab records. The exercises use public Metabolomics Workbench studies. Because the accessions are stored as configuration values, they can be updated if a study changes or is replaced.
 
 The mwTab representation organizes information into blocks. Depending on the record, these include study, subject, sample-factor, collection, sample-preparation, chromatography, mass-spectrometry or NMR, and metabolite-data content. The exact fields present vary across deposits. That variation is not an inconvenience to hide; it is evidence to inspect.
 
@@ -113,9 +115,9 @@ One resource may expose different datasets under different patterns. A public la
 
 Picture three workspaces arranged from left to right. The first has an open door and a download arrow. The second has a sign-in badge and an agreement document. The third has data locked inside a cloud workspace, with only a reviewed summary moving outward. A study can move between workspaces as its release status changes, so a calendar and version label appear below all three.
 
-## 5. Worked example: a 90-second evidence triage
+## 5. Worked example: a quick evidence check
 
-This example demonstrates the reasoning process for the locked study pair while reserving detailed study claims for the dated records examined in Lesson 2.
+This example introduces the checks for the release pair. Lesson 2 examines the dated study records in detail.
 
 **Claim to evaluate:** "The diet and exercise datasets are both on Metabolomics Workbench, so their metabolite values can be pooled."
 
@@ -128,19 +130,19 @@ This example demonstrates the reasoning process for the locked study pair while 
 
 **Decision:** Reject automatic quantitative pooling. Proceed with metadata comparison, identifier crosswalking, overlap description, and within-study exploratory analysis. Consider cross-study quantitative modeling only if a later, explicit compatibility assessment and design justify it.
 
-## 6. Hands-on activity: open the evidence trail
+## 6. Hands-on activity: open the source records
 
 Open the learner cohort-comparison worksheet and complete the first four fields for both configured accessions.
 
-1. Record `DIET_ACCESSION = ST001521` and `EXERCISE_ACCESSION = ST003348` from the release manifest.
-2. For each accession, record the study landing-page URL and REST summary URL.
+1. Record `DIET_ACCESSION = ST001521` and `EXERCISE_ACCESSION = ST003348` from `module/data/provenance.json`.
+2. Record the diet [study page](https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST001521) and [REST summary](https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary), then the exercise [study page](https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST003348) and [REST summary](https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary).
 3. Record the date and time you verified public availability.
 4. Label the access evidence as `verified`, `not verified`, or `conflicting`.
 5. Write one sentence describing what public access does and does not imply about scientific comparability.
 
 **Stop condition:** If either configured accession differs from the release manifest or its public release cannot be verified, do not substitute another study silently. Continue with the versioned cache if available, mark the source as cached, and report the discrepancy to the instructor.
 
-## 7. Interpretation guardrails
+## 7. Keep these distinctions
 
 - Repository co-location supports common discovery and retrieval, not common measurement.
 - A RefMet match supports a name-level bridge, not a common concentration or identification level.
@@ -183,9 +185,9 @@ Complete this sentence in one or two lines:
 
 Keep the response. You will revisit it after the analysis lesson.
 
-## Take-home message
+## Before you continue
 
-Harmonization is disciplined preservation of meaning across representations. It helps you discover what is comparable, what is only partially comparable, and what should remain separate. The rest of this module turns that principle into an auditable workflow.
+Harmonization helps you compare records without erasing important differences. In Lesson 2, you will use that idea to compare the two study designs.
 
 ## Primary sources and first-party documentation
 
@@ -193,6 +195,6 @@ Harmonization is disciplined preservation of meaning across representations. It 
 2. Metabolomics Workbench. [mwTab file specification and repository tutorials](https://www.metabolomicsworkbench.org/data/tutorials.php). Accessed August 10, 2026.
 3. Sud M, Fahy E, Cotter D, et al. [Metabolomics Workbench: an international repository for metabolomics data and metadata, metabolite standards, protocols, tutorials and training, and analysis tools](https://academic.oup.com/nar/article/44/D1/D463/2502588). *Nucleic Acids Research*. 2016;44(D1):D463-D470.
 4. Fahy E, Subramaniam S. [RefMet: a reference nomenclature for metabolomics](https://doi.org/10.1038/s41592-020-01009-y). *Nature Methods*. 2020;17:1173-1174.
-5. MoTrPAC. [Data access FAQ](https://www.motrpac-data.org/knowledge-center/project-overview/faq) and [Data Hub documentation](https://www.motrpac-data.org/knowledge-center/dissemination/data-access/data-hub). Accessed August 10, 2026.
+5. MoTrPAC. [Data access FAQ](https://motrpac-data.org/knowledge-center/project-overview/faq) and [Data Hub documentation](https://motrpac-data.org/knowledge-center/dissemination/data-access/data-hub). Accessed August 17, 2026.
 6. NIH Common Fund. [Nutrition for Precision Health frequently asked questions](https://commonfund.nih.gov/nutritionforprecisionhealth/frequently-asked-questions). Accessed August 10, 2026.
 7. Wilkinson MD, Dumontier M, Aalbersberg IJ, et al. [The FAIR Guiding Principles for scientific data management and stewardship](https://doi.org/10.1038/sdata.2016.18). *Scientific Data*. 2016;3:160018.

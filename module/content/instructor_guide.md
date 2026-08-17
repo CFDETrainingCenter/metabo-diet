@@ -9,9 +9,9 @@
 **Hands-on data source:** Public Metabolomics Workbench studies only  
 **Design framework:** Backward design with Bloom progression from understand to apply, analyze, evaluate, and create
 
-This module teaches learners to determine what can and cannot be compared across a diet-anchored and an exercise-anchored metabolomics study. Success is not measured by maximizing integration. A defensible decision to keep a field, feature, matrix, timepoint, or quantitative table separate is a successful outcome.
+This module teaches learners to decide what the two studies can support. Keeping an incompatible field, feature, matrix, timepoint, or quantitative table separate is an acceptable result.
 
-> **Non-negotiable scientific guardrail:** The module compares metadata structure and reviewed analyte-name coverage and performs quantitative exploration within each study. It does not pool quantitative values across the two studies or estimate a diet-versus-exercise causal effect.
+> **Scope:** The module compares metadata structure and reviewed analyte-name coverage and performs quantitative exploration within each study. It does not pool quantitative values across the two studies or estimate a diet-versus-exercise causal effect.
 
 ## Audience and prerequisites
 
@@ -20,12 +20,14 @@ The module is intended for graduate students, postdoctoral scholars, research st
 Learners should be able to:
 
 - Read a rectangular data table.
-- Use basic Python and pandas operations.
+- Read guided Python and pandas cells and change the named values when prompted.
 - Interpret a scatterplot.
 - Recognize samples, variables, and missing values.
 - Explain at a basic level what metabolomics measures.
 
 No prior Metabolomics Workbench, RefMet, MoTrPAC, NPH, or All of Us experience is required.
+
+No prior terminal or Jupyter experience is required for the guided path, but learners need basic familiarity with tables and scatterplots. The module is not a general Python course. Direct first-time setup appears before the pretest; R is optional.
 
 ## Learning objectives
 
@@ -42,7 +44,7 @@ By the end of the module, learners will be able to:
 | Objective | Instruction and practice | Embedded evidence | Summative evidence |
 |---|---|---|---|
 | LO1 | Lessons 1-2; cohort-comparison worksheet; sample/time audit in Lesson 4 | KC2-01 to KC2-03; sourced compatibility decisions | POST-01 to POST-03; completed comparison worksheet |
-| LO2 | Lessons 1-4; interpretation guardrails; bounded-claim exercise | KC1-01, KC1-03, KC2 items, KC3-02, KC4-03 | POST-02 to POST-04, POST-08; four-sentence interpretation |
+| LO2 | Lessons 1-4; interpretation limits; bounded-claim exercise | KC1-01, KC1-03, KC2 items, KC3-02, KC4-03 | POST-02 to POST-04, POST-08; four-sentence interpretation |
 | LO3 | Lesson 3; crosswalk and overlap audit | KC3-01 to KC3-03; reviewed ambiguous/unmapped rows | POST-05 to POST-07, POST-12; crosswalk rubric |
 | LO4 | Lesson 4; REST retrieval, audit, overlap, class summary, PCA | KC4-01 to KC4-03; notebook audit outputs | POST-07 to POST-09, POST-12; reproducible notebook execution |
 | LO5 | Lessons 1 and 5; transfer checklist | KC1-02 and KC5-01 to KC5-03 | POST-10 and POST-11; sourced go/revise/wait/stop decision |
@@ -60,7 +62,7 @@ The pretest contains at least two items per objective domain when cross-listed i
 | 5. Access patterns and transfer | 15 | Transfer checklist and posttest |
 | **Total** | **140** |  |
 
-The 140 minutes include embedded knowledge checks but exclude the 5-minute pretest and 8-minute posttest, for an expected learner total of about 153 minutes. If learners are new to pandas or metabolomics, schedule an optional 30-minute orientation rather than compressing the guardrail discussions.
+The 140 minutes include embedded knowledge checks but exclude the 5-minute pretest, 8-minute posttest, and software installation, for an expected course total of about 153 minutes after setup. If learners are new to Python, Jupyter, PCA, or metabolomics, schedule 30 to 60 additional minutes and use the reduced worksheet path stated in each lesson.
 
 ## Locked data configuration
 
@@ -112,6 +114,7 @@ Complete within 48 hours of delivery:
 - [ ] Confirm both study landing pages and summary, factors, analysis, metabolites, and data endpoints are public.
 - [ ] Record UTC retrieval times and license strings.
 - [ ] Run the notebook from a fresh environment with live retrieval.
+- [ ] Confirm the first-time setup works before opening the pretest and that the smoke-test command writes a separate notebook.
 - [ ] Verify structural counts, `QPP...` sample roles, analysis IDs, and plasma-versus-serum evidence.
 - [ ] Verify the 153 raw and 145 conservative overlap audit stages.
 - [ ] Test the cached fallback by simulating live-retrieval failure without overwriting the live cache.
@@ -239,7 +242,7 @@ The lesson Markdown includes text descriptions for conceptual access, comparison
 | RefMet mapping maximizes overlap by narrowing ambiguous labels | Restore source detail, mark review required or broader, and recompute eligible sets. |
 | Learner proposes pooled diet-versus-exercise inference | Return to the estimand and confounding audit; require a within-study or descriptive name-set alternative. |
 | Access policy is unclear | Pause affected movement, document the question, and use the resource's official support channel. |
-| Learner lacks Python environment | Use the supported hosted notebook or instructor-run demonstration; do not skip the decision-log activity. |
+| Learner lacks a working Python environment | Use the first-time setup guide and default cache. An instructor demonstration may preview the output, but schedule the learner's hands-on run after setup rather than treating the demonstration as completion. |
 
 ## Quality and fidelity audit
 

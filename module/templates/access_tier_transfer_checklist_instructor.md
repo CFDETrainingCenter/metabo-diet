@@ -24,8 +24,8 @@ The learner wants to download a public MoTrPAC analysis-result file for local, n
 
 Primary pages:
 
-- [MoTrPAC FAQ](https://www.motrpac-data.org/knowledge-center/project-overview/faq)
-- [MoTrPAC Data Hub](https://www.motrpac-data.org/knowledge-center/dissemination/data-access/data-hub)
+- [MoTrPAC FAQ](https://motrpac-data.org/knowledge-center/project-overview/faq)
+- [MoTrPAC Data Hub](https://motrpac-data.org/knowledge-center/dissemination/data-access/data-hub)
 - [MoTrPAC onboarding](https://motrpac-data.org/knowledge-center/dissemination/data-access/onboarding)
 
 ### Correct planning classification
@@ -87,7 +87,7 @@ NPH may support richer diet-response questions, but each module, diet period, te
 | "NPH data can never produce an external result." | Participant-level data remain governed, but policy-permitted aggregate outputs can be disseminated. Verify current rules. |
 | "A public landing page means the data can be downloaded." | Discovery and download are separate actions; document each. |
 | "I have approval, so I can put data in GitHub." | Authorization is bounded by storage, sharing, and output rules. |
-| "Access is the only gate." | Scientific design and measurement compatibility remain independent gates. |
+| "Access is the only issue." | A dataset can be accessible and still be unsuitable for the intended scientific comparison. |
 
 ## Suggested scoring, 20 points
 
@@ -109,4 +109,3 @@ Regardless of numeric score, require revision if the learner:
 - Uses a program-wide access label without checking the selected release.
 - Treats access approval as scientific compatibility.
 - Proposes local or public caching of controlled participant data.
-

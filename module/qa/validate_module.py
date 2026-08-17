@@ -79,7 +79,12 @@ def main() -> int:
     license_text = (ROOT / "LICENSE").read_text(encoding="utf-8") if (ROOT / "LICENSE").exists() else ""
     attribution_text = (MODULE / "ATTRIBUTION.md").read_text(encoding="utf-8")
     ok("Creative Commons Attribution 4.0" in license_text, "English CC BY 4.0 repository license", failures)
-    ok("third-party" in license_text.lower(), "license excludes unauthorized third-party relicensing", failures)
+    ok(
+        all(section in license_text for section in ("Section 1 -- Definitions", "Section 8 -- Interpretation")),
+        "repository contains the canonical CC BY 4.0 legal code",
+        failures,
+    )
+    ok("third-party" in attribution_text.lower(), "attribution excludes unauthorized third-party relicensing", failures)
     ok("Creative Commons Attribution 4.0" in attribution_text, "module attribution states training-material license", failures)
 
     live_audit_path = MODULE / "qa" / "live_mw_audit.json"
@@ -166,6 +171,38 @@ def main() -> int:
                 ok(bool(question.get("rationale")), f"{name}:{question.get('id')} has rationale", failures)
                 ok(has_answer, f"{name}:{question.get('id')} has valid answer", failures)
             ok(len(ids) == len(set(ids)), f"{name} question IDs are unique", failures)
+
+    answer_key_path = MODULE / "assessments" / "answer_key.md"
+    posttest_path = MODULE / "assessments" / "posttest.json"
+    if answer_key_path.exists() and posttest_path.exists():
+        answer_key_text = answer_key_path.read_text(encoding="utf-8")
+        answer_key_rows: dict[str, list[str]] = {}
+        for line in answer_key_text.splitlines():
+            if re.match(r"^\| POST-\d{2} \|", line):
+                fields = [field.strip() for field in line.strip().strip("|").split("|")]
+                if len(fields) == 4:
+                    answer_key_rows[fields[0]] = fields
+        posttest_payload = load_json(posttest_path)
+        posttest_items = posttest_payload.get("items", []) if isinstance(posttest_payload, dict) else []
+        ok(
+            len(answer_key_rows) == len(posttest_items) == 12,
+            "posttest answer-key table has all 12 four-column rows",
+            failures,
+        )
+        for item in posttest_items:
+            if not isinstance(item, dict):
+                continue
+            item_id = item.get("id", "")
+            row = answer_key_rows.get(item_id)
+            expected_objectives = ", ".join(item.get("objective_ids", []))
+            ok(
+                row is not None
+                and row[1] == item.get("answer")
+                and row[2] == expected_objectives
+                and bool(row[3]),
+                f"answer key matches {item_id} answer, objectives, and rationale",
+                failures,
+            )
 
     notebook_path = MODULE / "notebooks" / "metabo_diet_harmonization.ipynb"
     if notebook_path.exists():

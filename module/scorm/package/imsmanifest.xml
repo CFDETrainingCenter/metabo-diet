@@ -19,6 +19,7 @@
   </organizations>
   <resources>
     <resource identifier="RES_METABO_DIET" type="webcontent" adlcp:scormtype="sco" href="index.html">
+      <file href="ATTRIBUTION.md"/>
       <file href="LICENSE"/>
       <file href="assets/assessment.js"/>
       <file href="assets/course.css"/>
@@ -32,6 +33,7 @@
       <file href="lesson_03.html"/>
       <file href="lesson_04.html"/>
       <file href="lesson_05.html"/>
+      <file href="module/data/provenance.json"/>
       <file href="posttest.html"/>
       <file href="pretest.html"/>
     </resource>

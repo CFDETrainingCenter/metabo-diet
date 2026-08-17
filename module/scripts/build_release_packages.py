@@ -31,7 +31,6 @@ from docx.shared import Inches, Pt, RGBColor
 ROOT = Path(__file__).resolve().parents[2]
 MODULE = ROOT / "module"
 SUPPORT = MODULE / "support"
-DOWNLOADS = MODULE / "site" / "public" / "downloads"
 QA = MODULE / "qa"
 
 LESSONS = [
@@ -564,6 +563,7 @@ def add_markdown(
 ) -> None:
     lines = path.read_text(encoding="utf-8").splitlines()
     compact_lesson_sources = path.name in {
+        "lesson_02_comparing_study_design.md",
         "lesson_04_guided_analysis_interpretation.md",
         "lesson_05_access_tiers_transfer.md",
     }
@@ -573,6 +573,7 @@ def add_markdown(
     current_kind = None
     current_num_id = None
     in_code = False
+    in_multiple_choice_question = False
     index = 0
     while index < len(lines):
         raw = lines[index].rstrip()
@@ -613,6 +614,7 @@ def add_markdown(
             add_table(doc, rows)
             current_kind = None
             current_num_id = None
+            in_multiple_choice_question = False
             continue
         heading = re.match(r"^(#{1,6})\s+(.+)$", stripped)
         if heading:
@@ -641,6 +643,7 @@ def add_markdown(
             )
             current_kind = None
             current_num_id = None
+            in_multiple_choice_question = False
             index += 1
             continue
         quote = re.match(r"^>\s?(.*)$", stripped)
@@ -687,7 +690,24 @@ def add_markdown(
             index += 1
             continue
         paragraph = doc.add_paragraph()
+        is_question_prompt = bool(re.match(r"^\*\*KC\d+-\d+\.\*\*", stripped))
+        is_question_option = bool(re.match(r"^[A-D]\.\s+", stripped))
+        if is_question_prompt:
+            in_multiple_choice_question = True
+        if in_multiple_choice_question and (is_question_prompt or is_question_option):
+            # A learner should never have to turn the page between a prompt
+            # and its answer choices. The complete five-paragraph block fits
+            # on one page at the guide's body size.
+            paragraph.paragraph_format.keep_together = True
+            paragraph.paragraph_format.keep_with_next = not stripped.startswith("D. ")
+        if path.name == "glossary.md" and re.fullmatch(r"\*\*[^*]+\*\*", stripped):
+            # Keep each glossary term with at least the first paragraph of its
+            # definition instead of leaving the term alone at a page foot.
+            paragraph.paragraph_format.keep_together = True
+            paragraph.paragraph_format.keep_with_next = True
         add_inline(paragraph, stripped)
+        if in_multiple_choice_question and stripped.startswith("D. "):
+            in_multiple_choice_question = False
         current_kind = None
         current_num_id = None
         index += 1
@@ -1017,13 +1037,14 @@ def build_learner_guide(output: Path) -> None:
     add_cover(
         doc,
         packet_type="Learner Guide",
-        subtitle="An intermediate, asynchronous field guide",
+        subtitle="A guided, self-paced module",
         audience="Prepared for CFDE learners working with public metabolomics data",
     )
     add_contents(
         doc,
         [
             "How to use this guide",
+            "Before you begin - first-time setup",
             "Pretest",
             "Lesson 1 - Why harmonization matters",
             "Lesson 2 - Comparing study design",
@@ -1040,20 +1061,20 @@ def build_learner_guide(output: Path) -> None:
     doc.add_heading("How to use this guide", level=1)
     add_paragraph(
         doc,
-        "The module is designed for approximately 153 minutes: 140 minutes of lesson activity, "
-        "a 5-minute pretest, and an 8-minute posttest. Complete the lessons in order and keep "
-        "the three learner worksheets open while you work. The primary runnable artifact is "
-        "module/notebooks/metabo_diet_harmonization.ipynb; the guide provides the conceptual "
-        "frame and tells you exactly when to use each notebook section.",
+        "The module takes approximately 153 minutes after software setup: 140 minutes of lesson "
+        "activity, a 5-minute pretest, and an 8-minute posttest. First-time Python or metabolomics "
+        "learners should allow another 30 to 60 minutes. Extract metabo_diet_analysis_bundle.zip "
+        "and metabo_diet_templates.zip, and keep this guide plus the three worksheets open. The "
+        "main notebook is module/notebooks/metabo_diet_harmonization.ipynb.",
     )
     doc.add_heading("Guide-to-notebook sequence", level=2)
     sequence = [
-        "READ the learner-guide lesson and its scientific guardrails.",
-        "FIND the matching notebook heading by its stable NB-L1 through NB-L5 key.",
-        "RUN the cells labeled Run now in top-to-bottom order.",
-        "OBSERVE the named output and stop if a stated check fails.",
-        "RECORD the requested answer in the worksheet or learner-edit cell.",
-        "CHECK the completion statement before moving to the next lesson.",
+        "Read the matching lesson in this guide.",
+        "Open the notebook section with the same NB-L1 through NB-L5 key.",
+        "Run each code cell after a Run now heading, from top to bottom.",
+        "At a Learner edit heading, change only the named value or response, then run the cell.",
+        "Compare the output with the stated result and stop if a check fails.",
+        "Write the requested answer and use the Ready to move on? note before continuing.",
     ]
     sequence_num_id = new_num_id(doc, doc._metabo_number_abs[1])
     for step in sequence:
@@ -1101,6 +1122,8 @@ def build_learner_guide(output: Path) -> None:
         p = doc.add_paragraph()
         apply_numbering(p, num_id, 0)
         add_inline(p, text)
+    doc.add_page_break()
+    add_markdown(doc, MODULE / "content" / "getting_started.md")
     doc.add_page_break()
     add_assessment(doc, MODULE / "assessments" / "pretest.json", "Learner pretest")
     for lesson_index, lesson in enumerate(LESSONS):
@@ -1381,6 +1404,9 @@ def build_template_bundle(output: Path) -> None:
     )
     shutil.copy2(ROOT / "LICENSE", staging / "LICENSE")
     shutil.copy2(MODULE / "ATTRIBUTION.md", staging / "DATA_ATTRIBUTION.md")
+    provenance_target = staging / "module" / "data" / "provenance.json"
+    provenance_target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(MODULE / "data" / "provenance.json", provenance_target)
     included = sorted(
         str(path.relative_to(staging)) for path in staging.rglob("*") if path.is_file()
     )
@@ -1434,6 +1460,8 @@ def build_analysis_bundle(output: Path) -> None:
         MODULE / "scripts" / "test_R_endpoint_normalization.R",
         MODULE / "qa" / "local_pilot_protocol.md",
         MODULE / "qa" / "live_mw_audit.json",
+        SUPPORT / "metabo_diet_learner_guide.pdf",
+        SUPPORT / "metabo_diet_templates.zip",
     ]
     missing = [str(path.relative_to(ROOT)) for path in required_files if not path.is_file()]
     if missing:
@@ -1444,6 +1472,9 @@ def build_analysis_bundle(output: Path) -> None:
         MODULE / "data" / "derived",
         MODULE / "figures",
         MODULE / "scripts",
+        MODULE / "content",
+        MODULE / "templates",
+        MODULE / "assessments",
     ):
         tree_files.extend(
             path
@@ -1454,30 +1485,59 @@ def build_analysis_bundle(output: Path) -> None:
             and not any(part.startswith(".") for part in path.relative_to(MODULE).parts)
         )
     sources = sorted(set(required_files + tree_files))
-    readme = """# Metabo-Diet runnable analysis bundle
+    readme = """# Metabo-Diet learner and analysis bundle
 
-This archive preserves the paths expected by the executed notebook. Extract the
-whole archive, keeping the `module/` directory intact.
+## Start here
 
-## Python cached path
+1. Extract this whole archive. Keep the `module/` directory intact.
+2. Open `module/support/metabo_diet_learner_guide.pdf`.
+3. Extract `module/support/metabo_diet_templates.zip` and keep the three worksheets nearby.
+4. Follow the first-time setup in the guide or `module/content/getting_started.md`.
+5. Complete the pretest, then move through guide Lessons 1 to 5 and notebook sections `NB-L1` to `NB-L5` together.
 
-From the directory containing `module/`, create an environment, install the
-execution dependencies, and run the notebook top-to-bottom:
+The Python notebook is the main activity. The R companion is optional. The
+validated public cache is the default, so live API access is not required after
+packages are installed.
+
+## Interactive Python path
+
+From the directory containing `module/`, run the commands for your system.
+
+macOS or Linux:
 
 ```bash
-python -m venv .venv
-.venv/bin/pip install -r module/notebooks/requirements-dev.txt
-.venv/bin/python module/scripts/execute_notebook.py
+python3.12 --version
+python3.12 -m venv .venv
+./.venv/bin/python -m pip install -r module/notebooks/requirements-dev.txt
+./.venv/bin/python -m jupyter lab module/notebooks/metabo_diet_harmonization.ipynb
 ```
 
-The bundled `module/data/raw/` files support the offline fallback; outputs are
-written to `module/data/derived/` and `module/figures/`. If a Jupyter UI is
-already installed, you may instead open the notebook interactively from its
-existing path, but keep the full `module/` tree intact.
+Windows PowerShell:
+
+```powershell
+py -3.12 --version
+py -3.12 -m venv .venv
+.\\.venv\\Scripts\\python.exe -m pip install -r module\\notebooks\\requirements-dev.txt
+.\\.venv\\Scripts\\python.exe -m jupyter lab module\\notebooks\\metabo_diet_harmonization.ipynb
+```
+
+Python 3.11 is also supported. The setup guide explains how to run cells and
+what to do when a check fails. Outputs are written to `module/data/derived/`
+and `module/figures/`.
+
+## Optional installation smoke test
+
+This command runs every code cell without pausing for learner edits. It checks
+the installation but does not complete the course and does not overwrite the
+source notebook:
+
+```bash
+./.venv/bin/python module/scripts/execute_notebook.py --output metabo_diet_smoke_test.ipynb
+```
 
 The notebook imports `module/scripts/metabo_diet_pipeline.py`; do not separate
 the notebook from the rest of the module tree. See `module/data/provenance.json`
-and `module/ATTRIBUTION.md` for retrieval evidence, checksums, and licensing.
+and `module/ATTRIBUTION.md` for retrieval records, checksums, and licensing.
 
 Original Metabo-Diet training materials are licensed under CC BY 4.0; see the
 root `LICENSE` file. Third-party data retain the source licenses described in
@@ -1582,21 +1642,6 @@ def render_docx_to_pdf(docx_path: Path) -> Path:
     return pdf_path
 
 
-def copy_downloads(outputs: Sequence[Path]) -> None:
-    DOWNLOADS.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(ROOT / "LICENSE", DOWNLOADS / "LICENSE")
-    for obsolete in (
-        "metabo_diet_harmonization.ipynb",
-        "metabo_diet_R_appendix.Rmd",
-        "metabo_diet_R_appendix.html",
-    ):
-        stale = DOWNLOADS / obsolete
-        if stale.exists():
-            stale.unlink()
-    for output in outputs:
-        shutil.copy2(output, DOWNLOADS / output.name)
-
-
 def main() -> None:
     SUPPORT.mkdir(parents=True, exist_ok=True)
     QA.mkdir(parents=True, exist_ok=True)
@@ -1610,16 +1655,6 @@ def main() -> None:
     instructor_pdf = render_docx_to_pdf(instructor_docx)
     build_template_bundle(templates_zip)
     build_analysis_bundle(analysis_zip)
-    copy_downloads(
-        (
-            learner_docx,
-            learner_pdf,
-            instructor_docx,
-            instructor_pdf,
-            templates_zip,
-            analysis_zip,
-        )
-    )
     report = {
         "builder": str(Path(__file__).relative_to(ROOT)),
         "design_preset": "compact_reference_guide",

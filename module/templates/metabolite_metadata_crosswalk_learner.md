@@ -6,7 +6,7 @@
 **Created:** ____________________  
 **RefMet retrieval date/version:** ____________________
 
-## Purpose and non-purpose
+## What this worksheet is for
 
 This template records source evidence, harmonized representations, review decisions, and purpose-specific eligibility for `DIET_ACCESSION = ST001521` and `EXERCISE_ACCESSION = ST003348`.
 
@@ -81,7 +81,7 @@ Use one row per source feature per analysis. Do not deduplicate before preservin
 
 ### Blank working rows
 
-Complete at least 12 rows: six per study. Include an apparent overlap, a lipid if present, an ambiguous mapping, and an unmapped or unidentified feature when present.
+For the timed lesson, complete three rows: one retained shared name, one isotope-labeled or internal-standard exclusion, and one ambiguous or unmapped example. For a full project audit, complete at least 12 rows (six per study) and include a lipid when present.
 
 | row_id | config_key | analysis_id | source_metabolite_name | source_refmet_name | candidate | resolution | status | exact overlap | class summary | within-study | cross-study | decision reason |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|

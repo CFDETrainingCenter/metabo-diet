@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2026-08-14" />
+<meta name="date" content="2026-08-17" />
 
 <title>Metabo-Diet R appendix</title>
 
@@ -2752,7 +2752,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">Metabo-Diet R appendix</h1>
 <h3 class="subtitle">Metabolomics Workbench live retrieval with a
 validated cached-JSON fallback</h3>
-<h4 class="date">2026-08-14</h4>
+<h4 class="date">2026-08-17</h4>
 
 </div>
 
@@ -2761,12 +2761,11 @@ validated cached-JSON fallback</h3>
 <h1><span class="header-section-number">1</span> How to use the R
 companion</h1>
 <p>This R Markdown file follows the same five lesson keys as the primary
-Python notebook. Read the corresponding learner-guide lesson first, run
-chunks from top to bottom, stop on any failed <code>stopifnot()</code>
-check, and record the requested interpretation in the learner worksheet.
-The Python notebook remains the primary hands-on artifact; this
-companion demonstrates the equivalent cached/live retrieval and core
-analysis in R.</p>
+Python notebook. Read the matching guide lesson, then run the R chunks
+from top to bottom. If a check fails, stop and review the output. Record
+your interpretation in the worksheet. The Python notebook is the main
+activity; this file shows the same retrieval and analysis steps in
+R.</p>
 <table>
 <colgroup>
 <col width="33%" />
@@ -2812,17 +2811,22 @@ analysis in R.</p>
 <div id="nb-r-setup" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Environment setup
 (<code>NB-R-SETUP</code>)</h1>
-<p>Install R 4.3 or later from <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a>. From the directory that
-contains <code>module/</code>, install every cached, rendering, testing,
-and optional live-retrieval dependency with:</p>
-<pre class="bash"><code>Rscript module/notebooks/install_r_packages.R
+<p>To read the companion without installing anything, open the
+pre-rendered <code>module/notebooks/metabo_diet_R_appendix.html</code>
+in a browser.</p>
+<p>To rerun it, install R 4.3 or later from <a href="https://cran.r-project.org/" class="uri">https://cran.r-project.org/</a> plus RStudio or another
+Pandoc installation. From the directory that contains
+<code>module/</code>, check Pandoc, install the cached-path packages,
+and render:</p>
+<pre class="bash"><code>Rscript -e &#39;stopifnot(rmarkdown::pandoc_available()); rmarkdown::pandoc_version()&#39;
+Rscript module/notebooks/install_r_packages.R
 Rscript -e &#39;rmarkdown::render(&quot;module/notebooks/metabo_diet_R_appendix.Rmd&quot;)&#39;</code></pre>
-<p>The installer covers <code>rmarkdown</code>, <code>knitr</code>,
-<code>jsonlite</code>, <code>data.table</code>, <code>httr</code>,
-<code>BiocManager</code>, and <code>metabolomicsWorkbenchR</code>. The
-validated-cache path is the default and does not require network access
-after installation. Set <code>METABO_DIET_LIVE=1</code> before rendering
-only when you intentionally want to test live retrieval.</p>
+<p>The default installer covers <code>rmarkdown</code>,
+<code>knitr</code>, <code>jsonlite</code>, <code>data.table</code>, and
+<code>httr</code>. The validated cache does not require network access
+after installation. To test optional live retrieval, run
+<code>Rscript module/notebooks/install_r_packages.R --live</code> first,
+then set <code>METABO_DIET_LIVE=1</code> before rendering.</p>
 <pre class="r"><code>required_packages &lt;- c(&quot;rmarkdown&quot;, &quot;knitr&quot;, &quot;jsonlite&quot;, &quot;data.table&quot;, &quot;httr&quot;)
 missing_packages &lt;- required_packages[
   !vapply(required_packages, requireNamespace, quietly = TRUE, FUN.VALUE = logical(1))
@@ -2850,9 +2854,8 @@ analysis</strong>; they are never stacked across studies.</p>
 <code>metabolomicsWorkbenchR::do_query()</code> for each split endpoint.
 If the package, network, response, or schema is unavailable, the code
 falls back endpoint-by-endpoint to the validated JSON cache.</p>
-<p><strong>Lesson 1 action.</strong> Confirm the two accessions below,
-then write one sentence explaining why a shared RefMet name is
-compatible with a naming comparison but not with pooled raw
+<p>Confirm the two accessions below. Then write one sentence explaining
+why a shared RefMet name supports a naming comparison but not pooled raw
 intensities.</p>
 <div id="configuration-and-path-discovery" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Configuration and
@@ -2888,15 +2891,18 @@ source(NORMALIZATION_SCRIPT)
 
 cat(&quot;Retrieval mode:&quot;, if (PREFER_LIVE_API) &quot;live with cache fallback&quot; else &quot;validated cache&quot;, &quot;\n&quot;)</code></pre>
 <pre><code>## Retrieval mode: validated cache</code></pre>
+<pre class="r"><code>cat(&quot;Diet accession:&quot;, DIET_ACCESSION, &quot;\n&quot;)</code></pre>
+<pre><code>## Diet accession: ST001521</code></pre>
+<pre class="r"><code>cat(&quot;Exercise accession:&quot;, EXERCISE_ACCESSION, &quot;\n&quot;)</code></pre>
+<pre><code>## Exercise accession: ST003348</code></pre>
 </div>
 </div>
 <div id="nb-r-l2" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Lesson 2 companion -
 Comparing study design (<code>NB-R-L2</code>)</h1>
-<p><strong>Lesson 2 action.</strong> Run retrieval and factor chunks in
-order. Record endpoint source, samples, participants, specimen,
-conditions, and time semantics for each study. Stop if the factor checks
-fail.</p>
+<p>Run the retrieval and factor chunks in order. Record endpoint source,
+samples, participants, specimen, conditions, and time meaning for each
+study. Stop if a factor check fails.</p>
 <div id="split-rest-retrieval-with-cache-fallback" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Split REST retrieval
 with cache fallback</h2>
@@ -2904,15 +2910,13 @@ with cache fallback</h2>
 field, accession, and output item. <code>fetch_endpoint()</code> makes
 one query per endpoint rather than treating study metadata and data as
 one undifferentiated response.</p>
-<p>The package does not return the raw REST JSON shape. Its <a href="https://code.bioconductor.org/browse/metabolomicsWorkbenchR/R/parse_fcns.R">official
-parser source</a> returns flat endpoints as data frames, factors as a
-study-keyed list with expanded factor columns, and data as an
-analysis-keyed list with sample values flattened into columns. The last
-transformation also changes non-syntactic sample IDs such as
-<code>9002-3-PA</code> to <code>9002.3.PA</code>. The sourced
-normalization layer converts either package output or cached JSON into
-one validated record contract and restores sample IDs using the
-already-normalized factor table.</p>
+<p><code>metabolomicsWorkbenchR</code> reshapes the responses. Flat
+endpoints become data frames, factors become lists by study, and data
+become lists by analysis. It also changes sample IDs such as
+<code>9002-3-PA</code> to <code>9002.3.PA</code>. The normalization
+script converts live and cached results to the same structure and
+restores IDs from the factor table. See the official <a href="https://bioconductor.org/packages/release/bioc/html/metabolomicsWorkbenchR.html">Bioconductor
+package page</a> for the released implementation and documentation.</p>
 <pre class="r"><code>fetch_endpoint &lt;- function(study_id, endpoint, prefer_live = FALSE,
                            expected_sample_ids = NULL) {
   url &lt;- paste(
@@ -3079,9 +3083,9 @@ aggregate(local_sample_id ~ study_id, tidy_factors, function(x) length(unique(x)
 <div id="nb-r-l3" class="section level1" number="5">
 <h1><span class="header-section-number">5</span> Lesson 3 companion -
 Harmonizing metabolomics and metadata (<code>NB-R-L3</code>)</h1>
-<p><strong>Lesson 3 action.</strong> Predict the raw overlap, inspect
-every labeled-standard collision, and trace one retained RefMet name to
-the source-reported names and analysis IDs in both studies.</p>
+<p>Predict the raw overlap, inspect the labeled-standard collisions, and
+trace one retained RefMet name to the source names and analysis IDs in
+both studies.</p>
 <div id="refmet-overlap-and-conservative-standard-cleanup" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> RefMet overlap and
 conservative standard cleanup</h2>
@@ -3186,9 +3190,9 @@ head(crosswalk[, c(
 <div id="nb-r-l4" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> Lesson 4 companion -
 Guided analysis and interpretation (<code>NB-R-L4</code>)</h1>
-<p><strong>Lesson 4 action.</strong> Run each PCA separately, record its
-preprocessing/sample counts and explained variance, and write an
-interpretation that names design alternatives and a causal boundary.</p>
+<p>Run each PCA separately. Record the preprocessing, sample counts, and
+explained variance, then write an interpretation that includes other
+explanations and the limit of the claim.</p>
 <div id="separate-pca-in-r" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Separate PCA in
 R</h2>
@@ -3325,18 +3329,17 @@ values cannot be compared across panels.</p>
 <div id="nb-r-l5" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Lesson 5 companion -
 Access transfer and interpretation (<code>NB-R-L5</code>)</h1>
-<p>The separate PCAs are exploratory summaries, not causal or
-repeated-measures tests. FARMM days 9-15 are not diet-only observations,
-while ST003348 time is entangled with fasting and clock time. A stronger
-extension would fit a participant-aware longitudinal model within each
-study, preserve analysis identity, and compare standardized directions
-and uncertainty - not uncalibrated raw peak areas - across studies.</p>
-<p><strong>Lesson 5 action.</strong> Use the learner-guide transfer
-checklist to document a target dataset/release, intended action, dated
-first-party evidence, compute boundary, permitted outputs, unresolved
-requirements, and a <code>GO</code>, <code>REVISE</code>,
-<code>WAIT</code>, or <code>STOP</code> decision. Do not place
-credentials or governed data in this file.</p>
+<p>These PCAs are exploratory, not causal tests or repeated-measures
+models. In FARMM, days 9 to 15 reflect more than diet alone; in
+<code>ST003348</code>, time also varies with fasting and clock time. A
+later analysis could fit a longitudinal model within each study and
+compare effect directions and uncertainty instead of raw peak-area
+values.</p>
+<p>Use the learner-guide transfer checklist to document an exact dataset
+and action, dated first-party evidence, the compute boundary, permitted
+outputs, unresolved requirements, and a <code>GO</code>,
+<code>REVISE</code>, <code>WAIT</code>, or <code>STOP</code> decision.
+Keep credentials and governed data out of this file.</p>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 4.5.2 (2025-10-31)
 ## Platform: aarch64-apple-darwin20

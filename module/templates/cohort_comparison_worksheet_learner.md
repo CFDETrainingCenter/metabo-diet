@@ -40,7 +40,9 @@ Every factual entry needs a source URL, mwTab block, REST endpoint, publication 
 
 **Summary measure:** ______________________________________________________
 
-**What this worksheet will not authorize:** _______________________________
+**What you will not use this comparison to claim:** _______________________
+
+For the timed lesson, complete the eight named rows in Section 9 plus the supporting fields in Sections 2, 3, 5, and 6. The remaining rows are a project extension.
 
 ## 2. Dataset identity and access evidence
 
@@ -207,4 +209,3 @@ Write one tempting but unsupported claim you will avoid:
 - [ ] All analysis IDs and units are listed.
 - [ ] At least one field is intentionally not harmonized.
 - [ ] No conclusion relies on pooled cross-study quantitative values.
-

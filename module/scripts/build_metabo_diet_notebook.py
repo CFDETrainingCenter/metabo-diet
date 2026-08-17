@@ -54,7 +54,7 @@ def build() -> None:
             """
 # Metabo-Diet: harmonizing public diet and exercise metabolomics
 
-**Audience.** Intermediate learners who know basic tabular data handling and have seen PCA, but do not need prior experience with Metabolomics Workbench (MW) or RefMet.
+**Audience.** Learners who can read a data table and a scatterplot. No prior experience with Metabolomics Workbench (MW), RefMet, a terminal, or Jupyter is required. The notebook guides the analysis; it is not a general introduction to Python.
 
 **Prerequisites.** Python 3.11 or 3.12 and the packages in `requirements-dev.txt`. The optional R companion uses R 4.3 or later. All learner data are public Metabolomics Workbench records.
 
@@ -64,7 +64,7 @@ def build() -> None:
 2. derive participant IDs and tidy longitudinal factors without inventing a balanced panel;
 3. distinguish repository-provided RefMet mappings from analytical equivalence;
 4. audit isotope-labeled/internal-standard collisions before reporting biological overlap;
-5. run log-transformed, median-imputed, autoscaled PCA within one study and analysis; and
+5. run PCA within one study and analysis after the notebook explains and applies its preprocessing; and
 6. state interpretation limits created by plasma-versus-serum, platform, timepoint, and co-intervention differences.
 
 **Guided-analysis time:** about 40 minutes. The full asynchronous module is 2.5 hours.
@@ -75,14 +75,14 @@ def build() -> None:
             """
 ## How to use the notebook with the learner guide
 
-Complete the pretest in the learner guide before Lesson 1. For each lesson, use this sequence:
+Complete the setup section below, then take the pretest in the learner guide. For each lesson:
 
-1. **READ** the named learner-guide lesson and its scientific guardrails.
-2. **FIND** the matching notebook heading below by its stable key (`NB-L1` through `NB-L5`).
-3. **RUN** only the cells labeled **Run now**, from top to bottom.
-4. **OBSERVE** the named output; do not continue if a stop condition fails.
-5. **RECORD** the requested answer in the learner worksheet or an editable notebook scaffold.
-6. **CHECK** the completion statement before returning to the guide.
+1. Read the matching lesson in the guide.
+2. Open the notebook section with the same key (`NB-L1` through `NB-L5`).
+3. Run each code cell after a **Run now** heading, from top to bottom.
+4. At a **Learner edit** heading, change only the named ALL_CAPS value or clearly marked response text, then run that cell.
+5. Compare the output with the stated result. Stop if a check fails.
+6. Write the requested response and use the **Ready to move on?** note before continuing.
 
 | Learner guide | Notebook section | Main notebook action |
 |---|---|---|
@@ -101,7 +101,7 @@ The exact filename is `module/notebooks/metabo_diet_harmonization.ipynb`. Headin
 <a id="nb-setup"></a>
 ## Environment setup (`NB-SETUP`) - complete before Lesson 1
 
-Keep the extracted `module/` tree intact. Open a terminal in the directory that contains `module/`.
+Keep the extracted `module/` tree intact. Open a terminal in the directory that contains `module/`. If you have not used a terminal or Jupyter before, read `module/content/getting_started.md` or the **Before you begin** section of the learner guide first.
 
 ### 1. Install the runtimes once
 
@@ -114,33 +114,44 @@ Keep the extracted `module/` tree intact. Open a terminal in the directory that 
 macOS or Linux:
 
 ```bash
+python3.12 --version
 python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r module/notebooks/requirements-dev.txt
-jupyter lab module/notebooks/metabo_diet_harmonization.ipynb
+./.venv/bin/python -m pip install --upgrade pip
+./.venv/bin/python -m pip install -r module/notebooks/requirements-dev.txt
+./.venv/bin/python -m jupyter lab module/notebooks/metabo_diet_harmonization.ipynb
 ```
 
 Windows PowerShell:
 
 ```powershell
+py -3.12 --version
 py -3.12 -m venv .venv
-.venv\\Scripts\\Activate.ps1
-python -m pip install --upgrade pip
-python -m pip install -r module/notebooks/requirements-dev.txt
-jupyter lab module/notebooks/metabo_diet_harmonization.ipynb
+.\\.venv\\Scripts\\python.exe -m pip install --upgrade pip
+.\\.venv\\Scripts\\python.exe -m pip install -r module\\notebooks\\requirements-dev.txt
+.\\.venv\\Scripts\\python.exe -m jupyter lab module\\notebooks\\metabo_diet_harmonization.ipynb
 ```
 
-Select the **Python 3 (Metabo-Diet)** kernel if prompted. For a deterministic noninteractive test, run `.venv/bin/python module/scripts/execute_notebook.py` on macOS/Linux or `.venv\\Scripts\\python module\\scripts\\execute_notebook.py` on Windows.
+Python 3.11 is also supported; substitute the 3.11 command if its version check reports Python 3.11. Select the **Python 3 (Metabo-Diet)** kernel if prompted.
 
-### 3. Install R packages if using the R companion
+### 3. Use Jupyter
+
+- Choose **Kernel > Restart Kernel** before Lesson 1 so you run the required cells yourself rather than relying on saved example outputs.
+- Click a code cell and press **Shift+Enter**. `[*]` means running; a number such as `[1]` means complete.
+- Edit only cells introduced by a **Learner edit** heading.
+- A red traceback means stop. Keep the error message and fix the environment or the earlier failed check before continuing.
+
+For an optional noninteractive installation test, write to a separate file: `./.venv/bin/python module/scripts/execute_notebook.py --output metabo_diet_smoke_test.ipynb` on macOS/Linux or `.\\.venv\\Scripts\\python.exe module\\scripts\\execute_notebook.py --output metabo_diet_smoke_test.ipynb` on Windows. This test does not complete the learner activities.
+
+### 4. Use the optional R companion
+
+You can read the pre-rendered `module/notebooks/metabo_diet_R_appendix.html` without installing R. To rerun it, install R 4.3 or later and RStudio or another Pandoc installation. Confirm Pandoc with `Rscript -e 'stopifnot(rmarkdown::pandoc_available())'`, then run:
 
 ```bash
 Rscript module/notebooks/install_r_packages.R
 Rscript -e 'rmarkdown::render("module/notebooks/metabo_diet_R_appendix.Rmd")'
 ```
 
-The cached path needs no network after package installation. Live retrieval is optional and is enabled by setting `METABO_DIET_LIVE=1` before starting Jupyter or R.
+The cached path needs no network after package installation. For optional live R retrieval, run the installer with `--live` before setting `METABO_DIET_LIVE=1`. Python live retrieval uses the packages already listed in `requirements-dev.txt`.
 """,
             cell_id="nb-setup",
             tags=("setup",),
@@ -149,7 +160,7 @@ The cached path needs no network after package installation. Live retrieval is o
             """
 ### Run now - verify Python and the complete package set
 
-Run this diagnostic before importing the analysis libraries. **Stop** if it reports a missing package or an unsupported Python version; activate the intended environment and reinstall `requirements-dev.txt` before continuing.
+Run this diagnostic before importing the analysis libraries. **Stop** if it reports a missing package or an unsupported Python version. Reinstall `requirements-dev.txt` with the `.venv` Python command from setup, restart the kernel, and run this cell again.
 """,
             cell_id="nb-setup-action",
         ),
@@ -204,7 +215,9 @@ for distribution, installed_version in installed.items():
 <a id="nb-l1"></a>
 ## Lesson 1 - Why harmonization matters (`NB-L1`)
 
-**Guide cross-reference.** Read learner-guide Lesson 1 before running the configuration cell. Then:
+### Before you start
+
+Read Lesson 1 in the learner guide before running the configuration cell. Then:
 
 1. Review the scientific boundary below.
 2. Run the configuration cell once.
@@ -293,6 +306,8 @@ PREFER_LIVE_API = os.getenv("METABO_DIET_LIVE", "0") == "1"
 
 pd.set_option("display.max_colwidth", 80)
 print("Module directory located successfully: module/")
+print(f"Diet accession: {DIET_ACCESSION}")
+print(f"Exercise accession: {EXERCISE_ACCESSION}")
 print(f"Retrieval mode: {'live with cache fallback' if PREFER_LIVE_API else 'validated cache'}")
 """,
             cell_id="nb-l1-config",
@@ -300,10 +315,21 @@ print(f"Retrieval mode: {'live with cache fallback' if PREFER_LIVE_API else 'val
         ),
         md(
             """
+### Ready to move on?
+
+In Section 1 of the cohort-comparison worksheet, write one sentence explaining why the two peak-area matrices must stay separate. Continue when the output shows `ST001521`, `ST003348`, and the intended retrieval mode.
+""",
+            cell_id="nb-l1-complete",
+            tags=("lesson-1",),
+        ),
+        md(
+            """
 <a id="nb-l2"></a>
 ## Lesson 2 - Comparing study design and phenotype capture (`NB-L2`)
 
-**Guide cross-reference.** Read learner-guide Lesson 2 and open the cohort-comparison worksheet. In this section:
+### Before you start
+
+Read Lesson 2 in the learner guide and open `cohort_comparison_worksheet.md`. In this section:
 
 1. Load all five split endpoints for each study.
 2. Verify endpoint and analysis counts.
@@ -335,8 +361,14 @@ studies, source_log = load_studies(
 source_log_path = DERIVED_DIR / "input_source_log.csv"
 source_log.to_csv(source_log_path, index=False)
 
-assert set(source_log.endpoint) == set(MW_ENDPOINTS)
-assert source_log.shape[0] == 10
+assert set(source_log.endpoint) == set(MW_ENDPOINTS), (
+    f"Expected endpoints {sorted(MW_ENDPOINTS)}; found {sorted(source_log.endpoint.unique())}. "
+    "Stop and verify the configured accessions and cache files."
+)
+assert source_log.shape[0] == 10, (
+    f"Expected 10 study-endpoint rows; found {source_log.shape[0]}. "
+    "Stop and review the source log before continuing."
+)
 display(source_log[["study_id", "endpoint", "source", "url"]])
 """,
             cell_id="nb-l2-load",
@@ -446,9 +478,21 @@ timepoint_counts = (
 )
 display(timepoint_counts)
 
-assert tidy_factors.query("study_id == @DIET_ACCESSION").local_sample_id.str.startswith("QPP").sum() == 0
-assert tidy_factors.query("study_id == @DIET_ACCESSION").shape[0] == 150
-assert tidy_factors.query("study_id == @EXERCISE_ACCESSION").shape[0] == 76
+diet_biological = tidy_factors.query("study_id == @DIET_ACCESSION")
+exercise_biological = tidy_factors.query("study_id == @EXERCISE_ACCESSION")
+diet_qpp_count = diet_biological.local_sample_id.str.startswith("QPP").sum()
+assert diet_qpp_count == 0, (
+    f"Expected 0 QPP rows in the biological table; found {diet_qpp_count}. "
+    "Stop and review sample_role assignment."
+)
+assert diet_biological.shape[0] == 150, (
+    f"Expected 150 diet-study biological samples; found {diet_biological.shape[0]}. "
+    "Stop and review the factor parsing and cache version."
+)
+assert exercise_biological.shape[0] == 76, (
+    f"Expected 76 exercise-study biological samples; found {exercise_biological.shape[0]}. "
+    "Stop and review the factor parsing and cache version."
+)
 """,
             cell_id="nb-l2-time-audit",
             tags=("lesson-2", "execute"),
@@ -457,7 +501,7 @@ assert tidy_factors.query("study_id == @EXERCISE_ACCESSION").shape[0] == 76
             """
 ### Learner edit - inspect one study before comparing it
 
-Choose `DIET_ACCESSION` or `EXERCISE_ACCESSION`, predict the number of participants and timepoints, then run the scaffold. Record one design difference that makes a pooled quantitative comparison unsafe.
+Choose `DIET_ACCESSION` or `EXERCISE_ACCESSION`, predict the number of participants and timepoints, then run the scaffold. Record the result in Sections 3 and 6 of the cohort-comparison worksheet, and put one unsafe design difference in Section 9.
 """,
             cell_id="nb-l2-learner-prompt",
         ),
@@ -482,7 +526,9 @@ display(study_audit)
 
 Do not force a balanced panel: the FARMM factor endpoint has nine Western-male Day 5 rows and eleven Western-male Day 9 rows. More importantly, days 9, 12, and 15 occur during or after antibiotic/PEG perturbation, so they are not diet-only contrasts. Exercise collections also differ in fasting status and clock time. `interpretation_context` keeps those design facts beside every sample.
 
-**Lesson 2 complete when:** the endpoint audit passes and your worksheet distinguishes samples from participants, plasma from serum, and diet-study days from exercise-recovery hours.
+### Ready to move on?
+
+Continue when the endpoint checks pass and Sections 3, 5, 6, and 9 of the cohort-comparison worksheet distinguish samples from participants, plasma from serum, and diet-study days from exercise-recovery hours.
 """
         ),
         md(
@@ -490,7 +536,9 @@ Do not force a balanced panel: the FARMM factor endpoint has nine Western-male D
 <a id="nb-l3"></a>
 ## Lesson 3 - Harmonizing metabolomics and metadata (`NB-L3`)
 
-**Guide cross-reference.** Read learner-guide Lesson 3 and open the metabolite/metadata crosswalk worksheet. In this section:
+### Before you start
+
+Read Lesson 3 in the learner guide and open `metabolite_metadata_crosswalk.md`. In this section:
 
 1. Preserve source names and analysis identifiers.
 2. Build the raw exact-name overlap.
@@ -573,9 +621,19 @@ standard_audit = mapping_audit.query(
 ]
 display(standard_audit)
 
-assert overlap_audit.shape[0] == 153
-assert overlap_audit.exercise_standard_collision.sum() == 8
-assert metabolite_crosswalk.shape[0] == 145
+assert overlap_audit.shape[0] == 153, (
+    f"Expected 153 raw exact RefMet overlaps; found {overlap_audit.shape[0]}. "
+    "Stop and review source versions, blank handling, and duplicate collapse."
+)
+standard_collisions = int(overlap_audit.exercise_standard_collision.sum())
+assert standard_collisions == 8, (
+    f"Expected 8 labeled-standard collisions; found {standard_collisions}. "
+    "Stop and inspect the source labels before applying exclusions."
+)
+assert metabolite_crosswalk.shape[0] == 145, (
+    f"Expected 145 retained RefMet names; found {metabolite_crosswalk.shape[0]}. "
+    "Stop and review the standard-collision rule."
+)
 """,
             cell_id="nb-l3-standard-audit",
             tags=("lesson-3", "execute"),
@@ -613,7 +671,7 @@ display(
             """
 ![High-contrast bar chart showing 510 diet RefMet names, 475 exercise RefMet names, a raw exact overlap of 153, and a conservative biological overlap of 145 after standard-label cleanup.](../figures/refmet_overlap_summary.png)
 
-**Interpretation.** The 145-name crosswalk is an auditable vocabulary bridge. It is not a list of quantitatively interchangeable measurements.
+**What the result means.** The crosswalk shows which RefMet names occur in both studies and preserves the source evidence. It does not make the measurements quantitatively interchangeable.
 """,
             cell_id="nb-l3-overlap-figure",
         ),
@@ -621,7 +679,7 @@ display(
             """
 ### Learner edit - trace one retained name
 
-Choose a different row if desired. Record the submitted names and analysis IDs from both studies, then write one sentence explaining why the shared RefMet key does not prove equal concentration or identification certainty.
+Choose a different row if desired. In Tab A of the metabolite/metadata crosswalk, record the submitted names and analysis IDs from both studies. Add one sentence explaining why the shared RefMet key does not prove equal concentration or identification certainty.
 """,
             cell_id="nb-l3-learner-prompt",
         ),
@@ -647,7 +705,9 @@ display(metabolite_crosswalk.query("refmet_name == @REFMET_TO_TRACE")[trace_colu
         ),
         md(
             """
-**Lesson 3 complete when:** all three overlap assertions pass and your worksheet preserves source names, analysis IDs, mapping evidence, uncertainty, and the exclusion decision for at least one example.
+### Ready to move on?
+
+Continue when all three overlap checks pass and Tab A of the crosswalk records the source names, analysis IDs, mapping evidence, uncertainty, and exclusion decision for at least one retained example and one labeled standard.
 """,
             cell_id="nb-l3-complete",
         ),
@@ -656,7 +716,9 @@ display(metabolite_crosswalk.query("refmet_name == @REFMET_TO_TRACE")[trace_colu
 <a id="nb-l4"></a>
 ## Lesson 4 - Guided analysis and biological interpretation (`NB-L4`)
 
-**Guide cross-reference.** Read learner-guide Lesson 4 before generating figures. Use the `NB-L4-CLASS`, `NB-L4-PCA-DIET`, and `NB-L4-PCA-EXERCISE` keys cited in the guide.
+### Before you start
+
+Read Lesson 4 in the learner guide before generating figures. Use the `NB-L4-CLASS`, `NB-L4-PCA-DIET`, and `NB-L4-PCA-EXERCISE` keys cited there.
 
 ### L4.1 Summarize overlap by RefMet class (`NB-L4-CLASS`)
 
@@ -678,8 +740,16 @@ Expected output: the class counts sum to 145. Treat the result as assay/name cov
 plot_class_summary(class_summary, FIGURES_DIR / "refmet_class_summary.png")
 display(class_summary.head(15))
 
-assert class_summary.refmet_count.sum() == 145
-assert overlap_counts["conservative_overlap_with_refmet_class"] == 145
+class_total = int(class_summary.refmet_count.sum())
+assert class_total == 145, (
+    f"Expected class counts to sum to 145; found {class_total}. "
+    "Stop and review the RefMet classification join."
+)
+classified_overlap = overlap_counts["conservative_overlap_with_refmet_class"]
+assert classified_overlap == 145, (
+    f"Expected 145 retained names with class data; found {classified_overlap}. "
+    "Stop and inspect missing or duplicate class mappings."
+)
 """,
             cell_id="nb-l4-class-summary",
             tags=("lesson-4", "execute"),
@@ -705,6 +775,8 @@ For a transparent teaching workflow, each selected matrix is processed independe
 5. median-impute each feature on the logged scale;
 6. remove zero-variance features and autoscale each remaining feature; and
 7. fit a two-component PCA to that one study/analysis matrix.
+
+In plain language, `log2(peak area + 1)` compresses very large values, median imputation fills a missing entry with the middle observed value for that feature, and autoscaling puts features on comparable standardized scales so the largest raw ranges do not dominate. You do not need to understand every line of the implementation to follow the audit; focus on what enters the model, what the preprocessing changes, and what the plot can support.
 
 PCA is exploratory. Separation can reflect biology, time, diet, fasting, collection, analytical mode, or other unmodeled structure. PCA does not establish differential abundance or causal effects.
 """,
@@ -740,7 +812,9 @@ display(pca_summary_frame([diet_pca]))
             """
 ![ST001521 positive reversed-phase PCA with points colored by original diet factor and marker shapes indicating Baseline, Day 5, Day 9, Day 12, and Day 15; axes report explained variance.](../figures/ST001521_AN002534_pca.png)
 
-**Read cautiously.** The plot summarizes 150 plasma samples from AN002534. It does not isolate a diet effect: arms differ in setting and prior diet, while post-day-5 collections are entangled with antibiotics and PEG. Overlapping points do not prove equivalence, and separated points do not identify the features or mechanisms responsible.
+### What this plot shows
+
+The plot summarizes 150 plasma samples from AN002534. It does not isolate a diet effect: arms differ in setting and prior diet, while post-day-5 collections are entangled with antibiotics and PEG. Overlapping points do not prove equivalence, and separated points do not identify the features or mechanisms responsible.
 """,
             cell_id="nb-l4-pca-diet-figure",
         ),
@@ -776,13 +850,15 @@ display(pca_summary)
             """
 ![ST003348 positive reversed-phase PCA of 76 serum samples, with high-contrast colors for rest, immediate post-exercise, 3-hour recovery, and 22-hour recovery; axes report explained variance.](../figures/ST003348_AN005483_pca.png)
 
-**Read cautiously.** The plot summarizes AN005483 only, after excluding its explicit labeled-standard rows. Within-person repeated measures remain correlated, and collection time overlaps with fasting and clock-time changes. PCA alone is not a repeated-measures test.
+### What this plot shows
+
+The plot summarizes AN005483 only, after excluding its explicit labeled-standard rows. Within-person repeated measures remain correlated, and collection time overlaps with fasting and clock-time changes. PCA alone is not a repeated-measures test.
 """,
             cell_id="nb-l4-pca-exercise-figure",
         ),
         md(
             """
-### Non-negotiable guardrail
+### Why the two matrices stay separate
 
 There is intentionally no code that stacks ST001521 and ST003348 peak areas. Plasma versus serum, separate extraction and chromatography methods, different analytical analyses, and uncalibrated peak-area scales make a combined PCA dominated by study/platform effects and therefore uninterpretable as a diet-versus-exercise contrast.
 
@@ -800,7 +876,7 @@ Choose one RefMet main class and answer:
 2. Do any names map to more than one analysis within either study?
 3. What claim can you make, and what claim must you avoid?
 
-Predict your result before running the scaffold. Change `CLASS_TO_INSPECT` to explore another class.
+Predict your result before running the scaffold. Change `CLASS_TO_INSPECT` to explore another class, then record the class, count, and claim limit in your Lesson 4 notes.
 """,
             cell_id="nb-l4-exercise-prompt",
         ),
@@ -840,7 +916,7 @@ display(
             """
 ### Learner edit - run one preprocessing sensitivity check
 
-Predict whether a stricter missingness threshold will change the retained feature count or explained variance. Change `SENSITIVITY_MAX_MISSING` to a value from 0 through 1, run the cell, and record which observations persist. This is a within-study sensitivity check, not a license to tune the threshold for a preferred plot.
+Predict whether a stricter missingness threshold will change the retained feature count or explained variance. Change `SENSITIVITY_MAX_MISSING` to a value from 0 through 1, run the cell, and record which observations persist in the four-sentence note below. This is a within-study sensitivity check, not a license to tune the threshold for a preferred plot.
 """,
             cell_id="nb-l4-sensitivity-prompt",
         ),
@@ -890,11 +966,25 @@ display(sensitivity_comparison)
         ),
         md(
             """
+### Learner edit - write the four-sentence interpretation
+
+Double-click this cell, replace the bracketed text, and run the cell with **Shift+Enter** to save the rendered note.
+
+1. **Observation:** Within `[study and analysis]`, the exploratory output shows `[visible pattern or count]`.
+2. **Context:** The relevant design and phenotype metadata indicate `[time, specimen, intervention, or repeated-measures fact]`.
+3. **Other explanations:** The pattern could also reflect `[technical or biological alternative]`.
+4. **Limit:** These data do not establish `[causal or cross-study claim that is unsupported]`.
+""",
+            cell_id="nb-l4-interpretation",
+            tags=("lesson-4", "learner-edit"),
+        ),
+        md(
+            """
 ### Sample answer
 
 Reveal this only after writing your own answer:
 
-“This class contains the reported number of exact, conservatively retained shared RefMet names. Some names may occur in multiple analysis modes, which is visible in the analysis-ID columns. I can claim shared *repository nomenclature coverage* for these names. I cannot claim matched concentration, matched annotation certainty, pathway enrichment, or a common biological response across the studies.”
+This class contains the reported number of shared RefMet names after the stated exclusions. Some names occur in more than one analysis mode. The result shows shared naming coverage, but it does not tell us whether concentrations, identification confidence, pathway activity, or biological responses match across studies.
 """
         ),
         md(
@@ -917,7 +1007,9 @@ A second extension is to replace the conservative name-collision rule with verif
         ),
         md(
             """
-**Lesson 4 complete when:** both PCAs use separate study/analysis matrices, the expected sample/feature summaries appear, and your four-sentence interpretation states observation, context, alternatives, and boundary without a causal cross-study claim.
+### Ready to move on?
+
+Continue when both PCAs use separate study/analysis matrices, the expected sample and feature summaries appear, and your four-sentence note above covers observation, context, alternatives, and the limit of the claim.
 """,
             cell_id="nb-l4-complete",
         ),
@@ -926,7 +1018,9 @@ A second extension is to replace the conservative name-collision rule with verif
 <a id="nb-l5"></a>
 ## Lesson 5 - Access patterns and transfer (`NB-L5`)
 
-**Guide cross-reference.** Read learner-guide Lesson 5 and open the access-pattern transfer checklist. This section does not retrieve governed data. Instead:
+### Before you start
+
+Read Lesson 5 in the learner guide and open `access_tier_transfer_checklist.md`. This section does not retrieve governed data. Instead:
 
 1. Review which inputs came from live endpoints versus the validated public cache.
 2. Choose a target dataset/release and intended action.
@@ -946,7 +1040,7 @@ The defaults describe this public cached tutorial. Replace them with evidence fo
 # Learner-edit cell: replace every value with dated evidence for your target resource.
 TARGET_RESOURCE = "Metabolomics Workbench ST001521/ST003348 public release"
 INTENDED_ACTION = "Run the cached educational workflow locally"
-ACCESS_EVIDENCE_DATE = "2026-08-14"
+ACCESS_EVIDENCE_DATE = "2026-08-17"
 INPUT_BOUNDARY = "Public split REST responses or versioned public cache"
 COMPUTE_LOCATION = "Local learner environment"
 PERMITTED_OUTPUT = "Aggregate tables, figures, code, and provenance records"
@@ -1008,11 +1102,20 @@ expected_pngs = {
     "ST003348_AN005483_pca.png",
 }
 
-assert expected_csvs.issubset({path.name for path in DERIVED_DIR.glob("*.csv")})
-assert expected_pngs.issubset({path.name for path in FIGURES_DIR.glob("*.png")})
-assert not list(FIGURES_DIR.glob("*.svg"))
-assert overlap_counts["raw_exact_refmet_overlap"] == 153
-assert overlap_counts["conservative_biological_refmet_overlap"] == 145
+found_csvs = {path.name for path in DERIVED_DIR.glob("*.csv")}
+found_pngs = {path.name for path in FIGURES_DIR.glob("*.png")}
+missing_csvs = sorted(expected_csvs - found_csvs)
+missing_pngs = sorted(expected_pngs - found_pngs)
+assert not missing_csvs, f"Missing expected CSV files: {missing_csvs}. Rerun the earlier analysis cells in order."
+assert not missing_pngs, f"Missing expected PNG files: {missing_pngs}. Rerun the earlier figure cells in order."
+svg_files = sorted(path.name for path in FIGURES_DIR.glob("*.svg"))
+assert not svg_files, f"Unexpected SVG files found: {svg_files}. Use the release PNG outputs."
+assert overlap_counts["raw_exact_refmet_overlap"] == 153, (
+    f"Expected raw overlap 153; found {overlap_counts['raw_exact_refmet_overlap']}."
+)
+assert overlap_counts["conservative_biological_refmet_overlap"] == 145, (
+    f"Expected conservative overlap 145; found {overlap_counts['conservative_biological_refmet_overlap']}."
+)
 
 artifact_paths = sorted(
     [DERIVED_DIR / name for name in expected_csvs]
@@ -1038,7 +1141,9 @@ print("Tutorial completed: 226 biological samples, 145 conservative shared RefMe
         ),
         md(
             """
-**Lesson 5 and notebook complete when:** the artifact manifest is displayed without errors, your transfer checklist cites dated first-party evidence, and your decision states any unresolved requirements. Save the notebook, return to the learner guide, and complete the posttest.
+### Ready to finish?
+
+The notebook is complete when the artifact manifest appears without errors, your transfer checklist cites dated first-party evidence, and your decision states any unresolved requirements. Save the notebook, return to the learner guide, and complete the posttest.
 """,
             cell_id="nb-l5-complete",
         ),

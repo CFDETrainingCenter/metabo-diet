@@ -10,33 +10,33 @@
   "outputs": [
     {
       "path": "module/support/metabo_diet_learner_guide.docx",
-      "bytes": 343987,
-      "sha256": "c5527e07e783785caf27dc9ec5898147a0f93c9339cfb961e6c8cdbc050809d5"
+      "bytes": 348203,
+      "sha256": "2724c60a7ad4b7f1f8d8a88031ea99e2b738516d7a704d7c3b84ed3783688604"
     },
     {
       "path": "module/support/metabo_diet_learner_guide.pdf",
-      "bytes": 1852160,
-      "sha256": "db566e675c70e68994639e1ce270fec42ad79e1d3701159a64219c5375505d9a"
+      "bytes": 1898546,
+      "sha256": "70cbb035a79b8bf65fa8276a612f753246a1b8d18cda4ada013bbd1f30792b6f"
     },
     {
       "path": "module/support/metabo_diet_instructor_packet.docx",
-      "bytes": 75555,
-      "sha256": "62e73021b1654d639aeb028340ff35f86c51e9dc4fb7549f68928d23a8e6b36c"
+      "bytes": 75845,
+      "sha256": "157acbdbdf431a9d4514ae82cf26b837dde15c0b442d6a91a056f4237be9b0cb"
     },
     {
       "path": "module/support/metabo_diet_instructor_packet.pdf",
-      "bytes": 829177,
-      "sha256": "cef37125d7cac69b53e99e7234ed85a41c55f0e6bd1604a0f8753a04db8002e5"
+      "bytes": 832218,
+      "sha256": "91ded58a50723122435341a50d5ae33d39eeca25b6c3134a6163bef110ac9c55"
     },
     {
       "path": "module/support/metabo_diet_templates.zip",
-      "bytes": 13096,
-      "sha256": "b241e0a335f86b0f797dfc862f0aa2c12e85105a7010aad12282890699ccf0ee"
+      "bytes": 26329,
+      "sha256": "0046e3f8f7a7688120878b58cb0e1e8b965643aeb71dde954c66f25b019ed018"
     },
     {
       "path": "module/support/metabo_diet_analysis_bundle.zip",
-      "bytes": 3901522,
-      "sha256": "e8d280c135441eb6e59cb2eca57904490f17b5766da15314461740907d8fa5b0"
+      "bytes": 4834735,
+      "sha256": "7de9bd45c15b96422fd1de099cc6292ca190d271bc7ba028ca15e6a5a6ea2c43"
     }
   ]
 }

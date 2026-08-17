@@ -35,8 +35,8 @@ This checklist translates the revised July 2026 proposal into verifiable deliver
 
 ## Packaging and accessibility
 
-- [x] Learner site is responsive, keyboard accessible, high contrast, and uses semantic headings/labels.
-- [x] Progress and assessment interactions work without a server-side dependency.
+- [x] The SCORM course shell is keyboard accessible, high contrast, and uses semantic headings and labels.
+- [x] SCORM progress and assessment interactions work without a server-side dependency.
 - [x] Export-ready DOCX and PDF support files render without clipping, overlap, or broken tables.
 - [x] Figures have text alternatives; transcript/caption text is available for narrated or visual material.
 - [x] SCORM-compatible package contains a valid manifest and launches the course.
@@ -47,7 +47,7 @@ This checklist translates the revised July 2026 proposal into verifiable deliver
 - [x] Assessment keys and scoring are validated programmatically.
 - [x] Cached and live data paths produce structurally consistent analysis inputs.
 - [x] Notebook outputs agree with derived tables and plotted values.
-- [x] Site production build and automated tests pass.
+- [x] The standalone SCORM package passes manifest, launch, interaction, download-sync, and ZIP integrity checks.
 - [x] DOCX and PDF pages receive full visual inspection.
 - [x] Final file manifest and checksums are generated.
 
@@ -55,6 +55,7 @@ This checklist translates the revised July 2026 proposal into verifiable deliver
 
 - [x] The Python notebook is divided into five guide-aligned lessons with stable `NB-L1` through `NB-L5` references.
 - [x] Python, R, package installation, cached mode, and optional live mode are documented at the start of the notebook and in the repository README.
+- [x] First-time terminal and Jupyter setup appears before the pretest and the analysis bundle contains the guide and worksheets it references.
 - [x] The guide tells learners when to read, run, observe, record, stop, and continue.
 - [x] Every lesson points to its matching notebook section, and the guide includes a complete crosswalk.
 - [x] The learner-guide appendix contains two separate, captioned PCA examples with text alternatives.

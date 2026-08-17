@@ -7,7 +7,7 @@ output:
     toc_float: true
     number_sections: true
     df_print: paged
-date: "2026-08-14"
+date: "2026-08-17"
 ---
 
 ```{r setup, include=FALSE}
@@ -17,7 +17,7 @@ options(width = 110)
 
 # How to use the R companion
 
-This R Markdown file follows the same five lesson keys as the primary Python notebook. Read the corresponding learner-guide lesson first, run chunks from top to bottom, stop on any failed `stopifnot()` check, and record the requested interpretation in the learner worksheet. The Python notebook remains the primary hands-on artifact; this companion demonstrates the equivalent cached/live retrieval and core analysis in R.
+This R Markdown file follows the same five lesson keys as the primary Python notebook. Read the matching guide lesson, then run the R chunks from top to bottom. If a check fails, stop and review the output. Record your interpretation in the worksheet. The Python notebook is the main activity; this file shows the same retrieval and analysis steps in R.
 
 | Learner guide | R companion section | Main action |
 |---|---|---|
@@ -29,14 +29,17 @@ This R Markdown file follows the same five lesson keys as the primary Python not
 
 # Environment setup (`NB-R-SETUP`) {#nb-r-setup}
 
-Install R 4.3 or later from <https://cran.r-project.org/>. From the directory that contains `module/`, install every cached, rendering, testing, and optional live-retrieval dependency with:
+To read the companion without installing anything, open the pre-rendered `module/notebooks/metabo_diet_R_appendix.html` in a browser.
+
+To rerun it, install R 4.3 or later from <https://cran.r-project.org/> plus RStudio or another Pandoc installation. From the directory that contains `module/`, check Pandoc, install the cached-path packages, and render:
 
 ```bash
+Rscript -e 'stopifnot(rmarkdown::pandoc_available()); rmarkdown::pandoc_version()'
 Rscript module/notebooks/install_r_packages.R
 Rscript -e 'rmarkdown::render("module/notebooks/metabo_diet_R_appendix.Rmd")'
 ```
 
-The installer covers `rmarkdown`, `knitr`, `jsonlite`, `data.table`, `httr`, `BiocManager`, and `metabolomicsWorkbenchR`. The validated-cache path is the default and does not require network access after installation. Set `METABO_DIET_LIVE=1` before rendering only when you intentionally want to test live retrieval.
+The default installer covers `rmarkdown`, `knitr`, `jsonlite`, `data.table`, and `httr`. The validated cache does not require network access after installation. To test optional live retrieval, run `Rscript module/notebooks/install_r_packages.R --live` first, then set `METABO_DIET_LIVE=1` before rendering.
 
 ```{r environment-check}
 required_packages <- c("rmarkdown", "knitr", "jsonlite", "data.table", "httr")
@@ -59,7 +62,7 @@ This appendix reproduces the core data-ingest, metadata, RefMet-overlap, and PCA
 
 The default path is deterministic and offline-capable. Set `METABO_DIET_LIVE=1` to try `metabolomicsWorkbenchR::do_query()` for each split endpoint. If the package, network, response, or schema is unavailable, the code falls back endpoint-by-endpoint to the validated JSON cache.
 
-**Lesson 1 action.** Confirm the two accessions below, then write one sentence explaining why a shared RefMet name is compatible with a naming comparison but not with pooled raw intensities.
+Confirm the two accessions below. Then write one sentence explaining why a shared RefMet name supports a naming comparison but not pooled raw intensities.
 
 ## Configuration and path discovery
 
@@ -94,17 +97,19 @@ if (!file.exists(NORMALIZATION_SCRIPT)) stop("Missing R normalization helpers: "
 source(NORMALIZATION_SCRIPT)
 
 cat("Retrieval mode:", if (PREFER_LIVE_API) "live with cache fallback" else "validated cache", "\n")
+cat("Diet accession:", DIET_ACCESSION, "\n")
+cat("Exercise accession:", EXERCISE_ACCESSION, "\n")
 ```
 
 # Lesson 2 companion - Comparing study design (`NB-R-L2`) {#nb-r-l2}
 
-**Lesson 2 action.** Run retrieval and factor chunks in order. Record endpoint source, samples, participants, specimen, conditions, and time semantics for each study. Stop if the factor checks fail.
+Run the retrieval and factor chunks in order. Record endpoint source, samples, participants, specimen, conditions, and time meaning for each study. Stop if a factor check fails.
 
 ## Split REST retrieval with cache fallback
 
 The official Bioconductor interface accepts the MW context, input field, accession, and output item. `fetch_endpoint()` makes one query per endpoint rather than treating study metadata and data as one undifferentiated response.
 
-The package does not return the raw REST JSON shape. Its [official parser source](https://code.bioconductor.org/browse/metabolomicsWorkbenchR/R/parse_fcns.R) returns flat endpoints as data frames, factors as a study-keyed list with expanded factor columns, and data as an analysis-keyed list with sample values flattened into columns. The last transformation also changes non-syntactic sample IDs such as `9002-3-PA` to `9002.3.PA`. The sourced normalization layer converts either package output or cached JSON into one validated record contract and restores sample IDs using the already-normalized factor table.
+`metabolomicsWorkbenchR` reshapes the responses. Flat endpoints become data frames, factors become lists by study, and data become lists by analysis. It also changes sample IDs such as `9002-3-PA` to `9002.3.PA`. The normalization script converts live and cached results to the same structure and restores IDs from the factor table. See the official [Bioconductor package page](https://bioconductor.org/packages/release/bioc/html/metabolomicsWorkbenchR.html) for the released implementation and documentation.
 
 ```{r retrieval-functions}
 fetch_endpoint <- function(study_id, endpoint, prefer_live = FALSE,
@@ -263,7 +268,7 @@ aggregate(local_sample_id ~ study_id, tidy_factors, function(x) length(unique(x)
 
 # Lesson 3 companion - Harmonizing metabolomics and metadata (`NB-R-L3`) {#nb-r-l3}
 
-**Lesson 3 action.** Predict the raw overlap, inspect every labeled-standard collision, and trace one retained RefMet name to the source-reported names and analysis IDs in both studies.
+Predict the raw overlap, inspect the labeled-standard collisions, and trace one retained RefMet name to the source names and analysis IDs in both studies.
 
 ## RefMet overlap and conservative standard cleanup
 
@@ -351,7 +356,7 @@ head(crosswalk[, c(
 
 # Lesson 4 companion - Guided analysis and interpretation (`NB-R-L4`) {#nb-r-l4}
 
-**Lesson 4 action.** Run each PCA separately, record its preprocessing/sample counts and explained variance, and write an interpretation that names design alternatives and a causal boundary.
+Run each PCA separately. Record the preprocessing, sample counts, and explained variance, then write an interpretation that includes other explanations and the limit of the claim.
 
 ## Separate PCA in R
 
@@ -475,9 +480,9 @@ graphics::par(old_parameters)
 
 # Lesson 5 companion - Access transfer and interpretation (`NB-R-L5`) {#nb-r-l5}
 
-The separate PCAs are exploratory summaries, not causal or repeated-measures tests. FARMM days 9-15 are not diet-only observations, while ST003348 time is entangled with fasting and clock time. A stronger extension would fit a participant-aware longitudinal model within each study, preserve analysis identity, and compare standardized directions and uncertainty - not uncalibrated raw peak areas - across studies.
+These PCAs are exploratory, not causal tests or repeated-measures models. In FARMM, days 9 to 15 reflect more than diet alone; in `ST003348`, time also varies with fasting and clock time. A later analysis could fit a longitudinal model within each study and compare effect directions and uncertainty instead of raw peak-area values.
 
-**Lesson 5 action.** Use the learner-guide transfer checklist to document a target dataset/release, intended action, dated first-party evidence, compute boundary, permitted outputs, unresolved requirements, and a `GO`, `REVISE`, `WAIT`, or `STOP` decision. Do not place credentials or governed data in this file.
+Use the learner-guide transfer checklist to document an exact dataset and action, dated first-party evidence, the compute boundary, permitted outputs, unresolved requirements, and a `GO`, `REVISE`, `WAIT`, or `STOP` decision. Keep credentials and governed data out of this file.
 
 ```{r session-info}
 sessionInfo()

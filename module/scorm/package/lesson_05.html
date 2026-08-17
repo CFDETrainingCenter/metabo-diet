@@ -82,7 +82,7 @@
 </tr>
 </tbody></table></div>
 <blockquote>
-<p><strong>Notebook connection - <code>NB-L5</code>.</strong> Open <strong>Lesson 5 - Access patterns and transfer (<code>NB-L5</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Review the source log, replace every value in the transfer-decision learner-edit cell with dated evidence for your exact target, choose <code>GO</code>, <code>REVISE</code>, <code>WAIT</code>, or <code>STOP</code>, and run <code>NB-REPRO</code>. Return here and complete the posttest only after the artifact manifest appears without errors.</p>
+<p><strong>In the notebook (NB-L5):</strong> Review the source log and edit the transfer-decision cell with dated evidence for one exact target. Choose <code>GO</code>, <code>REVISE</code>, <code>WAIT</code>, or <code>STOP</code>, then run <code>NB-REPRO</code>. Complete the posttest after the artifact manifest appears without errors.</p>
 </blockquote>
 <h2>1. Access tier is not a logo</h2>
 <p>In Lesson 1, access was introduced as a planning problem. After completing an open-data workflow, you can now see exactly where access rules affect the analysis.</p>
@@ -98,7 +98,7 @@
 </ul>
 <p>Do not assign a permanent tier to an entire program. Current MoTrPAC documentation, for example, distinguishes public releases that community users can access without an account from restricted or embargoed data that require authentication, a data-use agreement, or other authorization. The access pattern is dataset-dependent. All of Us provides Registered and Controlled Tier collections in a governed Researcher Workbench and restricts external release of participant-level data and small counts under its policies.</p>
 <p>The July 2026 proposal used MoTrPAC as a simplified registration-gated example. This module intentionally updates that framing to match current first-party documentation: <strong>verify the exact release and action every time</strong>.</p>
-<h2>2. The invariant core and the movable boundary</h2>
+<h2>2. What stays the same, and what must change</h2>
 <p>Some harmonization practices transfer across environments:</p>
 <ul>
 <li>Define the scientific question and estimand.</li>
@@ -121,7 +121,7 @@
 <li>Who reviews an export and what disclosure thresholds apply.</li>
 <li>How collaborators receive access.</li>
 </ul>
-<p>Think of the workflow as portable <strong>logic</strong>, not necessarily portable <strong>data</strong>.</p>
+<p>You can reuse the analysis steps even when the data must remain in a governed workspace.</p>
 <h2>3. Worked transfer case A: a MoTrPAC dataset</h2>
 <h3>Scenario</h3>
 <p>You find a MoTrPAC metabolomics release that may complement the exercise case study.</p>
@@ -157,9 +157,10 @@
 <h3>Scientific decision</h3>
 <p>NPH&#x27;s modular diet design and multimodal context may support questions that the small FARMM case cannot. It does not remove the need to define diet period, test-meal timing, specimen, assay, repeated measures, and the intended estimand.</p>
 <h2>5. Accessible description of the transfer diagram</h2>
-<p>The diagram has a central box labeled <code>portable harmonization logic</code>. Three arrows point to: an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A narrow outbound arrow from the cloud is labeled <code>policy-permitted reviewed outputs</code>.</p>
+<p>The diagram has a central box labeled <code>portable harmonization logic</code>. Three arrows point to: an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A single outbound arrow from the cloud is labeled <code>policy-permitted reviewed outputs</code>.</p>
 <h2>6. Hands-on activity: make a transfer decision</h2>
 <p>Use <code>module/templates/access_tier_transfer_checklist_learner.md</code> for a resource of your choice. You may use a specific MoTrPAC release, an NPH/All of Us collection, another Metabolomics Workbench accession, MetaboLights, or a consortium repository relevant to your work.</p>
+<p>For the timed course, complete five items: the exact dataset and intended action, one first-party source with its check date, the access pattern, the compute/storage boundary, and a <code>GO</code>, <code>REVISE</code>, <code>WAIT</code>, or <code>STOP</code> decision. The full checklist is a project extension.</p>
 <h3>Required evidence</h3>
 <ul>
 <li>Exact resource, dataset, and version or release.</li>
@@ -183,7 +184,7 @@
 <blockquote>
 <p>The first-party page states that this public release can be downloaded without an account; I infer that the local retrieval step is feasible, but I still need to confirm license and scientific compatibility before reuse.</p>
 </blockquote>
-<h2>7. Final guardrails</h2>
+<h2>7. Safety and governance rules</h2>
 <ul>
 <li>Verify current first-party terms; do not rely on this lesson as legal or policy authority.</li>
 <li>Dataset landing-page visibility does not prove participant-level download permission.</li>
@@ -214,12 +215,12 @@
 <blockquote>
 <p>Within the next month, I will apply the workflow to ________. My first evidence check will be ________, and the first incompatibility I will test is ________.</p>
 </blockquote>
-<h2>Take-home message</h2>
+<h2>Final decision rule</h2>
 <p>The harmonization workflow transfers when its logic, provenance, and guardrails are preserved. Access changes the analysis architecture; study design changes the claims. Both must be checked before data move or models run.</p>
 <h2>Primary sources and first-party documentation</h2>
 <ol>
-<li>MoTrPAC. <a href="https://www.motrpac-data.org/knowledge-center/project-overview/faq">Data access FAQ</a>. Accessed August 10, 2026.</li>
-<li>MoTrPAC. <a href="https://www.motrpac-data.org/knowledge-center/dissemination/data-access/data-hub">Data Hub access documentation</a> and <a href="https://motrpac-data.org/knowledge-center/dissemination/data-access/onboarding">consortium/restricted onboarding</a>. Accessed August 10, 2026.</li>
+<li>MoTrPAC. <a href="https://motrpac-data.org/knowledge-center/project-overview/faq">Data access FAQ</a>. Accessed August 17, 2026.</li>
+<li>MoTrPAC. <a href="https://motrpac-data.org/knowledge-center/dissemination/data-access/data-hub">Data Hub access documentation</a> and <a href="https://motrpac-data.org/knowledge-center/dissemination/data-access/onboarding">consortium/restricted onboarding</a>. Accessed August 17, 2026.</li>
 <li>NIH Common Fund. <a href="https://commonfund.nih.gov/nutritionforprecisionhealth/frequently-asked-questions">Nutrition for Precision Health FAQ</a>. Accessed August 10, 2026.</li>
 <li>All of Us Research Program. <a href="https://support.researchallofus.org/hc/en-us/articles/41981123613716-Researcher-Workbench">Researcher Workbench overview</a>. Accessed August 10, 2026.</li>
 <li>All of Us Research Program. <a href="https://support.researchallofus.org/hc/en-us/articles/34814131370388-Policy-Questions">Policy questions and dissemination guidance</a>. Accessed August 10, 2026.</li>

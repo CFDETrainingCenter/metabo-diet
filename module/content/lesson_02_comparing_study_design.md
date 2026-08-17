@@ -23,7 +23,7 @@ By the end of this lesson, you will be able to:
 | Cohort-comparison worksheet | 9 |
 | Knowledge check | 3 |
 
-> **Notebook connection - `NB-L2`.** After reading the comparison framework, open **Lesson 2 - Comparing study design and phenotype capture (`NB-L2`)** in `module/notebooks/metabo_diet_harmonization.ipynb`. Run the ten-endpoint source audit, endpoint-size table, biological-sample table, and timepoint checks in order. Use the learner-edit cell to inspect each study separately, then transfer the evidence to the cohort-comparison worksheet before continuing to `NB-L3`.
+> **In the notebook (NB-L2):** Run the source, endpoint-size, biological-sample, and timepoint cells in order. Use the learner-edit cell to inspect one study, then enter the results in Sections 3, 5, 6, and 9 of the cohort-comparison worksheet.
 
 ## 1. Begin with the question, not the column name
 
@@ -161,7 +161,7 @@ The following decisions are grounded in the locked Metabolomics Workbench record
 | Metabolite name | Submitted name and RefMet output | Submitted name and RefMet output | Exact-name comparison possible after Lesson 3 review |
 | Intensity | Four LC-MS analyses, unitless peak areas | Two LC-MS analyses, peak area | No cross-study quantitative pooling |
 
-Notice that a useful table can contain `not yet assessable`. The worksheet is an evidence ledger, not a form that must be completely filled.
+It is fine to mark a row `not yet assessable` when the source does not provide enough information.
 
 ## 5. Consortium-scale design references
 
@@ -182,6 +182,8 @@ The diagram has two vertical lanes. The diet lane moves from diet assignment to 
 ## 6. Hands-on activity: complete the cohort-comparison worksheet
 
 Use `module/templates/cohort_comparison_worksheet_learner.md`.
+
+For the timed course, complete these eight rows in the comparability matrix: species, specific matrix, timepoint, participant count, repeated-measures structure, phenotype anchor, units/scale, and platform/mode. Use the larger worksheet as a project extension after the lesson. A first-time learner is not expected to fill every blank table cell in 30 minutes.
 
 ### Step 1 - Resolve and document
 
@@ -235,7 +237,7 @@ Your worksheet is complete when:
 - Assay identifiers and units are recorded.
 - At least one field is intentionally not harmonized.
 
-## 7. Interpretation guardrails
+## 7. Comparison rules
 
 - A shared label is a hypothesis of equivalence, not proof.
 - Missing metadata does not mean the protocols were identical.
@@ -268,9 +270,9 @@ B. It lacks an intervention anchor, offset, and physiological state.
 C. It cannot appear in mwTab.  
 D. It always means immediate recovery.
 
-## Take-home message
+## Before you start the crosswalk
 
-Study comparison is a purpose-specific evidence exercise. Define the intended comparison, extract each record on its own terms, preserve protocol meaning, and classify compatibility with reasons. Only then should analyte-level harmonization begin.
+Decide what you want to compare first. Then extract each record on its own terms and explain why each field is or is not suitable for that purpose. Lesson 3 applies those decisions to the metabolite crosswalk.
 
 ## Primary sources and first-party documentation
 

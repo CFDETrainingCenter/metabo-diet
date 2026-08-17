@@ -18,7 +18,6 @@ MODULE = ROOT / "module"
 SCORM = MODULE / "scorm"
 PACKAGE = SCORM / "package"
 QA = MODULE / "qa"
-DOWNLOADS = MODULE / "site" / "public" / "downloads"
 
 LESSONS = [
     ("lesson_01", "Lesson 1 - Why harmonization matters", MODULE / "content" / "lesson_01_why_harmonization_matters.md"),
@@ -704,13 +703,17 @@ def build_index() -> str:
         resource_links.append('<li><a href="downloads/metabo_diet_analysis_bundle.zip">Runnable cached analysis bundle (Python notebook, pipeline, data, figures, and R appendix)</a></li>')
     main = """
 <section class="hero">
-  <p>Intermediate asynchronous module | Approximately 153 minutes</p>
+  <p>Guided intermediate module | Approximately 153 minutes after setup</p>
   <h1>Metabo-Diet</h1>
   <p>Learn to compare study designs, preserve phenotype and specimen meaning, harmonize metabolite names with RefMet, analyze two public studies safely, and transfer the workflow across access tiers.</p>
 </section>
 <section aria-labelledby="pathway-heading">
   <h2 id="pathway-heading">Learning pathway</h2>
   <ol class="activity-list">""" + "\n".join(items) + """</ol>
+</section>
+<section class="callout" aria-labelledby="setup-heading">
+  <h2 id="setup-heading">Before the pretest</h2>
+  <p>Download the learner guide, analysis bundle, and worksheets below. Extract both ZIP files, keep the <code>module/</code> folder intact, and follow the first-time setup in the guide. The Python notebook is the main activity; R is optional.</p>
 </section>
 <section class="callout" aria-labelledby="guardrail-heading">
   <h2 id="guardrail-heading">Scientific guardrail</h2>
@@ -773,6 +776,10 @@ def build_assessment(path: Path, page_id: str, next_href: str) -> str:
 
 def copy_resources() -> None:
     shutil.copy2(ROOT / "LICENSE", PACKAGE / "LICENSE")
+    shutil.copy2(MODULE / "ATTRIBUTION.md", PACKAGE / "ATTRIBUTION.md")
+    provenance_target = PACKAGE / "module" / "data" / "provenance.json"
+    provenance_target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(MODULE / "data" / "provenance.json", provenance_target)
     target = PACKAGE / "downloads"
     target.mkdir(parents=True, exist_ok=True)
     candidates = [
@@ -857,6 +864,8 @@ def validate_archive(zip_path: Path) -> dict:
             failures.append("Manifest references missing files: " + ", ".join(missing))
         required_pages = {
             "LICENSE",
+            "ATTRIBUTION.md",
+            "module/data/provenance.json",
             "index.html",
             "pretest.html",
             "posttest.html",
@@ -949,8 +958,6 @@ def main() -> None:
     report = validate_archive(zip_path)
     QA.mkdir(parents=True, exist_ok=True)
     (QA / "scorm_validation.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    DOWNLOADS.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(zip_path, DOWNLOADS / zip_path.name)
     print(json.dumps(report, indent=2))
     if not report["passed"]:
         raise SystemExit(1)

@@ -27,7 +27,6 @@ from pypdf import PdfReader
 ROOT = Path(__file__).resolve().parents[2]
 MODULE = ROOT / "module"
 SUPPORT = MODULE / "support"
-DOWNLOADS = MODULE / "site" / "public" / "downloads"
 SCORM = MODULE / "scorm" / "metabo_diet_scorm_1_2.zip"
 QA = MODULE / "qa"
 TABLE_DXA = 9360
@@ -353,6 +352,7 @@ def audit_templates_zip(path: Path, checks: list[dict], failures: list[str]) -> 
         "README.md",
         "LICENSE",
         "DATA_ATTRIBUTION.md",
+        "module/data/provenance.json",
         "worksheets/cohort_comparison_worksheet.md",
         "worksheets/metabolite_metadata_crosswalk.md",
         "worksheets/access_tier_transfer_checklist.md",
@@ -428,6 +428,9 @@ def audit_analysis_zip(
         "module/notebooks/install_r_packages.R",
         "module/notebooks/metabo_diet_R_appendix.Rmd",
         "module/notebooks/metabo_diet_R_appendix.html",
+        "module/content/getting_started.md",
+        "module/support/metabo_diet_learner_guide.pdf",
+        "module/support/metabo_diet_templates.zip",
         "module/scripts/metabo_diet_pipeline.py",
         "module/scripts/execute_notebook.py",
         "module/scripts/audit_live_mw.py",
@@ -453,6 +456,19 @@ def audit_analysis_zip(
         record(checks, failures, "analysis ZIP: no absolute/traversal paths", all(not name.startswith("/") and ".." not in Path(name).parts for name in names))
         readme = archive.read("README.md").decode("utf-8")
         record(checks, failures, "analysis ZIP: deterministic clean-run command", "requirements-dev.txt" in readme and "execute_notebook.py" in readme)
+        record(
+            checks,
+            failures,
+            "analysis ZIP: beginner start sequence names guide, templates, and notebook",
+            all(
+                token in readme
+                for token in (
+                    "metabo_diet_learner_guide.pdf",
+                    "metabo_diet_templates.zip",
+                    "metabo_diet_harmonization.ipynb",
+                )
+            ),
+        )
         notebook = inspect_notebook_bytes(archive.read("module/notebooks/metabo_diet_harmonization.ipynb"))
         required_cell_ids = {
             "nb-setup",
@@ -494,7 +510,13 @@ def audit_analysis_zip(
             environment = os.environ.copy()
             environment["METABO_DIET_LIVE"] = "0"
             environment["MPLCONFIGDIR"] = str(destination / "mplconfig")
-            command = [python_executable, str(destination / "module" / "scripts" / "execute_notebook.py")]
+            executed_notebook = destination / "metabo_diet_bundle_smoke_test.ipynb"
+            command = [
+                python_executable,
+                str(destination / "module" / "scripts" / "execute_notebook.py"),
+                "--output",
+                str(executed_notebook),
+            ]
             result = subprocess.run(
                 command,
                 cwd=destination,
@@ -504,15 +526,43 @@ def audit_analysis_zip(
                 text=True,
                 timeout=1200,
             )
-            rerun = inspect_notebook_bytes((destination / "module" / "notebooks" / "metabo_diet_harmonization.ipynb").read_bytes())
+            output_created = executed_notebook.is_file()
+            rerun = (
+                inspect_notebook_bytes(executed_notebook.read_bytes())
+                if output_created
+                else {
+                    "cells": 0,
+                    "code_cells": 0,
+                    "execution_counts": [],
+                    "error_outputs": 0,
+                    "cell_ids": [],
+                }
+            )
+            normalized_stdout = result.stdout
+            normalized_stderr = result.stderr
+            # macOS may expose the same temporary directory through both
+            # /var/... and /private/var/...; remove either spelling from QA evidence.
+            temporary_paths = sorted(
+                {str(destination), str(destination.resolve())}, key=len, reverse=True
+            )
+            for temporary_path in temporary_paths:
+                normalized_stdout = normalized_stdout.replace(
+                    temporary_path, "<temporary-directory>"
+                )
+                normalized_stderr = normalized_stderr.replace(
+                    temporary_path, "<temporary-directory>"
+                )
+            normalized_stdout = normalized_stdout.strip()
+            normalized_stderr = normalized_stderr.strip()
             execution = {
                 "requested": True,
-                "passed": result.returncode == 0 and rerun["error_outputs"] == 0,
-                "python_executable": python_executable,
+                "passed": result.returncode == 0 and output_created and rerun["error_outputs"] == 0,
+                "python_executable": Path(python_executable).name,
                 "returncode": result.returncode,
                 "elapsed_seconds": round(time.monotonic() - started, 3),
-                "stdout": result.stdout.strip(),
-                "stderr_tail": result.stderr.strip()[-2000:],
+                "stdout": normalized_stdout,
+                "stderr_tail": normalized_stderr[-2000:],
+                "output_created": output_created,
                 "notebook": rerun,
             }
         record(checks, failures, "analysis ZIP: clean extraction cached Python execution", execution["passed"], execution)
@@ -537,6 +587,18 @@ def audit_scorm(path: Path, checks: list[dict], failures: list[str]) -> dict:
         names = set(archive.namelist())
         record(checks, failures, "SCORM: root imsmanifest.xml", "imsmanifest.xml" in names)
         record(checks, failures, "SCORM: archive CRC", archive.testzip() is None)
+        required_support_files = {
+            "LICENSE",
+            "ATTRIBUTION.md",
+            "module/data/provenance.json",
+        }
+        record(
+            checks,
+            failures,
+            "SCORM: license, attribution, and provenance are included",
+            required_support_files <= names,
+            sorted(required_support_files - names),
+        )
         root = ET.fromstring(archive.read("imsmanifest.xml"))
         namespace = {"imscp": "http://www.imsproject.org/xsd/imscp_rootv1p1p2"}
         hrefs = {node.attrib.get("href", "") for node in root.findall(".//imscp:file", namespace)}
@@ -608,9 +670,7 @@ def main() -> int:
         SUPPORT / "metabo_diet_templates.zip",
         SUPPORT / "metabo_diet_analysis_bundle.zip",
     ]
-    expected = [*release_support, SCORM]
-    expected += [DOWNLOADS / path.name for path in expected]
-    expected = sorted(set(expected))
+    expected = sorted(set([*release_support, SCORM]))
     for path in expected:
         record(checks, failures, f"release file exists: {path.relative_to(ROOT)}", path.is_file() and path.stat().st_size > 0)
     if failures:
@@ -641,12 +701,16 @@ def main() -> int:
     scorm = audit_scorm(SCORM, checks, failures)
 
     byte_sync = {}
-    for support_path in release_support:
-        site_path = DOWNLOADS / support_path.name
-        same = site_path.is_file() and support_path.read_bytes() == site_path.read_bytes()
-        byte_sync[support_path.name] = same
-    byte_sync[SCORM.name] = (DOWNLOADS / SCORM.name).read_bytes() == SCORM.read_bytes()
-    record(checks, failures, "support/SCORM and site downloads are byte-synchronized", all(byte_sync.values()), byte_sync)
+    with zipfile.ZipFile(SCORM) as archive:
+        for support_path in (
+            SUPPORT / "metabo_diet_learner_guide.pdf",
+            SUPPORT / "metabo_diet_templates.zip",
+            SUPPORT / "metabo_diet_analysis_bundle.zip",
+        ):
+            member = f"downloads/{support_path.name}"
+            same = member in archive.namelist() and archive.read(member) == support_path.read_bytes()
+            byte_sync[support_path.name] = same
+    record(checks, failures, "support files and SCORM downloads are byte-synchronized", all(byte_sync.values()), byte_sync)
 
     render_counts = {}
     for key, pdf in zip(("learner_guide", "instructor_packet"), pdfs):
@@ -673,8 +737,6 @@ def main() -> int:
     manifest_paths = [
         ROOT / "LICENSE",
         *release_support,
-        DOWNLOADS / "LICENSE",
-        *[path for path in DOWNLOADS.iterdir() if path.is_file() and path.name.startswith("metabo_diet_")],
         SCORM,
         QA / "packaging_build_report.json",
         QA / "scorm_validation.json",

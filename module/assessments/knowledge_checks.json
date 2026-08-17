@@ -232,7 +232,7 @@
         "D": "Call it controlled access."
       },
       "answer": "B",
-      "rationale": "Access feasibility and scientific validity are independent gates. Open data can still be unsuitable for the intended comparison."
+      "rationale": "A dataset can be open and still be unsuitable for the intended comparison. Check access and scientific fit separately."
     }
   ]
 }

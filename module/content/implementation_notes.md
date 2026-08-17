@@ -1,6 +1,6 @@
 # Implementation notes and intentional updates from the proposal
 
-The July 2026 proposal is the design authority for the module's learning goals and deliverable set. The implementation updates several provisional statements where current repository evidence or scientific review requires greater precision.
+The July 2026 proposal defines the module's learning goals and deliverables. During development, several details were updated to match the repository records and scientific review.
 
 ## Locked case studies
 
@@ -27,5 +27,4 @@ The proposal described MoTrPAC as registration-gated. Current MoTrPAC documentat
 - Live REST retrieval is attempted first, with cached public data as a documented fallback.
 - The Python notebook is the primary guided analysis.
 - The R appendix demonstrates the corresponding retrieval and harmonization path with `metabolomicsWorkbenchR` plus cached fallback logic.
-- Learner-facing site, Word/PDF support materials, and the SCORM-compatible package are generated from the same source lessons and assessments to minimize content drift.
-
+- Word/PDF support materials and the SCORM package are generated from the same source lessons and assessments to minimize content drift. The team's learner dashboard can import or recreate that content separately.

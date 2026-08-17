@@ -49,7 +49,7 @@
         "D": "Identical specimens and preprocessing"
       },
       "answer": "A",
-      "rationale": "A standardized-name match supports an identifier bridge, not analytical, biological, or quantitative equivalence."
+      "rationale": "A matching standardized name suggests the same naming target. It does not show that the measurements have the same scale, specimen context, or biological meaning."
     },
     {
       "id": "PRE-04",
@@ -63,7 +63,7 @@
         "D": "Determine participant access eligibility"
       },
       "answer": "B",
-      "rationale": "RefMet is used as a nomenclature spine. It does not calibrate data, correct batches, or govern access."
+      "rationale": "RefMet supplies the common naming field in the crosswalk. It does not calibrate measurements, correct batches, or govern access."
     },
     {
       "id": "PRE-05",

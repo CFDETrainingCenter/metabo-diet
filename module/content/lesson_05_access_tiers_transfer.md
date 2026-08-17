@@ -25,7 +25,7 @@ By the end of this lesson, you will be able to:
 | Posttest, additional assessment time | 8 |
 | **Learner time with posttest** | **23** |
 
-> **Notebook connection - `NB-L5`.** Open **Lesson 5 - Access patterns and transfer (`NB-L5`)** in `module/notebooks/metabo_diet_harmonization.ipynb`. Review the source log, replace every value in the transfer-decision learner-edit cell with dated evidence for your exact target, choose `GO`, `REVISE`, `WAIT`, or `STOP`, and run `NB-REPRO`. Return here and complete the posttest only after the artifact manifest appears without errors.
+> **In the notebook (NB-L5):** Review the source log and edit the transfer-decision cell with dated evidence for one exact target. Choose `GO`, `REVISE`, `WAIT`, or `STOP`, then run `NB-REPRO`. Complete the posttest after the artifact manifest appears without errors.
 
 ## 1. Access tier is not a logo
 
@@ -45,7 +45,7 @@ Do not assign a permanent tier to an entire program. Current MoTrPAC documentati
 
 The July 2026 proposal used MoTrPAC as a simplified registration-gated example. This module intentionally updates that framing to match current first-party documentation: **verify the exact release and action every time**.
 
-## 2. The invariant core and the movable boundary
+## 2. What stays the same, and what must change
 
 Some harmonization practices transfer across environments:
 
@@ -69,7 +69,7 @@ Other parts may need redesign:
 - Who reviews an export and what disclosure thresholds apply.
 - How collaborators receive access.
 
-Think of the workflow as portable **logic**, not necessarily portable **data**.
+You can reuse the analysis steps even when the data must remain in a governed workspace.
 
 ## 3. Worked transfer case A: a MoTrPAC dataset
 
@@ -119,11 +119,13 @@ NPH's modular diet design and multimodal context may support questions that the 
 
 ## 5. Accessible description of the transfer diagram
 
-The diagram has a central box labeled `portable harmonization logic`. Three arrows point to: an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A narrow outbound arrow from the cloud is labeled `policy-permitted reviewed outputs`.
+The diagram has a central box labeled `portable harmonization logic`. Three arrows point to: an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A single outbound arrow from the cloud is labeled `policy-permitted reviewed outputs`.
 
 ## 6. Hands-on activity: make a transfer decision
 
 Use `module/templates/access_tier_transfer_checklist_learner.md` for a resource of your choice. You may use a specific MoTrPAC release, an NPH/All of Us collection, another Metabolomics Workbench accession, MetaboLights, or a consortium repository relevant to your work.
+
+For the timed course, complete five items: the exact dataset and intended action, one first-party source with its check date, the access pattern, the compute/storage boundary, and a `GO`, `REVISE`, `WAIT`, or `STOP` decision. The full checklist is a project extension.
 
 ### Required evidence
 
@@ -148,7 +150,7 @@ Write one sentence that distinguishes policy evidence from your interpretation. 
 
 > The first-party page states that this public release can be downloaded without an account; I infer that the local retrieval step is feasible, but I still need to confirm license and scientific compatibility before reuse.
 
-## 7. Final guardrails
+## 7. Safety and governance rules
 
 - Verify current first-party terms; do not rely on this lesson as legal or policy authority.
 - Dataset landing-page visibility does not prove participant-level download permission.
@@ -187,14 +189,14 @@ Complete `module/assessments/posttest.json` through the delivery platform, then 
 
 > Within the next month, I will apply the workflow to ________. My first evidence check will be ________, and the first incompatibility I will test is ________.
 
-## Take-home message
+## Final decision rule
 
 The harmonization workflow transfers when its logic, provenance, and guardrails are preserved. Access changes the analysis architecture; study design changes the claims. Both must be checked before data move or models run.
 
 ## Primary sources and first-party documentation
 
-1. MoTrPAC. [Data access FAQ](https://www.motrpac-data.org/knowledge-center/project-overview/faq). Accessed August 10, 2026.
-2. MoTrPAC. [Data Hub access documentation](https://www.motrpac-data.org/knowledge-center/dissemination/data-access/data-hub) and [consortium/restricted onboarding](https://motrpac-data.org/knowledge-center/dissemination/data-access/onboarding). Accessed August 10, 2026.
+1. MoTrPAC. [Data access FAQ](https://motrpac-data.org/knowledge-center/project-overview/faq). Accessed August 17, 2026.
+2. MoTrPAC. [Data Hub access documentation](https://motrpac-data.org/knowledge-center/dissemination/data-access/data-hub) and [consortium/restricted onboarding](https://motrpac-data.org/knowledge-center/dissemination/data-access/onboarding). Accessed August 17, 2026.
 3. NIH Common Fund. [Nutrition for Precision Health FAQ](https://commonfund.nih.gov/nutritionforprecisionhealth/frequently-asked-questions). Accessed August 10, 2026.
 4. All of Us Research Program. [Researcher Workbench overview](https://support.researchallofus.org/hc/en-us/articles/41981123613716-Researcher-Workbench). Accessed August 10, 2026.
 5. All of Us Research Program. [Policy questions and dissemination guidance](https://support.researchallofus.org/hc/en-us/articles/34814131370388-Policy-Questions). Accessed August 10, 2026.

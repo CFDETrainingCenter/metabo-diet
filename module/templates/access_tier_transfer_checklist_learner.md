@@ -10,6 +10,8 @@ Assess one exact dataset, release, and intended action. Use current first-party 
 
 This checklist supports planning and is not legal advice or a replacement for the resource's terms, institutional review, or data-governance process.
 
+For the timed lesson, complete five items: the exact dataset and action in Section 1, one first-party source and date in Section 2, one planning pattern in Section 3, the compute/storage boundary in Section 6, and the decision in Section 8. Use the remaining rows for a full project transfer.
+
 ## 1. Scope the request
 
 | Item | Entry |
@@ -66,7 +68,7 @@ Select only after completing the evidence table.
 
 > For my intended action, I infer _________________________________________.
 
-## 4. Scientific compatibility is a separate gate
+## 4. Check scientific fit separately
 
 | Check | Evidence | Compatible/partial/not compatible/unclear | Required action |
 |---|---|---|---|
@@ -153,4 +155,3 @@ Write each boundary explicitly.
 - [ ] I identified where data, code, and outputs may move.
 - [ ] I identified an official support path for unclear requirements.
 - [ ] My decision can be revisited when the release or policy changes.
-

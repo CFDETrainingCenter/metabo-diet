@@ -26,7 +26,7 @@ The locked configuration is `DIET_ACCESSION = ST001521` and `EXERCISE_ACCESSION 
 | Crosswalk activity | 12 |
 | Knowledge check | 3 |
 
-> **Notebook connection - `NB-L3`.** Open **Lesson 3 - Harmonizing metabolomics and metadata (`NB-L3`)** in `module/notebooks/metabo_diet_harmonization.ipynb`. Run `NB-L3-CROSSWALK`, inspect the labeled-standard audit, and confirm the 153 raw and 145 conservative counts. In the learner-edit cell, trace one retained RefMet name to both studies and record the mapping evidence and limitation in the crosswalk worksheet before continuing to `NB-L4`.
+> **In the notebook (NB-L3):** Run `NB-L3-CROSSWALK` and inspect the labeled-standard table. Confirm the 153 raw and 145 conservative counts. Then trace one retained RefMet name and record what the match does and does not show in Tab A of the crosswalk.
 
 ## 1. Identifier systems answer different questions
 
@@ -42,7 +42,7 @@ Metabolomics records can contain common names, vendor labels, abbreviations, dat
 | KEGG compound ID | Identifier in KEGG's compound representation | Useful for pathway linking but not a universal metabolite identity key |
 | Formula or exact mass | Composition or mass evidence | Isomers can share formula or mass; mass alone is not an identification |
 
-RefMet is the module's **nomenclature spine** because it is designed for metabolomics naming and includes both discrete structures and analytically reported species, including lipid sum compositions. The spine metaphor matters: it organizes the crosswalk while the original labels and other identifiers remain attached. It should not replace all evidence with a single clean-looking name.
+RefMet provides the common naming field in this crosswalk. It covers discrete structures and analytically reported species, including lipid sum compositions. Keep the submitted labels and other identifiers beside it; a standardized name should not replace the original evidence.
 
 ## 2. Annotation resolution must be preserved
 
@@ -59,7 +59,7 @@ For each candidate match, record an **annotation-resolution status** such as:
 
 Also record the identification evidence reported by the study when available. The Metabolomics Standards Initiative distinguishes levels of identification confidence; a standardized label does not upgrade that confidence.
 
-> **Core guardrail:** Normalize a label only to the level supported by the deposited analytical evidence. Never infer a specific isomer, stereoisomer, lipid chain arrangement, or identification level from a fuzzy name match.
+> **Mapping limit:** Normalize a label only to the level supported by the deposited analytical evidence. Never infer a specific isomer, stereoisomer, lipid chain arrangement, or identification level from a fuzzy name match.
 
 ## 3. A reproducible mapping workflow
 
@@ -132,12 +132,12 @@ These source and RefMet strings appear in the current public metabolite response
 
 | Source/analysis | Deposited label | Source RefMet string | Evidence question | Safe decision |
 |---|---|---|---|---|
-| `DIET_ACCESSION`, AN002533 | `2-Aminooctanoic acid` | `2-Aminocaprylic acid` | Do synonym and identifier evidence support the same structure? | `review_required`, then potentially `accepted_exact` |
-| `DIET_ACCESSION`, AN002533 | `LPE(18:0)_A` | `LPE 18:0` | Does `_A` distinguish a separate source feature, and is sum composition the supported resolution? | Preserve feature; accepted set key only after review |
-| `DIET_ACCESSION`, AN002533 | `LPC(P-18:0)/LPC(O-18:1)_A` | `LPC P-18:0 or LPC O-18:1` | Is the unresolved ether-lipid alternative preserved? | `accepted_broader` for class/species purposes, not a unique structure |
-| `EXERCISE_ACCESSION`, AN005484 | `Mannitol+Sorbitol` | `Mannitol` | Has a composite/isomeric label been narrowed without support? | `review_required` |
-| `EXERCISE_ACCESSION`, AN005484 | `NegX-RT295MZ165` | blank | Is this an unidentified feature? | `unmapped`; do not name from mass alone |
-| `EXERCISE_ACCESSION`, AN005484 | `Palmitic acid-[13C]16` | `Palmitic acid` | Is the source an isotope-labeled analytical standard rather than endogenous palmitic acid? | `excluded_nonbiological` for biological overlap |
+| `ST001521`, AN002533 | `2-Aminooctanoic acid` | `2-Aminocaprylic acid` | Do synonym and identifier evidence support the same structure? | `review_required`, then potentially `accepted_exact` |
+| `ST001521`, AN002533 | `LPE(18:0)_A` | `LPE 18:0` | Does `_A` distinguish a separate source feature, and is sum composition the supported resolution? | Preserve feature; accepted set key only after review |
+| `ST001521`, AN002533 | `LPC(P-18:0)/LPC(O-18:1)_A` | `LPC P-18:0 or LPC O-18:1` | Is the unresolved ether-lipid alternative preserved? | `accepted_broader` for class/species purposes, not a unique structure |
+| `ST003348`, AN005484 | `Mannitol+Sorbitol` | `Mannitol` | Has a composite/isomeric label been narrowed without support? | `review_required` |
+| `ST003348`, AN005484 | `NegX-RT295MZ165` | blank | Is this an unidentified feature? | `unmapped`; do not name from mass alone |
+| `ST003348`, AN005484 | `Palmitic acid-[13C]16` | `Palmitic acid` | Is the source an isotope-labeled analytical standard rather than endogenous palmitic acid? | `excluded_nonbiological` for biological overlap |
 
 The last row shows why a nonblank standardized field is not automatically eligible. In the audited build, eight `ST003348` isotope/internal-standard rows map to ordinary RefMet labels; excluding them reduces the raw exact-name overlap from 153 to a conservative biological overlap of 145.
 
@@ -242,9 +242,11 @@ Keep `source_value` and `source_unit` even after a justified conversion. Store t
 
 Use `module/templates/metabolite_metadata_crosswalk_learner.md`.
 
+For the timed course, complete three worked rows: one retained shared RefMet name, one isotope-labeled or internal-standard exclusion, and one ambiguous or unmapped example. The 12-row metabolite table and full metadata audit are a project extension. This smaller path lets a first-time learner practice each decision type before scaling up.
+
 ### Part A - Metabolites
 
-1. Select at least six submitted labels from the chosen analysis in `DIET_ACCESSION` and six from `EXERCISE_ACCESSION`.
+1. For the course path, select one retained shared name, one excluded standard, and one ambiguous or unmapped label. For the project extension, select at least six labels from each study.
 2. Include at least one apparent overlap, one lipid label if present, one unmapped or unidentified feature if present, and one label requiring manual review. If a requested case does not occur, document that rather than fabricating it.
 3. Preserve original labels and identifiers.
 4. Run or inspect the RefMet query for each distinct label.
@@ -275,7 +277,7 @@ Exchange the crosswalk with a partner or use the self-audit prompts:
 
 Flag any row that fails one of these checks. The goal is an auditable table, not a maximum mapping rate.
 
-## 9. Interpretation guardrails
+## 9. Mapping rules
 
 - RefMet standardizes nomenclature; it does not retroactively validate compound identification.
 - A one-to-many or many-to-one mapping is not automatically an error; it may reflect different resolution.
@@ -309,9 +311,9 @@ B. Original and standardized names, source and query provenance, mapping status,
 C. A list containing only mapped analytes.  
 D. A table in which all ambiguities are manually forced to one value.
 
-## Take-home message
+## What the crosswalk should preserve
 
-A good crosswalk is an auditable record of evidence and decisions. It standardizes what can be standardized, represents information loss explicitly, and protects unresolved cases from becoming false biological certainty.
+A good crosswalk preserves the source label, the proposed standardized name, the supporting record, and the decision. Keep unresolved rows marked as unresolved so later analyses do not treat them as confirmed matches.
 
 ## Primary sources and first-party documentation
 

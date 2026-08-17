@@ -19,6 +19,10 @@ A Metabolomics Workbench `AN...` identifier for a particular assay or analysis w
 **Annotation resolution**  
 The structural detail supported for an analyte, such as a discrete structure, lipid molecular species, lipid sum composition, compound class, or unknown feature.
 
+**API endpoint**
+
+A specific URL that returns one type of data from a service. This module requests separate Metabolomics Workbench endpoints for the study summary, factors, analyses, metabolites, and measurement data.
+
 ## B
 
 **Batch effect**  
@@ -40,6 +44,10 @@ A group of compounds sharing a defined chemical relationship. A class-level coun
 
 **Clinical or behavioral phenotype**  
 A measured characteristic or exposure such as diet pattern, exercise dose, age, disease status, fitness, or adherence. The protocol and timing define what the field means.
+
+**Code cell**
+
+A notebook block that contains executable code. In Jupyter, click the cell and press **Shift+Enter** to run it. `[*]` means the cell is running and a number means it finished.
 
 **Controlled-compute environment**  
 An approved workspace in which governed data remain and analyses run. Only policy-permitted outputs may leave the environment.
@@ -110,10 +118,18 @@ Positive or negative ionization mode in mass spectrometry. Different modes can d
 
 ## J
 
+**JupyterLab**
+
+The browser-based interface used to read and run the Python notebook. A Jupyter notebook mixes instructions, code cells, and saved outputs in one file.
+
 **Join cardinality**  
 The relationship between keys in two tables: one-to-one, one-to-many, many-to-one, or many-to-many. An unexpected many-to-many join can duplicate measurements and must be resolved before analysis.
 
 ## K
+
+**Kernel**
+
+The Python process that runs notebook code and stores objects created by earlier cells. Restarting the kernel clears that memory, which is why the module asks learners to run cells from top to bottom.
 
 **KEGG compound ID**  
 An identifier used in the KEGG compound resource and pathway ecosystem. It is useful for pathway linking but is not a universal identity key.
@@ -159,6 +175,10 @@ Nutrition for Precision Health, powered by the All of Us Research Program. Publi
 
 **Not yet assessable**  
 A compatibility status used when essential evidence is missing or unresolved. It must not be silently converted to comparable or not comparable.
+
+**Notebook**
+
+An `.ipynb` file containing instructions, code, and outputs. The primary notebook for this module is `metabo_diet_harmonization.ipynb`.
 
 ## P
 
@@ -225,6 +245,14 @@ Measurement focused on a defined analyte panel, often with method-specific quant
 **Time semantics**  
 The biological meaning of a time label, including anchor event, offset, unit, state, visit or period, and repeated-measures order.
 
+**Terminal**
+
+A text-based application used to enter commands. On macOS it is commonly called Terminal; on Windows this module uses PowerShell.
+
+**Traceback**
+
+The red error report shown when a Python cell fails. Keep the message and stop at the failed cell; it identifies where to begin troubleshooting.
+
 ## U
 
 **Unit reconciliation**  
@@ -232,6 +260,12 @@ A documented conversion performed only when the same quantity, compatible matrix
 
 **Untargeted metabolomics**  
 Broad profiling of analytical features without limiting measurement to a small predefined panel. Feature annotation and missingness require careful interpretation.
+
+## V
+
+**Virtual environment**
+
+A project-specific Python installation directory, named `.venv` in this module. It keeps the course packages separate from other Python projects and lets Jupyter use the tested versions.
 
 ## W
 
@@ -244,4 +278,3 @@ An analysis fit separately inside one study using its own design, repeated measu
 2. Metabolomics Workbench. [REST Service](https://www.metabolomicsworkbench.org/tools/mw_rest.php), [RefMet](https://www.metabolomicsworkbench.org/databases/refmet/index.php), and [mwTab documentation](https://www.metabolomicsworkbench.org/data/tutorials.php). Accessed August 10, 2026.
 3. Wilkinson MD, Dumontier M, Aalbersberg IJ, et al. [The FAIR Guiding Principles for scientific data management and stewardship](https://doi.org/10.1038/sdata.2016.18). *Scientific Data*. 2016;3:160018.
 4. Sumner LW, Amberg A, Barrett D, et al. [Proposed minimum reporting standards for chemical analysis](https://doi.org/10.1007/s11306-007-0082-2). *Metabolomics*. 2007;3:211-221.
-

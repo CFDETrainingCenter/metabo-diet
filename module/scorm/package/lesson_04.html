@@ -79,7 +79,7 @@
 </tr>
 </tbody></table></div>
 <blockquote>
-<p><strong>Notebook connection - <code>NB-L4</code>.</strong> Open <strong>Lesson 4 - Guided analysis and biological interpretation (<code>NB-L4</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Run <code>NB-L4-CLASS</code>, then <code>NB-L4-PCA-DIET</code> and <code>NB-L4-PCA-EXERCISE</code> separately. Complete the shared-class learner-edit cell and the four-sentence interpretation before viewing the sample answer. The worked PCA figures are reproduced in the guide&#x27;s <strong>Appendix - PCA worked examples</strong>.</p>
+<p><strong>In the notebook (NB-L4):</strong> Run <code>NB-L4-CLASS</code>, <code>NB-L4-PCA-DIET</code>, and <code>NB-L4-PCA-EXERCISE</code> in order. Complete both learner-edit cells and the four-sentence note before reading the sample answer. The same PCA figures appear in the appendix.</p>
 </blockquote>
 <h2>1. Locked case-study configuration</h2>
 <p>The release configuration is:</p>
@@ -88,10 +88,10 @@ EXERCISE_ACCESSION = ST003348</code></pre>
 <p>Keep the variable names in code and prose even though the accessions are now locked. This preserves the proposal&#x27;s one-cell substitution design and makes a fallback pair possible.</p>
 <h3>Diet case: <code>ST001521</code></h3>
 <p>Metabolomics Workbench describes this FARMM study as a longitudinal human feeding study with three diet groups and plasma metabolomics. The study record reports 30 volunteers and five biological collection times. The factor response contains 160 rows: 150 participant-timepoint rows plus 10 pooled quality-control rows labeled <code>QPP...</code> with diet, sex, and time recorded as <code>NA</code>. Four analysis records cover different chromatography and ion-mode combinations and report unitless peak areas.</p>
-<p>The design is richer than a simple three-arm diet contrast. The study summary states that participants underwent an antibiotic and polyethylene glycol intervention during the time course; the vegan group continued its usual diet as outpatients, while 20 omnivores were randomized to an omnivore diet or exclusive enteral nutrition in an inpatient unit. Consequently, a change across study days cannot be attributed to diet alone without a design-appropriate model and assumptions.</p>
+<p><code>ST001521</code> is not a simple three-arm diet trial. Participants also underwent antibiotic and polyethylene glycol procedures during the time course; the vegan group continued its usual diet as outpatients, while 20 omnivores were randomized to an omnivore diet or exclusive enteral nutrition in an inpatient unit. Changes across days therefore cannot be attributed to diet alone without a design-appropriate model and assumptions.</p>
 <h3>Exercise case: <code>ST003348</code></h3>
 <p>Metabolomics Workbench describes an endurance exercise study of race walkers with 76 samples: 19 athletes at four timepoints. The project record defines <code>REST</code> as pre-exercise, <code>STAT</code> as immediately post-exercise, <code>REC3</code> as 3 hours into recovery, and <code>REC22</code> as 22 hours post-exercise. Two analysis records cover reversed-phase positive- and negative-ion modes and report peak area.</p>
-<p>The factors endpoint uses the broad sample-source label <code>blood</code>, while the collection record specifies <code>Blood (serum)</code> and describes clotting and serum preparation. This apparent discrepancy is instructive: use the more specific supported matrix for analysis, preserve the broad submitted factor, and cite both sources in the decision log.</p>
+<p>The factors endpoint uses the broad sample-source label <code>blood</code>, while the collection record specifies <code>Blood (serum)</code> and describes clotting and serum preparation. Keep <code>blood</code> as the submitted factor value, use serum as the more specific matrix supported by the collection record, and cite both sources.</p>
 <h3>Cross-study compatibility decision</h3>
 <p>The diet study uses plasma; the exercise study uses serum. Their time axes also represent different processes: study days spanning feeding and microbiota-depletion procedures versus minutes to hours after an endurance exercise bout. Treat both domains as partially comparable for broad discovery and not directly comparable for a pooled quantitative effect.</p>
 <h2>2. Open the notebook safely</h2>
@@ -103,7 +103,7 @@ EXERCISE_ACCESSION = ST003348</code></pre>
 <li>Complete the shared-class and sensitivity learner-edit cells.</li>
 <li>Write the bounded interpretation before revealing the sample answer.</li>
 </ol>
-<p>Confirm the configuration cell shows the locked accessions above. The release manifest should also provide:</p>
+<p>Confirm the configuration cell shows the accessions above. The data provenance manifest at <code>module/data/provenance.json</code> should also provide:</p>
 <ul>
 <li>Selected analysis IDs or the rule used to include multiple analyses.</li>
 <li>Retrieval date and API base URL.</li>
@@ -111,7 +111,7 @@ EXERCISE_ACCESSION = ST003348</code></pre>
 <li>Dependency versions.</li>
 <li>Crosswalk version.</li>
 </ul>
-<p>Do not continue if the displayed accession differs from the provenance manifest.</p>
+<p>Do not continue if the displayed accession differs from <code>module/data/provenance.json</code>.</p>
 <h3>Live retrieval and cached fallback</h3>
 <p>For each accession, the notebook requests:</p>
 <ul>
@@ -262,6 +262,7 @@ EXERCISE_ACCESSION = ST003348</code></pre>
 <p>One horizontal bar chart shows the 12 most frequent RefMet main classes among the 145 conservative shared names. The leading bars are amino acids and peptides (37), fatty acids (25), fatty esters (15), purines (11), bile acids (8), and pyridine alkaloids (7); the remaining six displayed classes have four or fewer names each. The x-axis is <code>Conservative shared RefMet names</code>. Bars are counts of standardized names, not metabolite concentrations or biological class abundance, and 24 names in less frequent classes are not shown in this top-12 view.</p>
 <h2>8. Principal component analysis: within each study</h2>
 <p>PCA summarizes directions of variation in a numeric matrix. It is sensitive to scale, skew, missingness, outliers, preprocessing, and feature selection. The notebook should create separate PCA models for each study or compatible analysis block.</p>
+<p>The notebook carries out the implementation for you. You are not expected to understand every line of code. Focus on which samples and features enter each PCA, how missing and large values are handled, and whether the interpretation stays within the study design.</p>
 <h3>Pre-PCA audit</h3>
 <p>For each PCA, record:</p>
 <ul>
@@ -353,7 +354,7 @@ EXERCISE_ACCESSION = ST003348</code></pre>
 <li>&quot;An apparent class difference may reflect assay coverage as well as biology.&quot;</li>
 </ol>
 <p>Suggested revisions are in the answer key.</p>
-<h2>12. Interpretation guardrails</h2>
+<h2>12. Analysis boundaries</h2>
 <ul>
 <li>Exclude pooled QC samples from biological sample counts and participant-level inference.</li>
 <li>Preserve plasma versus serum; do not call both simply blood in the analysis matrix.</li>
@@ -382,12 +383,12 @@ EXERCISE_ACCESSION = ST003348</code></pre>
 <p>B. Separation between the two studies proves a diet-versus-exercise mechanism.</p>
 <p>C. Scaling removes plasma-versus-serum differences.</p>
 <p>D. PCA automatically corrects batch effects.</p>
-<h2>Take-home message</h2>
-<p>The analysis is a chain of evidence: retrieve, validate, classify sample roles, join with audited keys, define eligibility, summarize, test sensitivity, and interpret within design boundaries. A reproducible number is not necessarily a biologically interpretable effect; the metadata determine which claims the number can support.</p>
+<h2>What the analysis can support</h2>
+<p>Validate each step before interpreting the result. A count can be reproducible and still support only a narrow claim, so use the study metadata to state that claim clearly.</p>
 <h2>Primary sources and first-party documentation</h2>
 <ol>
-<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST001521"><code>ST001521</code> study record</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary">REST summary</a>. Accessed August 10, 2026.</li>
-<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST003348"><code>ST003348</code> study record</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary">REST summary</a>. Accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST001521">ST001521 study record</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary">REST summary</a>. Accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?StudyID=ST003348">ST003348 study record</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary">REST summary</a>. Accessed August 10, 2026.</li>
 <li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/tools/mw_rest.php">REST Service, version 1.2</a>. Updated July 22, 2025; accessed August 10, 2026.</li>
 <li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/databases/refmet/index.php">RefMet database</a>. Accessed August 10, 2026.</li>
 <li>Jolliffe IT, Cadima J. <a href="https://doi.org/10.1098/rsta.2015.0202">Principal component analysis: a review and recent developments</a>. <em>Philosophical Transactions of the Royal Society A</em>. 2016;374:20150202.</li>

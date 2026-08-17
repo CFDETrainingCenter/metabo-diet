@@ -134,7 +134,7 @@
         "D": "A fabricated current access time."
       },
       "answer": "B",
-      "rationale": "A cache preserves continuity but must not masquerade as current live retrieval. Provenance and integrity evidence are required."
+      "rationale": "A cached response lets the analysis run, but it must be labeled as cached and reported with its retrieval and integrity information."
     },
     {
       "id": "POST-10",

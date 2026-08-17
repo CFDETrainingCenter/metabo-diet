@@ -45,18 +45,18 @@ Give feedback immediately after each embedded response and permit a retry. Recor
 
 | Item | Answer | Objective(s) | Rationale |
 |---|---|---|---|
-| POST-01 | B | The current `ST001521` factor table has 150 participant-timepoint rows and 10 pooled `QPP...` QC rows. |
-| POST-02 | B | Preserve plasma and serum and limit the broad blood-derived category to discovery. |
-| POST-03 | B | FARMM Day 9 and 3-hour post-exercise recovery have different anchors and protocol meaning. |
-| POST-04 | B | Study-specific population, matrix, lab, platform, time, and protocol differences confound a direct contrast. |
-| POST-05 | B | Isotope/internal-standard roles must be preserved and excluded from biological overlap. |
-| POST-06 | B | Preserve feature-level provenance; a set collapse is distinct from a quantitative feature merge. |
-| POST-07 | B | The audited flow is 153 raw nonblank exact strings and 145 after eight nonbiological `ST003348` exclusions. |
-| POST-08 | A | Quantitative exploration is fitted within study; the uncalibrated raw matrices are not stacked. |
-| POST-09 | B | Cache use requires failure evidence, timestamp, integrity verification, and a visible source flag. |
-| POST-10 | C | MoTrPAC access is dataset- and release-dependent and must be checked. |
-| POST-11 | B | NPH participant-level analysis belongs in the Researcher Workbench and output follows current policy. |
-| POST-12 | C | Unexpected row multiplication requires a join-cardinality audit before analysis. |
+| POST-01 | B | LO1 | The current `ST001521` factor table has 150 participant-timepoint rows and 10 pooled `QPP...` QC rows. |
+| POST-02 | B | LO1, LO2 | Preserve plasma and serum and limit the broad blood-derived category to discovery. |
+| POST-03 | B | LO1, LO2 | FARMM Day 9 and 3-hour post-exercise recovery have different anchors and protocol meaning. |
+| POST-04 | B | LO2 | Study-specific population, matrix, lab, platform, time, and protocol differences confound a direct contrast. |
+| POST-05 | B | LO3 | Isotope/internal-standard roles must be preserved and excluded from biological overlap. |
+| POST-06 | B | LO3 | Preserve feature-level provenance; a set collapse is distinct from a quantitative feature merge. |
+| POST-07 | B | LO3, LO4 | The audited flow is 153 raw nonblank exact strings and 145 after eight nonbiological `ST003348` exclusions. |
+| POST-08 | A | LO2, LO4 | Quantitative exploration is fitted within study; the uncalibrated raw matrices are not stacked. |
+| POST-09 | B | LO4 | Cache use requires failure evidence, timestamp, integrity verification, and a visible source flag. |
+| POST-10 | C | LO5 | MoTrPAC access is dataset- and release-dependent and must be checked. |
+| POST-11 | B | LO5 | NPH participant-level analysis belongs in the Researcher Workbench and output follows current policy. |
+| POST-12 | C | LO3, LO4 | Unexpected row multiplication requires a join-cardinality audit before analysis. |
 
 **Maximum:** 12 points. Suggested mastery is 10/12 plus satisfactory performance artifacts. A learner who misses both items in an objective domain should review that lesson and complete a parallel retry.
 
@@ -126,7 +126,7 @@ Use the detailed instructor worksheet for row-level evidence. Require these conc
 
 ### Model exclusion statement
 
-> We will not combine peak-area values across the studies because matrix, laboratory, chromatography, feature coverage, preprocessing, population, time, and intervention context differ. We can still compare reviewed RefMet-name coverage using provenance-preserving study-specific sets and explicit eligibility rules.
+> We will not combine peak-area values across the studies because matrix, laboratory, chromatography, feature coverage, preprocessing, population, time, and intervention context differ. We can still compare reviewed RefMet names by building one documented set for each study and reporting their overlap.
 
 ## Metabolite/metadata crosswalk key points
 

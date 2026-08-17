@@ -17,7 +17,7 @@ The exact RefMet-name intersection is 153 unique labels. An independent source-n
 
 ## Proposal criteria audit
 
-The revised proposal specifies the selection criteria on page 4 of [metabo_diet_proposal_MW_revised.pdf](../../tmp/cfde_career_talk_deck/proposal-mw-render/metabo_diet_proposal_MW_revised.pdf): human subjects; plasma or serum; LC-MS or comparable; one diet and one exercise anchor; a real longitudinal/timepoint problem; public release with factor/specimen metadata; and enough metabolite overlap.
+Page 4 of the revised proposal specifies these selection criteria: human subjects; plasma or serum; LC-MS or comparable; one diet and one exercise anchor; a real longitudinal/timepoint problem; public release with factor/specimen metadata; and enough metabolite overlap. The proposal source is retained by the project owner outside this release repository.
 
 | Criterion | ST001521 | ST003348 | Pair-level judgment |
 |---|---|---|---|

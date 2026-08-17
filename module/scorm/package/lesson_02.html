@@ -74,7 +74,7 @@
 </tr>
 </tbody></table></div>
 <blockquote>
-<p><strong>Notebook connection - <code>NB-L2</code>.</strong> After reading the comparison framework, open <strong>Lesson 2 - Comparing study design and phenotype capture (<code>NB-L2</code>)</strong> in <code>module/notebooks/metabo_diet_harmonization.ipynb</code>. Run the ten-endpoint source audit, endpoint-size table, biological-sample table, and timepoint checks in order. Use the learner-edit cell to inspect each study separately, then transfer the evidence to the cohort-comparison worksheet before continuing to <code>NB-L3</code>.</p>
+<p><strong>In the notebook (NB-L2):</strong> Run the source, endpoint-size, biological-sample, and timepoint cells in order. Use the learner-edit cell to inspect one study, then enter the results in Sections 3, 5, 6, and 9 of the cohort-comparison worksheet.</p>
 </blockquote>
 <h2>1. Begin with the question, not the column name</h2>
 <p>A variable is comparable only relative to a purpose. Age in years may be sufficiently comparable for a descriptive cohort table but insufficient if one study reports exact age and another reports broad, top-coded categories. A <code>post</code> sample may be suitable for identifying that both studies collected after an intervention but unsuitable for modeling a common acute-response time.</p>
@@ -215,7 +215,7 @@
 <td>No cross-study quantitative pooling</td>
 </tr>
 </tbody></table></div>
-<p>Notice that a useful table can contain <code>not yet assessable</code>. The worksheet is an evidence ledger, not a form that must be completely filled.</p>
+<p>It is fine to mark a row <code>not yet assessable</code> when the source does not provide enough information.</p>
 <h2>5. Consortium-scale design references</h2>
 <h3>MoTrPAC</h3>
 <p>MoTrPAC&#x27;s published human protocol describes a multicenter effort designed to characterize molecular responses to acute exercise and exercise training. It includes structured exercise phenotyping and collection of blood, skeletal muscle, and adipose tissue in defined protocol contexts. Use the protocol as an example of how modality, dose, tissue, and time are specified. Do not copy its timepoint labels onto <code>EXERCISE_ACCESSION</code>; retrieve the actual MW study protocol and factors.</p>
@@ -226,6 +226,7 @@
 <p>The diagram has two vertical lanes. The diet lane moves from diet assignment to adherence and feeding state, then to specimen collection. The exercise lane moves from exercise modality and dose to exertion and recovery, then to specimen collection. Both lanes feed into a shared assay box, but each arrow carries its own time, specimen, and protocol tags. A dashed line between the lanes is labeled <code>compare metadata</code>; there is no arrow labeled <code>pool values</code>.</p>
 <h2>6. Hands-on activity: complete the cohort-comparison worksheet</h2>
 <p>Use <code>module/templates/cohort_comparison_worksheet_learner.md</code>.</p>
+<p>For the timed course, complete these eight rows in the comparability matrix: species, specific matrix, timepoint, participant count, repeated-measures structure, phenotype anchor, units/scale, and platform/mode. Use the larger worksheet as a project extension after the lesson. A first-time learner is not expected to fill every blank table cell in 30 minutes.</p>
 <h3>Step 1 - Resolve and document</h3>
 <p>For <code>DIET_ACCESSION = ST001521</code> and <code>EXERCISE_ACCESSION = ST003348</code>, record:</p>
 <ul>
@@ -268,7 +269,7 @@
 <li>Assay identifiers and units are recorded.</li>
 <li>At least one field is intentionally not harmonized.</li>
 </ul>
-<h2>7. Interpretation guardrails</h2>
+<h2>7. Comparison rules</h2>
 <ul>
 <li>A shared label is a hypothesis of equivalence, not proof.</li>
 <li>Missing metadata does not mean the protocols were identical.</li>
@@ -294,8 +295,8 @@
 <p>B. It lacks an intervention anchor, offset, and physiological state.</p>
 <p>C. It cannot appear in mwTab.</p>
 <p>D. It always means immediate recovery.</p>
-<h2>Take-home message</h2>
-<p>Study comparison is a purpose-specific evidence exercise. Define the intended comparison, extract each record on its own terms, preserve protocol meaning, and classify compatibility with reasons. Only then should analyte-level harmonization begin.</p>
+<h2>Before you start the crosswalk</h2>
+<p>Decide what you want to compare first. Then extract each record on its own terms and explain why each field is or is not suitable for that purpose. Lesson 3 applies those decisions to the metabolite crosswalk.</p>
 <h2>Primary sources and first-party documentation</h2>
 <ol>
 <li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/tutorials.php">mwTab file specification, version 1.7, and tutorials</a>. Accessed August 10, 2026.</li>

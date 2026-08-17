@@ -2,30 +2,77 @@
 
 **Title:** Metabo-Diet: Harmonizing Dietary and Exercise Phenotypes with Metabolomics Across CFDE Resources
 
-This directory is the complete source package for the 2.5-hour, intermediate, asynchronous training module proposed to the Common Fund Data Ecosystem Training Center.
+This directory contains the materials for a 2.5-hour, self-paced CFDE Training Center module. The scientific content is intermediate, but the setup below is written for someone using Jupyter for the first time. If Python, metabolomics, or PCA is new to you, allow an extra 30 to 60 minutes.
 
-## Start here: local environment
+## Start here
 
-The primary artifact is `notebooks/metabo_diet_harmonization.ipynb`. Keep the full `module/` tree intact because the notebook imports `scripts/metabo_diet_pipeline.py` and reads the versioned cache under `data/raw/`.
+1. Download or clone the repository. If you downloaded a ZIP, extract it before opening any files.
+2. Open `support/metabo_diet_learner_guide.pdf` and keep the learner worksheets nearby.
+3. Complete the Python setup below before the pretest. R is optional.
+4. Work through Lessons 1 to 5 in order, moving between the guide and the matching `NB-L1` through `NB-L5` notebook sections.
 
-Install Python 3.11 or 3.12, then from the directory containing `module/` run:
+Start the code work in `notebooks/metabo_diet_harmonization.ipynb`. Keep the full `module/` folder together because the notebook uses the scripts and cached public data inside it.
+
+The same setup, with a one-minute Jupyter orientation, appears in `content/getting_started.md` and at the front of the learner guide.
+
+## First-time Python setup
+
+A terminal is the text-based app used to run the commands below. On macOS, open **Terminal**; on Windows, open **PowerShell**. Open it in the folder that contains `module/`. Type each command without copying a leading prompt symbol such as `$` or `>`.
+
+Install Python 3.12, then confirm the command works:
+
+```bash
+python3.12 --version
+```
+
+The expected result begins with `Python 3.12`. Python 3.11 is also supported; if that is the version you installed, replace `python3.12` with `python3.11` in the macOS/Linux commands.
+
+### macOS or Linux
 
 ```bash
 python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r module/notebooks/requirements-dev.txt
-jupyter lab module/notebooks/metabo_diet_harmonization.ipynb
+./.venv/bin/python -m pip install --upgrade pip
+./.venv/bin/python -m pip install -r module/notebooks/requirements-dev.txt
+./.venv/bin/python -m jupyter lab module/notebooks/metabo_diet_harmonization.ipynb
 ```
 
-On Windows PowerShell, activate with `.venv\Scripts\Activate.ps1`. The notebook's `NB-SETUP` section contains the complete Windows/macOS/Linux sequence and a package diagnostic.
+### Windows PowerShell
 
-For the optional R companion, install R 4.3 or later and run:
+```powershell
+py -3.12 --version
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r module\notebooks\requirements-dev.txt
+.\.venv\Scripts\python.exe -m jupyter lab module\notebooks\metabo_diet_harmonization.ipynb
+```
+
+Jupyter should open in a browser. If it asks for a kernel, choose **Python 3 (Metabo-Diet)**. Click a cell and press **Shift+Enter** to run it. A number such as `[1]` means the cell finished; `[*]` means it is still running. Stop if you see a red traceback and use the troubleshooting notes below before continuing.
+
+Do not open the notebook while it is still inside a ZIP archive. Do not move it away from the `module/` folder.
+
+## Optional R companion
+
+You can complete the core module without R. If you want the R version, install R 4.3 or later and Pandoc (RStudio includes Pandoc), then run:
 
 ```bash
 Rscript module/notebooks/install_r_packages.R
 Rscript -e 'rmarkdown::render("module/notebooks/metabo_diet_R_appendix.Rmd")'
 ```
+
+Open the generated `module/notebooks/metabo_diet_R_appendix.html` in a browser. The R file follows the same five lessons, but the Python notebook remains the main activity.
+
+The default installer supports the cached path. For the optional live R path, run `Rscript module/notebooks/install_r_packages.R --live` before setting `METABO_DIET_LIVE=1`.
+
+## Common setup problems
+
+| What you see | What to do |
+|---|---|
+| `command not found: python3.12` | Install Python 3.12, or use `python3.11` if `python3.11 --version` reports a supported version. |
+| PowerShell blocks `Activate.ps1` | Use the direct `.venv\Scripts\python.exe` commands above; activation is not required. |
+| `No module named ...` | Reinstall `requirements-dev.txt` with the direct `.venv` Python path and restart the Jupyter kernel. |
+| Jupyter opens the wrong kernel | Choose **Kernel > Change Kernel > Python 3 (Metabo-Diet)**. |
+| A notebook check fails | Read the message, keep the output, and stop. Do not delete rows or change expected counts just to make the check pass. |
+| Live retrieval fails | Leave live mode off and use the included validated cache. |
 
 ## Learner pathway
 
@@ -45,7 +92,6 @@ The remaining time is allocated to the pre-test, transitions, embedded checks, a
 - `notebooks/` - guided Python notebook and R appendix
 - `data/` - cached public data, derived analysis-ready tables, and provenance
 - `research/` - study-selection rationale and source audit
-- `site/` - accessible learner-facing course shell
 - `support/` - export-ready Word and PDF learner materials
 - `qa/` - scientific, instructional, technical, accessibility, and packaging checks
 - `scorm/` - SCORM-compatible package output
@@ -70,10 +116,12 @@ Original educational materials are released under [CC BY 4.0](../LICENSE). Cache
 The downloadable `metabo_diet_analysis_bundle.zip` preserves this `module/` tree so the cached path is runnable without network access. From the directory containing `module/`:
 
 ```bash
-python -m venv .venv
-.venv/bin/pip install -r module/notebooks/requirements-dev.txt
-.venv/bin/python module/scripts/execute_notebook.py
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r module/notebooks/requirements-dev.txt
+.venv/bin/python module/scripts/execute_notebook.py --output metabo_diet_harmonization_executed.ipynb
 ```
+
+This last command is a noninteractive verification run. It creates a separate executed notebook and does not replace the learner activity in Jupyter.
 
 To render the R companion from the validated cache:
 

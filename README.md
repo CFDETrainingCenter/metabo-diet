@@ -2,9 +2,13 @@
 
 Metabo-Diet: Harmonizing Dietary and Exercise Phenotypes with Metabolomics Across CFDE Resources.
 
-Start with the [module guide](module/README.md), then open the primary notebook at
-`module/notebooks/metabo_diet_harmonization.ipynb`. The five notebook sections
-use the same `NB-L1` through `NB-L5` keys as the learner guide.
+## Where to start
+
+- To take the course, open `module/support/metabo_diet_learner_guide.pdf` and follow its first-time setup page.
+- To run the code, use the step-by-step instructions in the [module guide](module/README.md). Keep the entire `module/` folder together.
+- The main notebook is `module/notebooks/metabo_diet_harmonization.ipynb`. Its `NB-L1` through `NB-L5` headings match the five lessons in the learner guide.
+
+The Python notebook is the required coding activity. The R companion is optional. Both use the included public-data cache by default, so live API access is not required after packages are installed.
 
 ## License
 

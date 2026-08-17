@@ -1,4 +1,4 @@
-"""Execute the Metabo-Diet notebook top-to-bottom and save its outputs."""
+"""Execute the Metabo-Diet notebook top-to-bottom and save a separate test copy."""
 
 from __future__ import annotations
 
@@ -20,7 +20,10 @@ def main() -> None:
         "--output",
         type=Path,
         default=None,
-        help="Executed notebook path; defaults to overwriting --input.",
+        help=(
+            "Executed notebook path; defaults to <input_stem>_executed.ipynb "
+            "beside the input and never overwrites the source by default."
+        ),
     )
     parser.add_argument(
         "--working-directory",
@@ -30,8 +33,14 @@ def main() -> None:
     )
     args = parser.parse_args()
     input_path = args.input.resolve()
-    output_path = (args.output or args.input).resolve()
+    default_output = input_path.with_name(input_path.stem + "_executed.ipynb")
+    output_path = (args.output.resolve() if args.output else default_output)
     working_directory = args.working_directory.resolve()
+
+    if output_path == input_path:
+        raise ValueError(
+            "Refusing to overwrite the source notebook. Choose a different --output path."
+        )
 
     notebook = nbformat.read(input_path, as_version=4)
     client = NotebookClient(
