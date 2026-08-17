@@ -19,17 +19,12 @@ The same setup, with a one-minute Jupyter orientation, appears in `content/getti
 
 A terminal is the text-based app used to run the commands below. On macOS, open **Terminal**; on Windows, open **PowerShell**. Open it in the folder that contains `module/`. Type each command without copying a leading prompt symbol such as `$` or `>`.
 
-Install Python 3.12, then confirm the command works:
-
-```bash
-python3.12 --version
-```
-
-The expected result begins with `Python 3.12`. Python 3.11 is also supported; if that is the version you installed, replace `python3.12` with `python3.11` in the macOS/Linux commands.
+Install Python 3.12, then use the version-check command for your system below. The result should begin with `Python 3.12`. Python 3.11 is also supported; substitute 3.11 only if its version check reports a supported version.
 
 ### macOS or Linux
 
 ```bash
+python3.12 --version
 python3.12 -m venv .venv
 ./.venv/bin/python -m pip install --upgrade pip
 ./.venv/bin/python -m pip install -r module/notebooks/requirements-dev.txt
@@ -46,7 +41,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m jupyter lab module\notebooks\metabo_diet_harmonization.ipynb
 ```
 
-Jupyter should open in a browser. If it asks for a kernel, choose **Python 3 (Metabo-Diet)**. Click a cell and press **Shift+Enter** to run it. A number such as `[1]` means the cell finished; `[*]` means it is still running. Stop if you see a red traceback and use the troubleshooting notes below before continuing.
+Jupyter should open in a browser. If it asks for a kernel, choose **Python 3 (ipykernel)** from the `.venv` environment. Click a cell and press **Shift+Enter** to run it. A number such as `[1]` means the cell finished; `[*]` means it is still running. The first diagnostic confirms that a virtual environment is active; stop if that check fails or if you see a red traceback.
 
 Do not open the notebook while it is still inside a ZIP archive. Do not move it away from the `module/` folder.
 
@@ -70,7 +65,7 @@ The default installer supports the cached path. For the optional live R path, ru
 | `command not found: python3.12` | Install Python 3.12, or use `python3.11` if `python3.11 --version` reports a supported version. |
 | PowerShell blocks `Activate.ps1` | Use the direct `.venv\Scripts\python.exe` commands above; activation is not required. |
 | `No module named ...` | Reinstall `requirements-dev.txt` with the direct `.venv` Python path and restart the Jupyter kernel. |
-| Jupyter opens the wrong kernel | Choose **Kernel > Change Kernel > Python 3 (Metabo-Diet)**. |
+| Jupyter opens the wrong kernel | Choose **Kernel > Change Kernel > Python 3 (ipykernel)** after launching Jupyter with the direct `.venv` command above. The first diagnostic must report `Virtual environment: active`. |
 | A notebook check fails | Read the message, keep the output, and stop. Do not delete rows or change expected counts just to make the check pass. |
 | Live retrieval fails | Leave live mode off and use the included validated cache. |
 

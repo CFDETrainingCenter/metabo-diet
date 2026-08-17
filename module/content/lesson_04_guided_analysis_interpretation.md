@@ -56,7 +56,7 @@ The diet study uses plasma; the exercise study uses serum. Their time axes also 
 
 ## 2. Open the notebook safely
 
-Open `module/notebooks/metabo_diet_harmonization.ipynb` in a fresh **Python 3 (Metabo-Diet)** kernel. Complete `NB-SETUP` and run `NB-L1` through `NB-L3` before starting this lesson; the Lesson 4 cells depend on those validated objects. Then follow this order:
+Open `module/notebooks/metabo_diet_harmonization.ipynb` in the **Python 3 (ipykernel)** kernel launched from `.venv`. Complete `NB-SETUP` and run `NB-L1` through `NB-L3` before starting this lesson; the Lesson 4 cells depend on those validated objects. Then follow this order:
 
 1. Run `NB-L4-CLASS` and confirm that the class counts sum to 145.
 2. Run `NB-L4-PCA-DIET` and record its sample/feature counts and explained variance.

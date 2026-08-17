@@ -591,6 +591,12 @@ def add_markdown(
             paragraph.paragraph_format.space_before = Pt(0)
             paragraph.paragraph_format.space_after = Pt(0)
             paragraph.paragraph_format.line_spacing = 1.0
+            paragraph.paragraph_format.keep_together = True
+            next_is_closing_fence = (
+                index + 1 < len(lines)
+                and lines[index + 1].strip().startswith(chr(96) * 3)
+            )
+            paragraph.paragraph_format.keep_with_next = not next_is_closing_fence
             set_paragraph_shading(paragraph, "F3F5F7", "B8C3CC")
             run = paragraph.add_run(clean_text(raw) if raw else " ")
             set_run_font(run, size=8.1, color="24313B", name="Consolas")
@@ -1458,6 +1464,8 @@ def build_analysis_bundle(output: Path) -> None:
         MODULE / "scripts" / "audit_live_mw.py",
         MODULE / "scripts" / "metabo_diet_R_normalization.R",
         MODULE / "scripts" / "test_R_endpoint_normalization.R",
+        MODULE / "research" / "study_selection.md",
+        MODULE / "qa" / "validate_module.py",
         MODULE / "qa" / "local_pilot_protocol.md",
         MODULE / "qa" / "live_mw_audit.json",
         SUPPORT / "metabo_diet_learner_guide.pdf",
@@ -1535,6 +1543,12 @@ source notebook:
 ./.venv/bin/python module/scripts/execute_notebook.py --output metabo_diet_smoke_test.ipynb
 ```
 
+Windows PowerShell:
+
+```powershell
+.\\.venv\\Scripts\\python.exe module\\scripts\\execute_notebook.py --output metabo_diet_smoke_test.ipynb
+```
+
 The notebook imports `module/scripts/metabo_diet_pipeline.py`; do not separate
 the notebook from the rest of the module tree. See `module/data/provenance.json`
 and `module/ATTRIBUTION.md` for retrieval records, checksums, and licensing.
@@ -1580,6 +1594,8 @@ uncalibrated plasma and serum peak-area matrices.
             "module/scripts/audit_live_mw.py",
             "module/scripts/metabo_diet_R_normalization.R",
             "module/scripts/test_R_endpoint_normalization.R",
+            "module/research/study_selection.md",
+            "module/qa/validate_module.py",
             "module/qa/local_pilot_protocol.md",
             "module/data/provenance.json",
             "module/qa/live_mw_audit.json",

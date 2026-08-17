@@ -178,6 +178,8 @@ CSS = """
   --line: #c8d3d8;
   --success: #176b44;
   --danger: #9b2c2c;
+  --focus-dark: #6b4700;
+  --focus-light: #ffffff;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -192,8 +194,9 @@ body {
 a { color: #164f7a; text-underline-offset: 0.16em; }
 a:hover { color: #0b3554; }
 a:focus-visible, button:focus-visible, input:focus-visible, [tabindex="0"]:focus-visible {
-  outline: 3px solid #d49416;
-  outline-offset: 3px;
+  outline: 3px solid var(--focus-light);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--focus-dark);
 }
 .skip-link {
   position: absolute;
@@ -836,6 +839,23 @@ def sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def relative_luminance(hex_color: str) -> float:
+    """Return WCAG relative luminance for a six-digit hexadecimal color."""
+    channels = [int(hex_color[index : index + 2], 16) / 255 for index in (1, 3, 5)]
+    linear = [
+        value / 12.92 if value <= 0.04045 else ((value + 0.055) / 1.055) ** 2.4
+        for value in channels
+    ]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def contrast_ratio(first: str, second: str) -> float:
+    lighter, darker = sorted(
+        (relative_luminance(first), relative_luminance(second)), reverse=True
+    )
+    return (lighter + 0.05) / (darker + 0.05)
+
+
 def validate_archive(zip_path: Path) -> dict:
     failures: list[str] = []
     with zipfile.ZipFile(zip_path) as archive:
@@ -890,10 +910,25 @@ def validate_archive(zip_path: Path) -> dict:
         if missing_downloads:
             failures.append("Required learner downloads missing: " + ", ".join(missing_downloads))
         course_js = archive.read("assets/course.js").decode("utf-8")
+        course_css = archive.read("assets/course.css").decode("utf-8")
         required_calls = ["LMSInitialize", "LMSSetValue", "LMSCommit", "LMSFinish", "cmi.core.score.raw", "cmi.core.lesson_status"]
         missing_calls = [token for token in required_calls if token not in course_js]
         if missing_calls:
             failures.append("LMS calls missing: " + ", ".join(missing_calls))
+        focus_contrast = contrast_ratio("#6b4700", "#ffffff")
+        focus_tokens = (
+            "--focus-dark: #6b4700;",
+            "--focus-light: #ffffff;",
+            "outline: 3px solid var(--focus-light);",
+            "box-shadow: 0 0 0 6px var(--focus-dark);",
+        )
+        focus_indicator_passed = (
+            focus_contrast >= 3 and all(token in course_css for token in focus_tokens)
+        )
+        if not focus_indicator_passed:
+            failures.append(
+                "Focus indicator must use the tested dual-color ring with at least 3:1 contrast."
+            )
         accessibility_checks = {}
         for page in sorted(required_pages):
             if not page.endswith(".html") or page not in name_set:
@@ -918,6 +953,8 @@ def validate_archive(zip_path: Path) -> dict:
             "required_downloads_present": not missing_downloads,
             "crc_passed": crc_failure is None,
             "lms_calls_present": not missing_calls,
+            "focus_indicator_passed": focus_indicator_passed,
+            "focus_dark_to_white_contrast_ratio": round(focus_contrast, 2),
             "accessibility_shell_checks": accessibility_checks,
             "sha256": sha256(zip_path),
             "bytes": zip_path.stat().st_size,

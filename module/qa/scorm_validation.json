@@ -7,6 +7,8 @@
   "required_downloads_present": true,
   "crc_passed": true,
   "lms_calls_present": true,
+  "focus_indicator_passed": true,
+  "focus_dark_to_white_contrast_ratio": 8.31,
   "accessibility_shell_checks": {
     "index.html": {
       "lang": true,
@@ -65,6 +67,6 @@
       "viewport": true
     }
   },
-  "sha256": "01edf0651daac0cb7a4b4c718aec432b28aebe83ba269d1725eb8e4d4ad2dd36",
-  "bytes": 5596902
+  "sha256": "2c92b9107ec296af5aaf4b3c12de81fc7b0991ee2295f0e1a1de395f40de7549",
+  "bytes": 5613325
 }

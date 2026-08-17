@@ -62,5 +62,5 @@ This checklist translates the revised July 2026 proposal into verifiable deliver
 - [x] Automated clean-environment Python execution and cached-mode R validation are recorded in `clean_environment_report.md`.
 - [x] An English Creative Commons Attribution 4.0 International license notice is included in the repository and release packages, with third-party data excluded from the grant.
 - [ ] Two non-author research assistants complete the local pilot and sign the record in `local_pilot_protocol.md`.
-- [ ] A repository administrator confirms public visibility; a public license does not by itself change GitHub visibility.
+- [ ] A repository administrator merges or promotes `sam_work` into the public default branch and confirms public visibility; a public license does not by itself publish the release.
 - [ ] The team reviews the Friday delivery and sends final comments/payment closure by email.

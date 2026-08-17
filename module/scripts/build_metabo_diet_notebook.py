@@ -44,7 +44,7 @@ def code(source: str, *, cell_id: str | None = None, tags: tuple[str, ...] = ())
 def build() -> None:
     notebook = nbformat.read(NOTEBOOK_PATH, as_version=4)
     notebook.metadata["kernelspec"] = {
-        "display_name": "Python 3 (Metabo-Diet)",
+        "display_name": "Python 3 (ipykernel)",
         "language": "python",
         "name": "python3",
     }
@@ -101,7 +101,7 @@ The exact filename is `module/notebooks/metabo_diet_harmonization.ipynb`. Headin
 <a id="nb-setup"></a>
 ## Environment setup (`NB-SETUP`) - complete before Lesson 1
 
-Keep the extracted `module/` tree intact. Open a terminal in the directory that contains `module/`. If you have not used a terminal or Jupyter before, read `module/content/getting_started.md` or the **Before you begin** section of the learner guide first.
+Keep the `module/` tree intact. Open a terminal in the directory that contains `module/`. If you have not used a terminal or Jupyter before, read `module/content/getting_started.md` or the **Before you begin** section of the learner guide first.
 
 ### 1. Install the runtimes once
 
@@ -131,7 +131,7 @@ py -3.12 -m venv .venv
 .\\.venv\\Scripts\\python.exe -m jupyter lab module\\notebooks\\metabo_diet_harmonization.ipynb
 ```
 
-Python 3.11 is also supported; substitute the 3.11 command if its version check reports Python 3.11. Select the **Python 3 (Metabo-Diet)** kernel if prompted.
+Python 3.11 is also supported; substitute the 3.11 command if its version check reports Python 3.11. If prompted, choose **Python 3 (ipykernel)** from `.venv`. The diagnostic below confirms that a virtual environment is active.
 
 ### 3. Use Jupyter
 
@@ -160,7 +160,7 @@ The cached path needs no network after package installation. For optional live R
             """
 ### Run now - verify Python and the complete package set
 
-Run this diagnostic before importing the analysis libraries. **Stop** if it reports a missing package or an unsupported Python version. Reinstall `requirements-dev.txt` with the `.venv` Python command from setup, restart the kernel, and run this cell again.
+Run this diagnostic before importing the analysis libraries. **Stop** if it reports an inactive virtual environment, a missing package, or an unsupported Python version. Relaunch Jupyter with the direct `.venv` command from setup, reinstall `requirements-dev.txt` if needed, restart the kernel, and run this cell again.
 """,
             cell_id="nb-setup-action",
         ),
@@ -189,6 +189,12 @@ if sys.version_info[:2] not in SUPPORTED_PYTHON:
         f"Use Python 3.11 or 3.12; this kernel is {platform.python_version()}."
     )
 
+if sys.prefix == sys.base_prefix:
+    raise RuntimeError(
+        "Virtual environment is not active. Relaunch Jupyter with the direct "
+        ".venv Python command from setup."
+    )
+
 installed = {}
 missing = []
 for distribution in REQUIRED_DISTRIBUTIONS:
@@ -204,6 +210,7 @@ if missing:
     )
 
 print(f"Python {platform.python_version()} - environment check passed")
+print("Virtual environment: active")
 for distribution, installed_version in installed.items():
     print(f"  {distribution}=={installed_version}")
 """,
@@ -329,7 +336,7 @@ In Section 1 of the cohort-comparison worksheet, write one sentence explaining w
 
 ### Before you start
 
-Read Lesson 2 in the learner guide and open `cohort_comparison_worksheet.md`. In this section:
+Read Lesson 2 in the learner guide and open `module/templates/cohort_comparison_worksheet_learner.md`. If you extracted the templates ZIP separately, use its matching `worksheets/cohort_comparison_worksheet.md` copy. In this section:
 
 1. Load all five split endpoints for each study.
 2. Verify endpoint and analysis counts.
@@ -538,7 +545,7 @@ Continue when the endpoint checks pass and Sections 3, 5, 6, and 9 of the cohort
 
 ### Before you start
 
-Read Lesson 3 in the learner guide and open `metabolite_metadata_crosswalk.md`. In this section:
+Read Lesson 3 in the learner guide and open `module/templates/metabolite_metadata_crosswalk_learner.md`. If you extracted the templates ZIP separately, use its matching `worksheets/metabolite_metadata_crosswalk.md` copy. In this section:
 
 1. Preserve source names and analysis identifiers.
 2. Build the raw exact-name overlap.
@@ -1020,7 +1027,7 @@ Continue when both PCAs use separate study/analysis matrices, the expected sampl
 
 ### Before you start
 
-Read Lesson 5 in the learner guide and open `access_tier_transfer_checklist.md`. This section does not retrieve governed data. Instead:
+Read Lesson 5 in the learner guide and open `module/templates/access_tier_transfer_checklist_learner.md`. If you extracted the templates ZIP separately, use its matching `worksheets/access_tier_transfer_checklist.md` copy. This section does not retrieve governed data. Instead:
 
 1. Review which inputs came from live endpoints versus the validated public cache.
 2. Choose a target dataset/release and intended action.

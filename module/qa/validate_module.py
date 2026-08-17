@@ -211,6 +211,12 @@ def main() -> int:
         code_cells = [cell for cell in cells if cell.get("cell_type") == "code"]
         ok(len(cells) >= 20, "notebook has a substantial tutorial sequence", failures)
         ok(all(cell.get("execution_count") is not None for cell in code_cells if "raise NotImplementedError" not in "".join(cell.get("source", []))), "notebook code cells have saved execution evidence", failures)
+        execution_counts = [cell.get("execution_count") for cell in code_cells]
+        ok(
+            execution_counts == list(range(1, len(code_cells) + 1)),
+            "notebook code cells have sequential saved execution counts",
+            failures,
+        )
         error_outputs = [
             output
             for cell in code_cells
@@ -246,8 +252,25 @@ def main() -> int:
             "Windows PowerShell",
             "install_r_packages.R",
             "jupyter lab",
+            "Virtual environment: active",
+            "module/templates/cohort_comparison_worksheet_learner.md",
+            "module/templates/metabolite_metadata_crosswalk_learner.md",
+            "module/templates/access_tier_transfer_checklist_learner.md",
         )
         ok(all(token in all_source for token in setup_tokens), "notebook contains complete Python/R setup instructions", failures)
+        kernelspec = notebook.get("metadata", {}).get("kernelspec", {})
+        ok(
+            kernelspec.get("display_name") == "Python 3 (ipykernel)",
+            "notebook names the kernel that a clean virtual environment provides",
+            failures,
+        )
+        serialized_notebook = json.dumps(notebook)
+        private_path_tokens = ("/Users/", "/private/", "\\\\Users\\\\")
+        ok(
+            not any(token in serialized_notebook for token in private_path_tokens),
+            "notebook contains no saved private user or temporary paths",
+            failures,
+        )
         learner_edit_cells = [
             cell
             for cell in code_cells

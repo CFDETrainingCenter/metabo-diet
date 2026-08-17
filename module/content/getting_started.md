@@ -4,15 +4,19 @@ The scientific material is written for learners who can read a data table and a 
 
 The 153-minute course estimate begins after software setup. If Python, metabolomics, or principal component analysis (PCA) is new to you, allow an additional 30 to 60 minutes and keep the glossary open.
 
-## Files you will use
+## Choose your starting point
 
-Keep these files together in one working folder:
+If you received the packaged course, keep these files together in one working folder:
 
 1. `metabo_diet_learner_guide.pdf` - the lessons, pretest, posttest, and worked PCA figures.
 2. `metabo_diet_analysis_bundle.zip` - the Python notebook, R companion, scripts, and public cached data.
 3. `metabo_diet_templates.zip` - editable learner worksheets.
 
-Extract both ZIP files before starting. Do not run the notebook from inside a ZIP. Keep the extracted `module/` folder intact because the notebook uses its `scripts/` and `data/` subfolders.
+Extract both ZIP files before starting. If you are reading this page inside an extracted analysis bundle, that bundle is already extracted; extract only `module/support/metabo_diet_templates.zip`.
+
+If you cloned the repository, use its existing `module/` directory. Open the guide in `module/support/`, use the learner worksheets in `module/templates/`, and do not extract the analysis bundle on top of the clone.
+
+Do not run the notebook from inside a ZIP. Keep the `module/` folder intact because the notebook uses its `scripts/` and `data/` subfolders.
 
 ## Install Python and open Jupyter
 
@@ -40,7 +44,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m jupyter lab module\notebooks\metabo_diet_harmonization.ipynb
 ```
 
-The version check should report Python 3.11 or 3.12. The package installation can take several minutes. Jupyter should then open in a browser. If it asks for a kernel, choose **Python 3 (Metabo-Diet)**.
+The version check should report Python 3.11 or 3.12. The package installation can take several minutes. Jupyter should then open in a browser. If it asks for a kernel, choose **Python 3 (ipykernel)** from the `.venv` environment. The first notebook diagnostic must report `Virtual environment: active`.
 
 ## Jupyter in one minute
 
@@ -57,7 +61,7 @@ The version check should report Python 3.11 or 3.12. The package installation ca
 |---|---|
 | `command not found` or “not recognized” | Confirm Python 3.12 is installed. Try the Python 3.11 command only if its version check reports 3.11. |
 | `No module named ...` | Repeat the package-install command with the `.venv` Python path shown above, then restart the kernel. |
-| Jupyter uses a different Python | Choose **Kernel > Change Kernel > Python 3 (Metabo-Diet)**. |
+| Jupyter uses a different Python | Launch Jupyter with the direct `.venv` command above, choose **Kernel > Change Kernel > Python 3 (ipykernel)**, and confirm that the first diagnostic reports `Virtual environment: active`. |
 | A notebook assertion or count check fails | Read the message and stop. Check the accession, cache, and earlier cells instead of deleting rows or changing the expected value. |
 | A live request fails | Use the default validated cache. Live access is optional. |
 

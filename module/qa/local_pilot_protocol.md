@@ -21,19 +21,31 @@ Do not record credentials, participant data, signed URLs, or governed output in 
 
 ## Test A - clean Python setup and cached execution
 
-From a new directory:
+From a new directory, use the virtual environment's Python directly. Activation is not required.
+
+macOS or Linux:
 
 ```bash
 unzip metabo_diet_analysis_bundle.zip
 python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install -r module/notebooks/requirements-dev.txt
-METABO_DIET_LIVE=0 python module/scripts/execute_notebook.py --output executed_test.ipynb
-python module/qa/validate_module.py
+./.venv/bin/python -m pip install --upgrade pip
+./.venv/bin/python -m pip install -r module/notebooks/requirements-dev.txt
+METABO_DIET_LIVE=0 ./.venv/bin/python module/scripts/execute_notebook.py --output executed_test.ipynb
+./.venv/bin/python module/qa/validate_module.py
 ```
 
-Windows PowerShell uses `.venv\Scripts\Activate.ps1`, `$env:METABO_DIET_LIVE = "0"`, and backslashes in paths.
+Windows PowerShell:
+
+```powershell
+Expand-Archive -Path .\metabo_diet_analysis_bundle.zip -DestinationPath .\metabo_diet_pilot
+Set-Location .\metabo_diet_pilot
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r module\notebooks\requirements-dev.txt
+$env:METABO_DIET_LIVE = "0"
+.\.venv\Scripts\python.exe module\scripts\execute_notebook.py --output executed_test.ipynb
+.\.venv\Scripts\python.exe module\qa\validate_module.py
+```
 
 Acceptance criteria:
 
@@ -63,7 +75,7 @@ Acceptance criteria:
 
 ```bash
 Rscript module/notebooks/install_r_packages.R
-METABO_DIET_LIVE=0 Rscript module/scripts/test_R_endpoint_normalization.R
+Rscript module/scripts/test_R_endpoint_normalization.R
 Rscript -e 'rmarkdown::render("module/notebooks/metabo_diet_R_appendix.Rmd")'
 ```
 

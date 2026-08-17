@@ -436,8 +436,10 @@ def audit_analysis_zip(
         "module/scripts/audit_live_mw.py",
         "module/scripts/metabo_diet_R_normalization.R",
         "module/scripts/test_R_endpoint_normalization.R",
+        "module/research/study_selection.md",
         "module/data/README.md",
         "module/data/provenance.json",
+        "module/qa/validate_module.py",
         "module/qa/live_mw_audit.json",
         "module/qa/local_pilot_protocol.md",
         "module/data/raw/ST001521_data.json",
@@ -526,6 +528,18 @@ def audit_analysis_zip(
                 text=True,
                 timeout=1200,
             )
+            validator_result = subprocess.run(
+                [
+                    python_executable,
+                    str(destination / "module" / "qa" / "validate_module.py"),
+                ],
+                cwd=destination,
+                env=environment,
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=300,
+            )
             output_created = executed_notebook.is_file()
             rerun = (
                 inspect_notebook_bytes(executed_notebook.read_bytes())
@@ -540,6 +554,8 @@ def audit_analysis_zip(
             )
             normalized_stdout = result.stdout
             normalized_stderr = result.stderr
+            normalized_validator_stdout = validator_result.stdout
+            normalized_validator_stderr = validator_result.stderr
             # macOS may expose the same temporary directory through both
             # /var/... and /private/var/...; remove either spelling from QA evidence.
             temporary_paths = sorted(
@@ -552,11 +568,24 @@ def audit_analysis_zip(
                 normalized_stderr = normalized_stderr.replace(
                     temporary_path, "<temporary-directory>"
                 )
+                normalized_validator_stdout = normalized_validator_stdout.replace(
+                    temporary_path, "<temporary-directory>"
+                )
+                normalized_validator_stderr = normalized_validator_stderr.replace(
+                    temporary_path, "<temporary-directory>"
+                )
             normalized_stdout = normalized_stdout.strip()
             normalized_stderr = normalized_stderr.strip()
+            normalized_validator_stdout = normalized_validator_stdout.strip()
+            normalized_validator_stderr = normalized_validator_stderr.strip()
             execution = {
                 "requested": True,
-                "passed": result.returncode == 0 and output_created and rerun["error_outputs"] == 0,
+                "passed": (
+                    result.returncode == 0
+                    and output_created
+                    and rerun["error_outputs"] == 0
+                    and validator_result.returncode == 0
+                ),
                 "python_executable": Path(python_executable).name,
                 "returncode": result.returncode,
                 "elapsed_seconds": round(time.monotonic() - started, 3),
@@ -564,10 +593,27 @@ def audit_analysis_zip(
                 "stderr_tail": normalized_stderr[-2000:],
                 "output_created": output_created,
                 "notebook": rerun,
+                "bundled_validator": {
+                    "returncode": validator_result.returncode,
+                    "stdout_tail": normalized_validator_stdout[-2000:],
+                    "stderr_tail": normalized_validator_stderr[-2000:],
+                },
             }
-        record(checks, failures, "analysis ZIP: clean extraction cached Python execution", execution["passed"], execution)
+        record(
+            checks,
+            failures,
+            "analysis ZIP: clean extraction cached Python execution and bundled validation",
+            execution["passed"],
+            execution,
+        )
     else:
-        record(checks, failures, "analysis ZIP: clean extraction cached Python execution", False, "rerun with --execute-analysis-bundle")
+        record(
+            checks,
+            failures,
+            "analysis ZIP: clean extraction cached Python execution and bundled validation",
+            False,
+            "rerun with --execute-analysis-bundle",
+        )
     return {
         "path": str(path.relative_to(ROOT)),
         "sha256": sha256(path),

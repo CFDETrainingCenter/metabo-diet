@@ -11,6 +11,8 @@
   --line: #c8d3d8;
   --success: #176b44;
   --danger: #9b2c2c;
+  --focus-dark: #6b4700;
+  --focus-light: #ffffff;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -25,8 +27,9 @@ body {
 a { color: #164f7a; text-underline-offset: 0.16em; }
 a:hover { color: #0b3554; }
 a:focus-visible, button:focus-visible, input:focus-visible, [tabindex="0"]:focus-visible {
-  outline: 3px solid #d49416;
-  outline-offset: 3px;
+  outline: 3px solid var(--focus-light);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--focus-dark);
 }
 .skip-link {
   position: absolute;

@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-17
 **Host:** macOS 26.6.1 (25G76), arm64  
-**Purpose:** Record automated reproducibility evidence before the Friday delivery. This report is not a substitute for the independent research-assistant pilot in `local_pilot_protocol.md`.
+**Purpose:** Record automated reproducibility evidence for the final review of the Friday delivery. This report is not a substitute for the independent research-assistant pilot in `local_pilot_protocol.md`.
 
 ## Python clean environment
 
@@ -12,7 +12,7 @@
 - Core pinned versions included NumPy 2.2.6, pandas 2.2.3, requests 2.32.5, scikit-learn 1.7.1, matplotlib 3.10.5, nbformat 5.10.4, nbclient 0.10.2, ipykernel 6.30.1, IPython 9.15.0, and JupyterLab 4.6.2.
 - The canonical notebook executed top to bottom in cached mode: 60 total cells, 18 code cells, sequential execution counts 1-18, and zero saved error outputs.
 - The final analysis ZIP was extracted to a new temporary directory and executed with the same clean interpreter. Result: PASS in approximately 12 seconds, 18/18 code cells.
-- `module/qa/validate_module.py` passed every deterministic check.
+- The validator included inside that extracted ZIP ran successfully and passed every deterministic check, including the notebook kernel name, saved execution evidence, and absence of private paths.
 
 ## R cached-mode validation
 
@@ -25,7 +25,7 @@
 
 ## Packaging and presentation
 
-- The standalone SCORM 1.2 package passed manifest, launch-file, assessment, license, download-sync, and ZIP CRC checks.
+- The standalone SCORM 1.2 package passed manifest, launch-file, assessment, license, download-sync, and ZIP CRC checks. Its dual-color keyboard-focus indicator passed the automated contrast check at 8.31:1 for the dark ring against white.
 - Learner guide: 91 PDF pages and 91 rendered PNG pages; every page was visually inspected, including a second pass after the final pagination changes.
 - Instructor packet: 34 PDF pages and 34 rendered PNG pages; every page was visually inspected.
 - DOCX accessibility audits reported zero high-, medium-, or low-severity findings for both documents.
