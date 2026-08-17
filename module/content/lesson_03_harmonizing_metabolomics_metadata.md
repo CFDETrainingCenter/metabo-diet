@@ -122,9 +122,9 @@ Automated output should begin as `not_evaluated` or `review_required`, not `acce
 
 Record reviewer, date, rule or evidence, decision reason, and downstream eligibility. If a decision changes, append a new record or version the table; do not erase the earlier rationale.
 
-### Accessible description of the mapping workflow
+### Text-only concept sketch: mapping workflow
 
-Imagine a six-column ledger read from left to right. The deposited feature and exact label stay fixed in the first column. A separate lookup string and RefMet response occupy the next two columns. Evidence and annotation resolution appear in the fourth column. A human or versioned rule records an accepted, broader, review-required, unmapped, or excluded decision in the fifth. The final column contains separate yes/no/review flags for exact-name overlap, class summary, within-study analysis, and cross-study analysis. Arrows never replace the first column; they add traceable decisions beside it.
+No separate image appears here. Imagine a six-column ledger read from left to right. The deposited feature and exact label stay fixed in the first column. A separate lookup string and RefMet response occupy the next two columns. Evidence and annotation resolution appear in the fourth column. A human or versioned rule records an accepted, broader, review-required, unmapped, or excluded decision in the fifth. The final column contains separate yes/no/review flags for exact-name overlap, class summary, within-study analysis, and cross-study analysis. Arrows never replace the first column; they add traceable decisions beside it.
 
 ## 4. Worked mapping example
 

@@ -206,9 +206,9 @@ A defensible summary might say:
 
 > The 145-name conservative overlap has RefMet class annotations for all 145 names. Amino acids and peptides, fatty acids, and fatty esters are the three largest classes in this shared-name set. These counts describe nomenclature coverage of the overlap and should not be interpreted as class abundance in plasma or serum.
 
-### Accessible description of the class-summary figure
+### Text description of the notebook class-summary chart (NB-L4-CLASS)
 
-One horizontal bar chart shows the 12 most frequent RefMet main classes among the 145 conservative shared names. The leading bars are amino acids and peptides (37), fatty acids (25), fatty esters (15), purines (11), bile acids (8), and pyridine alkaloids (7); the remaining six displayed classes have four or fewer names each. The x-axis is `Conservative shared RefMet names`. Bars are counts of standardized names, not metabolite concentrations or biological class abundance, and 24 names in less frequent classes are not shown in this top-12 view.
+Run `NB-L4-CLASS` to generate this chart; it is not reproduced in this part of the guide. The horizontal bar chart shows the 12 most frequent RefMet main classes among the 145 conservative shared names. The leading bars are amino acids and peptides (37), fatty acids (25), fatty esters (15), purines (11), bile acids (8), and pyridine alkaloids (7); the remaining six displayed classes have four or fewer names each. The x-axis is `Conservative shared RefMet names`. Bars are counts of standardized names, not metabolite concentrations or biological class abundance, and 24 names in less frequent classes are not shown in this top-12 view.
 
 ## 8. Principal component analysis: within each study
 

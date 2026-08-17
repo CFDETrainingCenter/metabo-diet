@@ -117,9 +117,9 @@ The safe default is to move approved code and public reference mappings **into**
 
 NPH's modular diet design and multimodal context may support questions that the small FARMM case cannot. It does not remove the need to define diet period, test-meal timing, specimen, assay, repeated measures, and the intended estimand.
 
-## 5. Accessible description of the transfer diagram
+## 5. Text-only concept sketch: transfer workflow
 
-The diagram has a central box labeled `portable harmonization logic`. Three arrows point to: an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A single outbound arrow from the cloud is labeled `policy-permitted reviewed outputs`.
+No separate image appears here. Picture a central box labeled `portable harmonization logic`. Three arrows point to an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A single outbound arrow from the cloud is labeled `reviewed outputs permitted by policy`.
 
 ## 6. Hands-on activity: make a transfer decision
 

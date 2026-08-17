@@ -9,7 +9,7 @@
 | PRE-01 | C | LO1 | A `post` value needs an anchor, elapsed time, physiological state, specimen, and assay context. |
 | PRE-02 | B | LO1, LO2 | Repeated samples from one person are correlated; sample count is not participant count. |
 | PRE-03 | A | LO2 | A shared standardized name supports a naming bridge, not shared scale, specimen, preprocessing, or causal response. |
-| PRE-04 | B | LO3 | RefMet supplies analytical-chemistry-centered standardized nomenclature. |
+| PRE-04 | B | LO3 | RefMet supplies standardized nomenclature designed for analytical chemistry. |
 | PRE-05 | C | LO3 | Ambiguity must remain visible until additional evidence supports one candidate. |
 | PRE-06 | B | LO4 | The MW study-context `factors` output returns samples and experimental variables. |
 | PRE-07 | B | LO2, LO4 | PCA describes variance under selected preprocessing and does not assign a cause. |

@@ -597,6 +597,11 @@ def add_markdown(
                 and lines[index + 1].strip().startswith(chr(96) * 3)
             )
             paragraph.paragraph_format.keep_with_next = not next_is_closing_fence
+            if next_is_closing_fence:
+                # Give the next paragraph a clear visual boundary after the
+                # shaded code block. Without this trailing space, Word/PDF
+                # renderers place body text directly against the last line.
+                paragraph.paragraph_format.space_after = Pt(6)
             set_paragraph_shading(paragraph, "F3F5F7", "B8C3CC")
             run = paragraph.add_run(clean_text(raw) if raw else " ")
             set_run_font(run, size=8.1, color="24313B", name="Consolas")
@@ -808,7 +813,7 @@ def add_contents(doc: Document, entries: Sequence[str]) -> None:
     lead = doc.add_paragraph()
     add_inline(
         lead,
-        "Use Word's Navigation pane or the descriptive headings in the PDF to move through the packet.",
+        "In Word, use the Navigation pane. In the PDF, use this contents list or search for a descriptive heading.",
     )
     for number, entry in enumerate(entries, start=1):
         p = doc.add_paragraph()
@@ -920,7 +925,9 @@ def add_provenance_appendix(doc: Document) -> None:
             add_paragraph(doc, rules)
             continue
         p = doc.add_paragraph(style="Heading 3")
-        add_inline(p, group.replace("_", " ").title())
+        group_heading = group.replace("_", " ").title()
+        group_heading = re.sub(r"\bSt(?=\d{6}\b)", "ST", group_heading)
+        add_inline(p, group_heading)
         num_id = new_num_id(doc, doc._metabo_number_abs[0])
         for rule in rules:
             item = doc.add_paragraph()
@@ -1111,7 +1118,7 @@ def build_learner_guide(output: Path) -> None:
             ["Offline path", "Use the versioned cache and record the fallback in the source log."],
             [
                 "Visual accessibility",
-                "Every proposed figure is paired with an equivalent text description in its lesson.",
+                "Conceptual workflows are presented as text-only sketches; generated charts include equivalent text descriptions.",
             ],
         ],
     )

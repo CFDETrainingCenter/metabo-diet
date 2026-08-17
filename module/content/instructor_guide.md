@@ -199,7 +199,7 @@ Knowledge items do not fully assess application. Require these artifacts for com
 
 ## Accessibility guidance
 
-The lesson Markdown includes text descriptions for conceptual access, comparison, class-summary, and PCA figures. Preserve those descriptions when converting to dashboard components.
+The lesson Markdown presents conceptual access and comparison workflows as text-only sketches and includes equivalent descriptions for generated charts. Preserve those descriptions when converting the material to dashboard components.
 
 ### Content requirements
 

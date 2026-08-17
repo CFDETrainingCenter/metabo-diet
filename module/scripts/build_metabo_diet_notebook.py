@@ -235,7 +235,7 @@ Read Lesson 1 in the learner guide before running the configuration cell. Then:
 
 The studies answer different questions. ST001521 is longitudinal plasma metabolomics during controlled feeding, with antibiotics on days 6–8 and a polyethylene glycol purge on day 7. ST003348 is serum metabolomics around an acute endurance race-walking bout. Exact RefMet names let us compare *nomenclature and coverage*; they do not prove matching isomers, annotation certainty, extraction recovery, or quantitative calibration.
 
-For that reason, this tutorial compares metadata, mapped-name presence, class coverage, and separately standardized within-study patterns. It never concatenates the raw peak-area matrices.
+For that reason, this tutorial compares metadata, mapped-name presence, class coverage, and patterns obtained after preprocessing each study separately. It never concatenates the raw peak-area matrices.
 """,
             cell_id="nb-l1",
             tags=("lesson-1",),
@@ -280,7 +280,7 @@ FIGURES_DIR = MODULE_DIR / "figures"
 DERIVED_DIR.mkdir(parents=True, exist_ok=True)
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 
-# Keep plotting caches out of learner artifacts while remaining sandbox-friendly.
+# Keep plotting caches out of learner artifacts while allowing the notebook to run in restricted environments.
 os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "metabo_diet_mpl"))
 sys.path.insert(0, str(MODULE_DIR / "scripts"))
 
@@ -508,7 +508,7 @@ assert exercise_biological.shape[0] == 76, (
             """
 ### Learner edit - inspect one study before comparing it
 
-Choose `DIET_ACCESSION` or `EXERCISE_ACCESSION`, predict the number of participants and timepoints, then run the scaffold. Record the result in Sections 3 and 6 of the cohort-comparison worksheet, and put one unsafe design difference in Section 9.
+Choose `DIET_ACCESSION` or `EXERCISE_ACCESSION`, predict the number of participants and timepoints, then run the scaffold. Record the result in Sections 3 and 6 of the cohort-comparison worksheet. In Section 9, record one design difference that makes pooling unsafe.
 """,
             cell_id="nb-l2-learner-prompt",
         ),
@@ -549,12 +549,12 @@ Read Lesson 3 in the learner guide and open `module/templates/metabolite_metadat
 
 1. Preserve source names and analysis identifiers.
 2. Build the raw exact-name overlap.
-3. Audit labeled-standard collisions before calling an overlap biological.
+3. Audit labeled-standard collisions before describing the overlap as biological.
 4. Trace one retained RefMet name back to both studies.
 
 ### L3.1 Build an auditable RefMet crosswalk (`NB-L3-CROSSWALK`)
 
-The pipeline preserves every source-reported name, analysis ID, MW metabolite ID, RefMet name/class, mapping evidence, confidence language, and inclusion decision.
+The pipeline preserves every source-reported name, analysis ID, MW metabolite ID, RefMet name/class, mapping evidence, reported confidence, and inclusion decision.
 
 The raw exact intersection is intentionally shown before cleanup. ST003348 contains ten explicit stable-isotope/internal-standard rows. Eight RefMet labels from those rows collide with the raw overlap. We conservatively remove those labels - even when an unlabeled row shares the same RefMet label - because the study-level endpoint alone does not tell us which signal should represent the biological compound. This produces the pre-specified conservative overlap of 145.
 """,
@@ -765,7 +765,7 @@ assert classified_overlap == 145, (
             """
 ![Horizontal high-contrast bar chart of the twelve largest RefMet main classes among the 145 conservative shared metabolite names.](../figures/refmet_class_summary.png)
 
-Class abundance reflects what these assays annotated and what RefMet classified. It is not pathway enrichment and does not adjust for how many compounds exist in each class.
+These class counts reflect the metabolites annotated by the assays and classified by RefMet. This is not pathway enrichment and does not adjust for how many compounds exist in each class.
 """,
             cell_id="nb-l4-class-figure",
         ),
@@ -867,7 +867,7 @@ The plot summarizes AN005483 only, after excluding its explicit labeled-standard
             """
 ### Why the two matrices stay separate
 
-There is intentionally no code that stacks ST001521 and ST003348 peak areas. Plasma versus serum, separate extraction and chromatography methods, different analytical analyses, and uncalibrated peak-area scales make a combined PCA dominated by study/platform effects and therefore uninterpretable as a diet-versus-exercise contrast.
+There is intentionally no code that stacks ST001521 and ST003348 peak areas. Plasma versus serum, different extraction and chromatography methods, separate analyses, and uncalibrated peak-area scales would make a combined PCA dominated by study and platform effects. It would therefore be uninterpretable as a diet-versus-exercise contrast.
 
 Safe cross-study targets here are RefMet presence, class coverage, mapping provenance, and separately computed within-study summaries.
 """,
@@ -1037,7 +1037,7 @@ Read Lesson 5 in the learner guide and open `module/templates/access_tier_transf
 
 ### L5.1 Learner edit - draft a transfer decision
 
-The defaults describe this public cached tutorial. Replace them with evidence for your exact target. Do not place credentials, governed data, signed URLs, or personal information in this notebook.
+The default values describe this tutorial's public cached data. Replace them with evidence for your exact target. Do not place credentials, governed data, signed URLs, or personal information in this notebook.
 """,
             cell_id="nb-l5",
             tags=("lesson-5",),

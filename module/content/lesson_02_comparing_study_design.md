@@ -173,11 +173,11 @@ MoTrPAC's published human protocol describes a multicenter effort designed to ch
 
 NIH describes NPH as a modular study nested in All of Us. Public program documentation distinguishes a larger baseline/test-meal module from free-living and domiciled controlled-feeding modules. Use it as an example of how dietary exposure, test meals, and multimodal measures can be organized. Do not infer that `DIET_ACCESSION` follows the NPH design.
 
-These examples teach **design transfer**: recognize a structure, then verify whether it exists in the target data. They do not supply missing metadata for the MW case studies.
+These examples show how to transfer a study-design concept: identify a structure, then verify that it exists in the target data. They do not supply missing metadata for the MW case studies.
 
-### Accessible description of the comparison diagram
+### Text-only concept sketch: comparison workflow
 
-The diagram has two vertical lanes. The diet lane moves from diet assignment to adherence and feeding state, then to specimen collection. The exercise lane moves from exercise modality and dose to exertion and recovery, then to specimen collection. Both lanes feed into a shared assay box, but each arrow carries its own time, specimen, and protocol tags. A dashed line between the lanes is labeled `compare metadata`; there is no arrow labeled `pool values`.
+No separate image appears here. Picture two vertical lanes. The diet lane moves from diet assignment to adherence and feeding state, then to specimen collection. The exercise lane moves from exercise modality and dose to exertion and recovery, then to specimen collection. Both lanes feed into a shared assay box, but each arrow carries its own time, specimen, and protocol tags. A dashed line between the lanes is labeled `compare metadata`; there is no arrow labeled `pool values`.
 
 ## 6. Hands-on activity: complete the cohort-comparison worksheet
 

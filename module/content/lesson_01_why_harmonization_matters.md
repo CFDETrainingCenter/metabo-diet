@@ -91,11 +91,11 @@ The mwTab representation organizes information into blocks. Depending on the rec
 
 ### RefMet
 
-RefMet provides an analytical-chemistry-centered reference nomenclature for metabolite structures and metabolite species. It is especially useful when deposited names differ in punctuation, synonym choice, or lipid notation. A RefMet match is evidence about nomenclature, not proof that two measurement features have identical analytical specificity. Lesson 3 develops this distinction.
+RefMet provides reference nomenclature designed for analytical chemistry, covering metabolite structures and metabolite species. It is especially useful when deposited names differ in punctuation, synonym choice, or lipid notation. A RefMet match is evidence about nomenclature, not proof that two measurement features have identical analytical specificity. Lesson 3 develops this distinction.
 
 ### MoTrPAC and Nutrition for Precision Health
 
-The Molecular Transducers of Physical Activity Consortium (MoTrPAC) and Nutrition for Precision Health (NPH), powered by All of Us, appear as transfer cases rather than learner data dependencies. Their study designs show how exercise and diet phenotypes can be captured at consortium scale.
+The Molecular Transducers of Physical Activity Consortium (MoTrPAC) and Nutrition for Precision Health (NPH), powered by All of Us, serve as examples for transferring the workflow. Learners do not need their data to complete the module. Their study designs show how exercise and diet phenotypes can be captured at consortium scale.
 
 Access status is a property of a **specific dataset, release, and intended action**, not a permanent label attached to an entire program. Current MoTrPAC documentation states that public releases can be accessed without an account, while restricted or embargoed data can require authentication and a data-use agreement. NPH documentation states that data are stored and analyzed in the All of Us Researcher Workbench, which is available to approved researchers. Requirements can change, so Lesson 5 teaches verification from current first-party documentation.
 
@@ -111,9 +111,9 @@ Use the following patterns as planning aids, not legal categories:
 
 One resource may expose different datasets under different patterns. A public landing page does not prove that the desired data are public. Conversely, the existence of restricted data does not prove that all releases require registration.
 
-### Accessible description of the access-pattern figure
+### Text-only concept sketch: access patterns
 
-Picture three workspaces arranged from left to right. The first has an open door and a download arrow. The second has a sign-in badge and an agreement document. The third has data locked inside a cloud workspace, with only a reviewed summary moving outward. A study can move between workspaces as its release status changes, so a calendar and version label appear below all three.
+No separate image appears here. Picture three workspaces arranged from left to right. The first has an open door and a download arrow. The second has a sign-in badge and an agreement document. The third has data locked inside a cloud workspace, with only a reviewed summary moving outward. A study can move between workspaces as its release status changes, so a calendar and version label appear below all three.
 
 ## 5. Worked example: a quick evidence check
 
@@ -145,7 +145,7 @@ Open the learner cohort-comparison worksheet and complete the first four fields 
 ## 7. Keep these distinctions
 
 - Repository co-location supports common discovery and retrieval, not common measurement.
-- A RefMet match supports a name-level bridge, not a common concentration or identification level.
+- A RefMet match links the records at the standardized-name level; it does not establish a common concentration or identification level.
 - A broad specimen category must not erase plasma-versus-serum or other matrix differences.
 - Physiological time must be defined before labels such as `baseline` or `post` are aligned.
 - Public access does not establish scientific compatibility.

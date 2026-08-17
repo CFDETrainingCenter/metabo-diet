@@ -109,11 +109,11 @@ Select only after completing the evidence table.
 Write each boundary explicitly.
 
 ```text
-[Public documentation/reference] --permitted input?--> [Compute environment]
-[Governed/raw data] ----------------stays where?------> [Compute environment]
-[Derived participant-level data] ---stays where?------> [Approved storage]
-[Aggregate/output] -----------------review rule?------> [Permitted destination]
-[Code] -----------------------------review rule?------> [Repository/collaborator]
+[Public reference] -- permitted input? --> [Compute]
+[Governed/raw data] -- stays where? --> [Approved compute]
+[Participant-level derivatives] -- stay where? --> [Approved storage]
+[Aggregate output] -- review rule? --> [Permitted destination]
+[Code] -- review rule? --> [Repository or collaborator]
 ```
 
 **Credentials/tokens location:** ___________________________________________

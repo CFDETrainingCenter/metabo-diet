@@ -350,7 +350,7 @@
     {
       "label": "analysis ZIP: clean extraction cached Python execution and bundled validation",
       "passed": true,
-      "detail": "{'requested': True, 'passed': True, 'python_executable': 'python', 'returncode': 0, 'elapsed_seconds': 12.357, 'stdout': 'Executed metabo_diet_harmonization.ipynb -> <temporary-directory>/metabo_diet_bundle_smoke_test.ipynb: 18 code cells, last execution_count=18', 'stderr_tail': '', 'output_created': True, 'notebook': {'cells': 60, 'code_cells': 18, 'execution_counts': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 'error_outputs': 0, 'cell_ids': ['nb-overview', 'nb-guide-crosswalk', 'nb-setup', 'nb-setup-action', 'nb-setup-check', 'nb-l1', 'nb-l1-config-action', 'nb-l1-config', 'nb-l1-complete', 'nb-l2', 'nb-l2-load-action', 'nb-l2-load', 'nb-l2-endpoint-action', 'nb-l2-endpoint-audit', 'md-63016451f07f', 'nb-l2-factors', 'nb-l2-factor-action', 'nb-l2-factor-table', 'nb-l2-time-action', 'nb-l2-time-audit', 'nb-l2-learner-prompt', 'nb-l2-learner-edit', 'md-28fd31403419', 'nb-l3', 'nb-l3-build-action', 'nb-l3-crosswalk', 'nb-l3-standard-action', 'nb-l3-standard-audit', 'nb-l3-overlap-action', 'nb-l3-overlap-plot', 'nb-l3-overlap-figure', 'nb-l3-learner-prompt', 'nb-l3-learner-edit', 'nb-l3-complete', 'nb-l4', 'nb-l4-class-action', 'nb-l4-class-summary', 'nb-l4-class-figure', 'nb-l4-pca-method', 'nb-l4-pca-diet-action', 'nb-l4-pca-diet', 'nb-l4-pca-diet-figure', 'nb-l4-pca-exercise-action', 'nb-l4-pca-exercise', 'nb-l4-pca-exercise-figure', 'nb-l4-pca-guardrail', 'nb-l4-exercise-prompt', 'nb-l4-exercise', 'nb-l4-sensitivity-prompt', 'nb-l4-sensitivity-edit', 'nb-l4-interpretation', 'md-5da09e5c0d03', 'md-1255a8267b47', 'md-3418772b2efe', 'nb-l4-complete', 'nb-l5', 'nb-l5-transfer-edit', 'nb-repro-action', 'nb-repro', 'nb-l5-complete']}, 'bundled_validator': {'returncode': 0, 'stdout_tail': ', and rationale\\nPASS  answer key matches POST-06 answer, objectives, and rationale\\nPASS  answer key matches POST-07 answer, objectives, and rationale\\nPASS  answer key matches POST-08 answer, objectives, and rationale\\nPASS  answer key matches POST-09 answer, objectives, and rationale\\nPASS  answer key matches POST-10 answer, objectives, and rationale\\nPASS  answer key matches POST-11 answer, objectives, and rationale\\nPASS  answer key matches POST-12 answer, objectives, and rationale\\nPASS  notebook has a substantial tutorial sequence\\nPASS  notebook code cells have saved execution evidence\\nPASS  notebook code cells have sequential saved execution counts\\nPASS  notebook contains no saved error outputs\\nPASS  notebook contains required concept: ST001521\\nPASS  notebook contains required concept: ST003348\\nPASS  notebook contains required concept: QPP\\nPASS  notebook contains required concept: PCA\\nPASS  notebook contains required concept: RefMet\\nPASS  notebook cells have stable IDs\\nPASS  notebook cell IDs are unique\\nPASS  notebook has all stable guide cross-reference IDs\\nPASS  notebook has exactly one Lesson 1 section\\nPASS  notebook has exactly one Lesson 2 section\\nPASS  notebook has exactly one Lesson 3 section\\nPASS  notebook has exactly one Lesson 4 section\\nPASS  notebook has exactly one Lesson 5 section\\nPASS  notebook contains complete Python/R setup instructions\\nPASS  notebook names the kernel that a clean virtual environment provides\\nPASS  notebook contains no saved private user or temporary paths\\nPASS  notebook includes learner-edit scaffolds across lessons\\nPASS  every code cell has an explicit preceding learner action\\nPASS  no obvious raw cross-study matrix concatenation\\nPASS  derived overlap table reports 153 raw names\\nPASS  derived overlap table reports 145 conservative names\\nPASS  ST001521 PCA sample count is 150\\nPASS  ST001521 PCA feature count is 212\\nPASS  ST003348 PCA sample count is 76\\nPASS  ST003348 PCA feature count is 313\\n\\nAll deterministic module checks passed.', 'stderr_tail': ''}}"
+      "detail": "{'requested': True, 'passed': True, 'python_executable': 'python', 'returncode': 0, 'elapsed_seconds': 13.38, 'stdout': 'Executed metabo_diet_harmonization.ipynb -> <temporary-directory>/metabo_diet_bundle_smoke_test.ipynb: 18 code cells, last execution_count=18', 'stderr_tail': '', 'output_created': True, 'notebook': {'cells': 60, 'code_cells': 18, 'execution_counts': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18], 'error_outputs': 0, 'cell_ids': ['nb-overview', 'nb-guide-crosswalk', 'nb-setup', 'nb-setup-action', 'nb-setup-check', 'nb-l1', 'nb-l1-config-action', 'nb-l1-config', 'nb-l1-complete', 'nb-l2', 'nb-l2-load-action', 'nb-l2-load', 'nb-l2-endpoint-action', 'nb-l2-endpoint-audit', 'md-63016451f07f', 'nb-l2-factors', 'nb-l2-factor-action', 'nb-l2-factor-table', 'nb-l2-time-action', 'nb-l2-time-audit', 'nb-l2-learner-prompt', 'nb-l2-learner-edit', 'md-28fd31403419', 'nb-l3', 'nb-l3-build-action', 'nb-l3-crosswalk', 'nb-l3-standard-action', 'nb-l3-standard-audit', 'nb-l3-overlap-action', 'nb-l3-overlap-plot', 'nb-l3-overlap-figure', 'nb-l3-learner-prompt', 'nb-l3-learner-edit', 'nb-l3-complete', 'nb-l4', 'nb-l4-class-action', 'nb-l4-class-summary', 'nb-l4-class-figure', 'nb-l4-pca-method', 'nb-l4-pca-diet-action', 'nb-l4-pca-diet', 'nb-l4-pca-diet-figure', 'nb-l4-pca-exercise-action', 'nb-l4-pca-exercise', 'nb-l4-pca-exercise-figure', 'nb-l4-pca-guardrail', 'nb-l4-exercise-prompt', 'nb-l4-exercise', 'nb-l4-sensitivity-prompt', 'nb-l4-sensitivity-edit', 'nb-l4-interpretation', 'md-5da09e5c0d03', 'md-1255a8267b47', 'md-3418772b2efe', 'nb-l4-complete', 'nb-l5', 'nb-l5-transfer-edit', 'nb-repro-action', 'nb-repro', 'nb-l5-complete']}, 'bundled_validator': {'returncode': 0, 'stdout_tail': ', and rationale\\nPASS  answer key matches POST-06 answer, objectives, and rationale\\nPASS  answer key matches POST-07 answer, objectives, and rationale\\nPASS  answer key matches POST-08 answer, objectives, and rationale\\nPASS  answer key matches POST-09 answer, objectives, and rationale\\nPASS  answer key matches POST-10 answer, objectives, and rationale\\nPASS  answer key matches POST-11 answer, objectives, and rationale\\nPASS  answer key matches POST-12 answer, objectives, and rationale\\nPASS  notebook has a substantial tutorial sequence\\nPASS  notebook code cells have saved execution evidence\\nPASS  notebook code cells have sequential saved execution counts\\nPASS  notebook contains no saved error outputs\\nPASS  notebook contains required concept: ST001521\\nPASS  notebook contains required concept: ST003348\\nPASS  notebook contains required concept: QPP\\nPASS  notebook contains required concept: PCA\\nPASS  notebook contains required concept: RefMet\\nPASS  notebook cells have stable IDs\\nPASS  notebook cell IDs are unique\\nPASS  notebook has all stable guide cross-reference IDs\\nPASS  notebook has exactly one Lesson 1 section\\nPASS  notebook has exactly one Lesson 2 section\\nPASS  notebook has exactly one Lesson 3 section\\nPASS  notebook has exactly one Lesson 4 section\\nPASS  notebook has exactly one Lesson 5 section\\nPASS  notebook contains complete Python/R setup instructions\\nPASS  notebook names the kernel that a clean virtual environment provides\\nPASS  notebook contains no saved private user or temporary paths\\nPASS  notebook includes learner-edit scaffolds across lessons\\nPASS  every code cell has an explicit preceding learner action\\nPASS  no obvious raw cross-study matrix concatenation\\nPASS  derived overlap table reports 153 raw names\\nPASS  derived overlap table reports 145 conservative names\\nPASS  ST001521 PCA sample count is 150\\nPASS  ST001521 PCA feature count is 212\\nPASS  ST003348 PCA sample count is 76\\nPASS  ST003348 PCA feature count is 313\\n\\nAll deterministic module checks passed.', 'stderr_tail': ''}}"
     },
     {
       "label": "SCORM: builder validation passed",
@@ -426,16 +426,16 @@
   "documents": [
     {
       "path": "module/support/metabo_diet_learner_guide.docx",
-      "sha256": "41c7cd5da1a6339d894041ab3139c507ba13af33024c7fc0eac2b5b449c08b20",
-      "bytes": 348539,
+      "sha256": "203c538b1c97e5435124b68c2f4204f7f1a390be9f1c8060f7f4e86b317e47e0",
+      "bytes": 348646,
       "paragraphs": 1535,
       "tables": 37,
       "numbered_paragraphs": 520
     },
     {
       "path": "module/support/metabo_diet_instructor_packet.docx",
-      "sha256": "4273561c1015f2e377e3337c48f6836c5e45466e9f7cfb3d47d570a1134a3d95",
-      "bytes": 75871,
+      "sha256": "f27cf8e0158da4e307da25ec3c412eb074e8a32dceda6e11301db4ea62dad89a",
+      "bytes": 75904,
       "paragraphs": 457,
       "tables": 25,
       "numbered_paragraphs": 189
@@ -444,16 +444,16 @@
   "pdfs": [
     {
       "path": "module/support/metabo_diet_learner_guide.pdf",
-      "sha256": "a8aafd4899db5f710f492768d70e69091e14493cbeb625055b3d0ec70e982e78",
-      "bytes": 1900569,
+      "sha256": "715f27acdaae3b476779753ac42012e972fbe58c8d387a11ec2433d9009d07fa",
+      "bytes": 1901347,
       "pages": 91,
       "tagged": "yes",
       "suspects": "no"
     },
     {
       "path": "module/support/metabo_diet_instructor_packet.pdf",
-      "sha256": "0aa55bae96cae1e027ce770f6b0aad6e32a9aa88d4b12626e6644582ee167945",
-      "bytes": 832218,
+      "sha256": "02a4e0d214cbaeefdf02056a919be03a06d9b39b638d4c893fadab05c5b48128",
+      "bytes": 832380,
       "pages": 34,
       "tagged": "yes",
       "suspects": "no"
@@ -481,8 +481,8 @@
   ],
   "templates_zip": {
     "path": "module/support/metabo_diet_templates.zip",
-    "sha256": "fd245a7e6fbfb1be32c09d32a413791e7e0cc17409c383393f33da1d9735264e",
-    "bytes": 26329,
+    "sha256": "d0234010f311e7476f5ef2ca2cedf3d2e61fb6de22607208bd3ef8ebb870b727",
+    "bytes": 26318,
     "file_count": 13,
     "files": [
       "DATA_ATTRIBUTION.md",
@@ -502,8 +502,8 @@
   },
   "analysis_bundle": {
     "path": "module/support/metabo_diet_analysis_bundle.zip",
-    "sha256": "313a181254003d6b4aa03bf27fc4f73463bd42f6d9d9015cdb7eeb35b7b2a1bf",
-    "bytes": 4849251,
+    "sha256": "a5b0db038f1a4cec854bbd684ee3143543cec3d776c30123fff3d336c12c927c",
+    "bytes": 4850325,
     "file_count": 77,
     "notebook": {
       "cells": 60,
@@ -597,7 +597,7 @@
       "passed": true,
       "python_executable": "python",
       "returncode": 0,
-      "elapsed_seconds": 12.357,
+      "elapsed_seconds": 13.38,
       "stdout": "Executed metabo_diet_harmonization.ipynb -> <temporary-directory>/metabo_diet_bundle_smoke_test.ipynb: 18 code cells, last execution_count=18",
       "stderr_tail": "",
       "output_created": true,
@@ -697,8 +697,8 @@
   },
   "scorm": {
     "path": "module/scorm/metabo_diet_scorm_1_2.zip",
-    "sha256": "2c92b9107ec296af5aaf4b3c12de81fc7b0991ee2295f0e1a1de395f40de7549",
-    "bytes": 5613325,
+    "sha256": "8c95410bd3bad9f4e3ad496006507f6dd3afe7e3e5b75b9e167787122ed3ffe5",
+    "bytes": 5615196,
     "validation": {
       "passed": true,
       "failures": [],
@@ -768,8 +768,8 @@
           "viewport": true
         }
       },
-      "sha256": "2c92b9107ec296af5aaf4b3c12de81fc7b0991ee2295f0e1a1de395f40de7549",
-      "bytes": 5613325
+      "sha256": "8c95410bd3bad9f4e3ad496006507f6dd3afe7e3e5b75b9e167787122ed3ffe5",
+      "bytes": 5615196
     }
   },
   "byte_sync": {
