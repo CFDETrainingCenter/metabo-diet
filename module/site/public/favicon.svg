@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Metabo-Diet</title>
+  <rect width="64" height="64" rx="15" fill="#123f45"/>
+  <path d="M15 45V19h7l10 15 10-15h7v26h-8V31l-9 13-9-13v14z" fill="#fff8ed"/>
+  <circle cx="49" cy="15" r="7" fill="#f27d66"/>
+</svg>
