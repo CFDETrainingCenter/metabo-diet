@@ -28,3 +28,21 @@ node --test tests/rendered-html.test.mjs
 
 The site is stateless. Assessment progress is stored only in the learner's
 browser via `localStorage`; no account or database is required.
+
+## Deployment
+
+The site builds to a Cloudflare Worker. It needs no database, environment
+variable, or other binding; learner progress stays in the browser.
+
+```bash
+npx wrangler login
+npm run deploy
+```
+
+This publishes to `metabo-diet-course.<subdomain>.workers.dev`. To preview the
+upload without publishing, run:
+
+```bash
+npm run build
+npx wrangler deploy --dry-run -c dist/server/wrangler.json
+```
