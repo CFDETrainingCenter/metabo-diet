@@ -1,0 +1,42 @@
+{
+  "builder": "module/scripts/build_release_packages.py",
+  "design_preset": "compact_reference_guide",
+  "header_pattern": "editorial_cover",
+  "named_overrides": {
+    "cover_title": "30 pt centered navy",
+    "dense_table_text": "9.2 pt for <=3 columns; 8.3 pt for 4-5; 7.5 pt for >=6",
+    "code_block_text": "8.1 pt Consolas on light gray"
+  },
+  "outputs": [
+    {
+      "path": "module/support/metabo_diet_learner_guide.docx",
+      "bytes": 348646,
+      "sha256": "203c538b1c97e5435124b68c2f4204f7f1a390be9f1c8060f7f4e86b317e47e0"
+    },
+    {
+      "path": "module/support/metabo_diet_learner_guide.pdf",
+      "bytes": 1901347,
+      "sha256": "715f27acdaae3b476779753ac42012e972fbe58c8d387a11ec2433d9009d07fa"
+    },
+    {
+      "path": "module/support/metabo_diet_instructor_packet.docx",
+      "bytes": 75904,
+      "sha256": "f27cf8e0158da4e307da25ec3c412eb074e8a32dceda6e11301db4ea62dad89a"
+    },
+    {
+      "path": "module/support/metabo_diet_instructor_packet.pdf",
+      "bytes": 832380,
+      "sha256": "02a4e0d214cbaeefdf02056a919be03a06d9b39b638d4c893fadab05c5b48128"
+    },
+    {
+      "path": "module/support/metabo_diet_templates.zip",
+      "bytes": 26318,
+      "sha256": "d0234010f311e7476f5ef2ca2cedf3d2e61fb6de22607208bd3ef8ebb870b727"
+    },
+    {
+      "path": "module/support/metabo_diet_analysis_bundle.zip",
+      "bytes": 4850325,
+      "sha256": "a5b0db038f1a4cec854bbd684ee3143543cec3d776c30123fff3d336c12c927c"
+    }
+  ]
+}

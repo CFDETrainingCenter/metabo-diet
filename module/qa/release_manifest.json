@@ -1,0 +1,76 @@
+{
+  "release": "Metabo-Diet 1.0",
+  "generated_at_utc": "2026-08-17T17:08:45Z",
+  "render_page_counts": {
+    "learner_guide": {
+      "pdf_pages": 91,
+      "png_pages": 91
+    },
+    "instructor_packet": {
+      "pdf_pages": 34,
+      "png_pages": 34
+    }
+  },
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 18656,
+      "sha256": "9e5f1b3c610b9c2da5c313bf81d577a7d1acec686bdb0384edefa6df0f90cd94"
+    },
+    {
+      "path": "module/qa/instructor_packet_a11y.json",
+      "bytes": 148,
+      "sha256": "dda6d1b703b5a77b04b6a4bcf9c5945f69b97516403a1ffe512d84f74c0cdaf7"
+    },
+    {
+      "path": "module/qa/learner_guide_a11y.json",
+      "bytes": 144,
+      "sha256": "58dcba1c5d6b30982232964711daaa2255177c53bf2f4ae7ad2037e95c523c25"
+    },
+    {
+      "path": "module/qa/packaging_build_report.json",
+      "bytes": 1465,
+      "sha256": "10c5c183e5bb05c0073065efab7255bebecd5d20287f1bccd0062b6db008482c"
+    },
+    {
+      "path": "module/qa/scorm_validation.json",
+      "bytes": 1550,
+      "sha256": "4d06cace5b68d0e90eabd7d5629a9117237a791e0b67729292aebc2271d61b95"
+    },
+    {
+      "path": "module/scorm/metabo_diet_scorm_1_2.zip",
+      "bytes": 5615196,
+      "sha256": "8c95410bd3bad9f4e3ad496006507f6dd3afe7e3e5b75b9e167787122ed3ffe5"
+    },
+    {
+      "path": "module/support/metabo_diet_analysis_bundle.zip",
+      "bytes": 4850325,
+      "sha256": "a5b0db038f1a4cec854bbd684ee3143543cec3d776c30123fff3d336c12c927c"
+    },
+    {
+      "path": "module/support/metabo_diet_instructor_packet.docx",
+      "bytes": 75904,
+      "sha256": "f27cf8e0158da4e307da25ec3c412eb074e8a32dceda6e11301db4ea62dad89a"
+    },
+    {
+      "path": "module/support/metabo_diet_instructor_packet.pdf",
+      "bytes": 832380,
+      "sha256": "02a4e0d214cbaeefdf02056a919be03a06d9b39b638d4c893fadab05c5b48128"
+    },
+    {
+      "path": "module/support/metabo_diet_learner_guide.docx",
+      "bytes": 348646,
+      "sha256": "203c538b1c97e5435124b68c2f4204f7f1a390be9f1c8060f7f4e86b317e47e0"
+    },
+    {
+      "path": "module/support/metabo_diet_learner_guide.pdf",
+      "bytes": 1901347,
+      "sha256": "715f27acdaae3b476779753ac42012e972fbe58c8d387a11ec2433d9009d07fa"
+    },
+    {
+      "path": "module/support/metabo_diet_templates.zip",
+      "bytes": 26318,
+      "sha256": "d0234010f311e7476f5ef2ca2cedf3d2e61fb6de22607208bd3ef8ebb870b727"
+    }
+  ]
+}

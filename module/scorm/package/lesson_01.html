@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Lesson 1 - Why harmonization matters | Metabo-Diet</title>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body data-page-id="lesson_01">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand">METABO-DIET</p>
+      <p class="mode">Harmonizing dietary and exercise phenotypes with metabolomics</p>
+    </div>
+  </header>
+  <div class="page-shell">
+    
+<nav class="course-nav" aria-label="Course navigation">
+  <h2>Course navigation</h2>
+  <ul><li><a href="index.html">Course home</a></li>
+<li><a href="pretest.html">Pretest</a></li>
+<li><a href="lesson_01.html">Lesson 1 - Why harmonization matters</a></li>
+<li><a href="lesson_02.html">Lesson 2 - Comparing study design</a></li>
+<li><a href="lesson_03.html">Lesson 3 - Harmonizing metabolomics and metadata</a></li>
+<li><a href="lesson_04.html">Lesson 4 - Guided analysis and interpretation</a></li>
+<li><a href="lesson_05.html">Lesson 5 - Access tiers and transfer</a></li>
+<li><a href="posttest.html">Posttest</a></li></ul>
+  <p class="status" id="lms-mode">Checking LMS connection...</p>
+  <p class="status" id="course-status">Course status: not attempted</p>
+</nav>
+
+    <main id="main-content" tabindex="-1">
+      
+<article>
+<h1>Lesson 1 - Why phenotype-to-metabolome harmonization matters</h1>
+<p><strong>Estimated time:</strong> 20 minutes</p>
+<p><strong>Bloom levels:</strong> Remember, understand</p>
+<p><strong>Module objectives addressed:</strong> LO1, LO2, LO5</p>
+<h2>Learning objectives</h2>
+<p>By the end of this lesson, you will be able to:</p>
+<ol>
+<li>Explain why metabolite measurements are not interpretable without study-design, specimen, timepoint, and phenotype context.</li>
+<li>Distinguish structural harmonization from statistical pooling.</li>
+<li>Recognize open, registration- or agreement-gated, and controlled-compute access patterns.</li>
+<li>Locate the two configurable Metabolomics Workbench case studies used throughout the module.</li>
+</ol>
+<h2>Lesson map</h2>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Activity</th>
+<th scope="col">Minutes</th>
+</tr></thead><tbody>
+<tr>
+<td>Pretest, additional assessment time</td>
+<td>5</td>
+</tr>
+<tr>
+<td>The phenotype-to-metabolome problem</td>
+<td>5</td>
+</tr>
+<tr>
+<td>The Metabo-Diet workflow and access patterns</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Worked triage activity</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Knowledge check and reflection</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Instructional subtotal, excluding pretest</strong></td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Learner time with pretest</strong></td>
+<td><strong>25</strong></td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>In the notebook (NB-L1):</strong> Complete <code>NB-SETUP</code>, then run the Lesson 1 configuration cell. Confirm <code>ST001521</code>, <code>ST003348</code>, and the retrieval mode. In Section 1 of the cohort-comparison worksheet, record why the two quantitative matrices must stay separate.</p>
+</blockquote>
+<h2>Before you begin</h2>
+<p>Complete the pretest before opening the answer key. Its purpose is to establish a baseline, not to determine eligibility. Record your confidence separately from correctness; confidence and knowledge can change at different rates.</p>
+<p>Three terms appear throughout the module. <strong>Harmonization</strong> aligns records while keeping important differences visible. <strong>Pooling</strong> places measurements from separate studies into one analysis. <strong>Provenance</strong> records where a value came from and how it changed. The glossary defines these and other unfamiliar terms.</p>
+<p>This module keeps two configuration labels so a study pair can be replaced without rewriting the workflow. The release pair is now locked:</p>
+<ul>
+<li><code>DIET_ACCESSION = ST001521</code>: the public, human FARMM diet-anchored plasma study.</li>
+<li><code>EXERCISE_ACCESSION = ST003348</code>: the public, human race-walking exercise-anchored serum study.</li>
+</ul>
+<p>The variable names are not accession numbers and must never be sent to the REST API literally. The notebook configuration cell resolves them to the values above. The versioned source record is <code>module/data/provenance.json</code>. Before teaching, the instructor confirms that both studies remain public and that this record still matches the retrieved data.</p>
+<h2>1. A metabolite value is an observation in context</h2>
+<p>Imagine two rows labeled <code>glucose</code>. One value was measured in fasting plasma before a controlled diet; the other was measured in serum immediately after a maximal exercise bout. The analyte labels look compatible, but the observations are not interchangeable.</p>
+<p>At least five layers shape what a metabolite value means:</p>
+<ol>
+<li><strong>Biological question:</strong> What exposure, intervention, or phenotype anchors the study?</li>
+<li><strong>Sampling context:</strong> Which specimen was collected, from whom, and under what conditions?</li>
+<li><strong>Time meaning:</strong> Does a label such as <code>post</code> mean after a meal, after weeks of feeding, immediately after exercise, or during recovery?</li>
+<li><strong>Analytical process:</strong> Which platform, method, batch structure, preprocessing, and units produced the value?</li>
+<li><strong>Data representation:</strong> How are samples, factors, metabolites, missing values, and identifiers encoded?</li>
+</ol>
+<p>Harmonization makes these layers explicit. It does not erase them.</p>
+<blockquote>
+<p><strong>Keep this distinction:</strong> Structural harmonization can make records easier to compare. It does not, by itself, make participants, interventions, specimens, timepoints, platforms, units, or quantitative values exchangeable.</p>
+</blockquote>
+<p>This distinction protects against a tempting but invalid workflow: matching metabolite names, stacking two intensity matrices, and interpreting the first principal component as a diet-versus-exercise biological effect. If study and phenotype are perfectly confounded, the observed separation may arise from platform, sample handling, units, batch, population, or other design differences. No statistical technique can identify a unique biological cause from that contrast alone.</p>
+<h2>2. What harmonization can accomplish</h2>
+<p>The Metabo-Diet workflow supports several defensible tasks:</p>
+<ul>
+<li>Compare how studies represent intervention, specimen, timepoint, and phenotype variables.</li>
+<li>Standardize metabolite labels while preserving the submitted names and mapping evidence.</li>
+<li>Identify metabolites reported in both studies at a compatible annotation level.</li>
+<li>Describe where metadata concepts align, partially align, or do not align.</li>
+<li>Conduct exploratory analyses within each study using study-appropriate preprocessing.</li>
+<li>Compare patterns descriptively when the measurement and design context supports the comparison.</li>
+<li>Document unresolved mappings and incompatibilities for future reuse.</li>
+</ul>
+<p>It does <strong>not</strong> automatically support:</p>
+<ul>
+<li>Direct comparison of raw or normalized intensities across platforms.</li>
+<li>Treating <code>post</code> timepoints as equivalent without physiological definitions.</li>
+<li>Treating plasma and serum as the same specimen.</li>
+<li>Treating a metabolite class label as a uniquely identified molecular structure.</li>
+<li>Inferring that an exposure caused a cross-study difference.</li>
+<li>Increasing effective sample size by concatenating unrelated cohorts.</li>
+</ul>
+<p>Sometimes the correct decision is to keep a field or analyte separate. Record the reason so another analyst can review it.</p>
+<h2>3. The resources in this module</h2>
+<h3>Metabolomics Workbench and NMDR</h3>
+<p>The Metabolomics Workbench hosts the National Metabolomics Data Repository (NMDR). Its REST service can return study summaries, factors, analyses, metabolite annotations, measurement tables, and mwTab records. The exercises use public Metabolomics Workbench studies. Because the accessions are stored as configuration values, they can be updated if a study changes or is replaced.</p>
+<p>The mwTab representation organizes information into blocks. Depending on the record, these include study, subject, sample-factor, collection, sample-preparation, chromatography, mass-spectrometry or NMR, and metabolite-data content. The exact fields present vary across deposits. That variation is not an inconvenience to hide; it is evidence to inspect.</p>
+<h3>RefMet</h3>
+<p>RefMet provides reference nomenclature designed for analytical chemistry, covering metabolite structures and metabolite species. It is especially useful when deposited names differ in punctuation, synonym choice, or lipid notation. A RefMet match is evidence about nomenclature, not proof that two measurement features have identical analytical specificity. Lesson 3 develops this distinction.</p>
+<h3>MoTrPAC and Nutrition for Precision Health</h3>
+<p>The Molecular Transducers of Physical Activity Consortium (MoTrPAC) and Nutrition for Precision Health (NPH), powered by All of Us, serve as examples for transferring the workflow. Learners do not need their data to complete the module. Their study designs show how exercise and diet phenotypes can be captured at consortium scale.</p>
+<p>Access status is a property of a <strong>specific dataset, release, and intended action</strong>, not a permanent label attached to an entire program. Current MoTrPAC documentation states that public releases can be accessed without an account, while restricted or embargoed data can require authentication and a data-use agreement. NPH documentation states that data are stored and analyzed in the All of Us Researcher Workbench, which is available to approved researchers. Requirements can change, so Lesson 5 teaches verification from current first-party documentation.</p>
+<h2>4. Three access patterns</h2>
+<p>Use the following patterns as planning aids, not legal categories:</p>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Pattern</th>
+<th scope="col">Typical learner experience</th>
+<th scope="col">Questions to verify</th>
+</tr></thead><tbody>
+<tr>
+<td>Open public retrieval</td>
+<td>A public study can be viewed or retrieved without personal credentials.</td>
+<td>Is this exact accession public? Is there an embargo? Are redistribution terms stated?</td>
+</tr>
+<tr>
+<td>Account, agreement, or approval gated</td>
+<td>Access requires identity, an account, acceptance of terms, a DUA, or review.</td>
+<td>Who may apply? What uses and exports are allowed? How long might approval take?</td>
+</tr>
+<tr>
+<td>Controlled compute</td>
+<td>Participant-level data remain inside an approved environment; only permitted outputs leave it.</td>
+<td>What tier is needed? What institutional and training requirements apply? What disclosure review or export rules govern outputs?</td>
+</tr>
+</tbody></table></div>
+<p>One resource may expose different datasets under different patterns. A public landing page does not prove that the desired data are public. Conversely, the existence of restricted data does not prove that all releases require registration.</p>
+<h3>Text-only concept sketch: access patterns</h3>
+<p>No separate image appears here. Picture three workspaces arranged from left to right. The first has an open door and a download arrow. The second has a sign-in badge and an agreement document. The third has data locked inside a cloud workspace, with only a reviewed summary moving outward. A study can move between workspaces as its release status changes, so a calendar and version label appear below all three.</p>
+<h2>5. Worked example: a quick evidence check</h2>
+<p>This example introduces the checks for the release pair. Lesson 2 examines the dated study records in detail.</p>
+<p><strong>Claim to evaluate:</strong> &quot;The diet and exercise datasets are both on Metabolomics Workbench, so their metabolite values can be pooled.&quot;</p>
+<ol>
+<li><strong>Repository check:</strong> Both are intended to be public MW studies. This supports a common retrieval mechanism, not common measurement properties.</li>
+<li><strong>Identifier check:</strong> Submitted names may be mapped to RefMet. This supports a documented analyte-name bridge, subject to annotation resolution.</li>
+<li><strong>Specimen check:</strong> Compare the sample source and collection protocol. Plasma versus serum, or fasting versus fed, can alter interpretation.</li>
+<li><strong>Timepoint check:</strong> Define each timepoint physiologically. A shared word such as <code>baseline</code> is insufficient.</li>
+<li><strong>Platform and scale check:</strong> Determine targeted versus untargeted analysis, chromatography, ion mode, quantification type, units, normalization, and batch structure.</li>
+<li><strong>Design check:</strong> Ask whether study and phenotype are separable. With one diet study and one exercise study, study membership is confounded with phenotype anchor.</li>
+</ol>
+<p><strong>Decision:</strong> Reject automatic quantitative pooling. Proceed with metadata comparison, identifier crosswalking, overlap description, and within-study exploratory analysis. Consider cross-study quantitative modeling only if a later, explicit compatibility assessment and design justify it.</p>
+<h2>6. Hands-on activity: open the source records</h2>
+<p>Open the learner cohort-comparison worksheet and complete the first four fields for both configured accessions.</p>
+<ol>
+<li>Record <code>DIET_ACCESSION = ST001521</code> and <code>EXERCISE_ACCESSION = ST003348</code> from <code>module/data/provenance.json</code>.</li>
+<li>Record the diet <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&amp;StudyID=ST001521">study page</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary">REST summary</a>, then the exercise <a href="https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&amp;StudyID=ST003348">study page</a> and <a href="https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary">REST summary</a>.</li>
+<li>Record the date and time you verified public availability.</li>
+<li>Label the access evidence as <code>verified</code>, <code>not verified</code>, or <code>conflicting</code>.</li>
+<li>Write one sentence describing what public access does and does not imply about scientific comparability.</li>
+</ol>
+<p><strong>Stop condition:</strong> If either configured accession differs from the release manifest or its public release cannot be verified, do not substitute another study silently. Continue with the versioned cache if available, mark the source as cached, and report the discrepancy to the instructor.</p>
+<h2>7. Keep these distinctions</h2>
+<ul>
+<li>Repository co-location supports common discovery and retrieval, not common measurement.</li>
+<li>A RefMet match links the records at the standardized-name level; it does not establish a common concentration or identification level.</li>
+<li>A broad specimen category must not erase plasma-versus-serum or other matrix differences.</li>
+<li>Physiological time must be defined before labels such as <code>baseline</code> or <code>post</code> are aligned.</li>
+<li>Public access does not establish scientific compatibility.</li>
+<li>Study-confounded separation must not be labeled a diet-versus-exercise effect.</li>
+<li>An unresolved or incompatible decision is a valid harmonization result.</li>
+</ul>
+<h2>8. Knowledge check</h2>
+<p>Answer before viewing the rationale in <code>module/assessments/knowledge_checks.json</code>.</p>
+<p><strong>KC1-01.</strong> Two studies report a RefMet match for the same metabolite. Which conclusion is justified?</p>
+<p>A. Their quantitative values may be concatenated without further checks.</p>
+<p>B. Their submitted labels have a shared standardized-name candidate; analytical specificity and context still require review.</p>
+<p>C. The metabolite was confirmed by an authentic standard in both studies.</p>
+<p>D. Any between-study difference is biological.</p>
+<p><strong>KC1-02.</strong> Which evidence establishes the access pattern for a candidate dataset?</p>
+<p>A. The reputation of the research consortium.</p>
+<p>B. The access tier remembered from a prior release.</p>
+<p>C. Current first-party documentation and a dated check of the exact dataset and intended action.</p>
+<p>D. The fact that a publication cites the dataset.</p>
+<p><strong>KC1-03.</strong> When phenotype anchor and study are perfectly confounded, what is the safest interpretation of a PCA separation between studies?</p>
+<p>A. It proves diet and exercise have different metabolic effects.</p>
+<p>B. It proves the exercise cohort is more heterogeneous.</p>
+<p>C. It is exploratory separation that may reflect biological, technical, or design differences that cannot be uniquely attributed.</p>
+<p>D. It validates quantitative pooling.</p>
+<h2>9. Reflection</h2>
+<p>Complete this sentence in one or two lines:</p>
+<blockquote>
+<p>A cross-study comparison would be useful for my work if it helped me ________, but it would become misleading if I ________.</p>
+</blockquote>
+<p>Keep the response. You will revisit it after the analysis lesson.</p>
+<h2>Before you continue</h2>
+<p>Harmonization helps you compare records without erasing important differences. In Lesson 2, you will use that idea to compare the two study designs.</p>
+<h2>Primary sources and first-party documentation</h2>
+<ol>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/tools/mw_rest.php">REST Service, version 1.2</a>. Updated July 22, 2025; accessed August 10, 2026.</li>
+<li>Metabolomics Workbench. <a href="https://www.metabolomicsworkbench.org/data/tutorials.php">mwTab file specification and repository tutorials</a>. Accessed August 10, 2026.</li>
+<li>Sud M, Fahy E, Cotter D, et al. <a href="https://academic.oup.com/nar/article/44/D1/D463/2502588">Metabolomics Workbench: an international repository for metabolomics data and metadata, metabolite standards, protocols, tutorials and training, and analysis tools</a>. <em>Nucleic Acids Research</em>. 2016;44(D1):D463-D470.</li>
+<li>Fahy E, Subramaniam S. <a href="https://doi.org/10.1038/s41592-020-01009-y">RefMet: a reference nomenclature for metabolomics</a>. <em>Nature Methods</em>. 2020;17:1173-1174.</li>
+<li>MoTrPAC. <a href="https://motrpac-data.org/knowledge-center/project-overview/faq">Data access FAQ</a> and <a href="https://motrpac-data.org/knowledge-center/dissemination/data-access/data-hub">Data Hub documentation</a>. Accessed August 17, 2026.</li>
+<li>NIH Common Fund. <a href="https://commonfund.nih.gov/nutritionforprecisionhealth/frequently-asked-questions">Nutrition for Precision Health frequently asked questions</a>. Accessed August 10, 2026.</li>
+<li>Wilkinson MD, Dumontier M, Aalbersberg IJ, et al. <a href="https://doi.org/10.1038/sdata.2016.18">The FAIR Guiding Principles for scientific data management and stewardship</a>. <em>Scientific Data</em>. 2016;3:160018.</li>
+</ol>
+</article>
+<div class="actions">
+  <button type="button" data-complete-lesson aria-pressed="false">Mark lesson complete</button>
+  <a class="button secondary" href="pretest.html">Previous</a>
+  <a class="button secondary" href="lesson_02.html">Next</a>
+</div>
+<p id="completion-notice" class="callout" tabindex="-1" aria-live="polite"></p>
+
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Metabo-Diet release 1.0 | Public Metabolomics Workbench case studies ST001521 and ST003348</p>
+      <p>Scientific boundary: no cross-study pooling of uncalibrated quantitative values.</p>
+    </div>
+  </footer>
+  <script src="assets/course.js"></script>
+  
+</body>
+</html>

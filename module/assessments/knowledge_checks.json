@@ -1,0 +1,238 @@
+{
+  "title": "Metabo-Diet embedded knowledge checks",
+  "version": "1.0.0",
+  "objective_ids": {
+    "LO1": "Compare intervention, specimen, timepoint, and phenotype representation across the two studies.",
+    "LO2": "Explain how design, provenance, and platform constrain cross-study conclusions.",
+    "LO3": "Apply and document a RefMet-centered metabolite and metadata harmonization workflow.",
+    "LO4": "Retrieve, analyze, and interpret public Metabolomics Workbench data within study-design boundaries.",
+    "LO5": "Evaluate access patterns and adapt the workflow to another resource."
+  },
+  "items": [
+    {
+      "id": "KC1-01",
+      "lesson_id": "L1",
+      "objective_ids": ["LO2", "LO3"],
+      "type": "single_choice",
+      "prompt": "Two studies report a RefMet match for the same metabolite. Which conclusion is justified?",
+      "options": {
+        "A": "Their quantitative values may be concatenated without further checks.",
+        "B": "Their submitted labels have a shared standardized-name candidate; analytical specificity and context still require review.",
+        "C": "The metabolite was confirmed by an authentic standard in both studies.",
+        "D": "Any between-study difference is biological."
+      },
+      "answer": "B",
+      "rationale": "RefMet supplies a nomenclature bridge. It does not establish experimental identification level, matrix equivalence, common scale, or biological causation."
+    },
+    {
+      "id": "KC1-02",
+      "lesson_id": "L1",
+      "objective_ids": ["LO5"],
+      "type": "single_choice",
+      "prompt": "Which evidence establishes the access pattern for a candidate dataset?",
+      "options": {
+        "A": "The reputation of the research consortium.",
+        "B": "The access tier remembered from a prior release.",
+        "C": "Current first-party documentation and a dated check of the exact dataset and intended action.",
+        "D": "The fact that a publication cites the dataset."
+      },
+      "answer": "C",
+      "rationale": "Access is specific to a dataset, release, action, user, and current policy. Program reputation or historical status is insufficient evidence."
+    },
+    {
+      "id": "KC1-03",
+      "lesson_id": "L1",
+      "objective_ids": ["LO2", "LO4"],
+      "type": "single_choice",
+      "prompt": "When phenotype anchor and study are perfectly confounded, what is the safest interpretation of a PCA separation between studies?",
+      "options": {
+        "A": "It proves diet and exercise have different metabolic effects.",
+        "B": "It proves the exercise cohort is more heterogeneous.",
+        "C": "It is exploratory separation that may reflect biological, technical, or design differences that cannot be uniquely attributed.",
+        "D": "It validates quantitative pooling."
+      },
+      "answer": "C",
+      "rationale": "Study, phenotype, matrix, platform, laboratory, and population differences are not separable in a two-study contrast. PCA does not resolve that confounding."
+    },
+    {
+      "id": "KC2-01",
+      "lesson_id": "L2",
+      "objective_ids": ["LO1", "LO2"],
+      "type": "single_choice",
+      "prompt": "One study records fasting duration in hours and another records only yes/no fasting status. For a binary fasted-versus-not-fasted description, how should the fields be classified?",
+      "options": {
+        "A": "Directly comparable with no documentation.",
+        "B": "Partially comparable after a documented derivation and loss of detail.",
+        "C": "Not comparable for any purpose.",
+        "D": "Directly comparable for modeling fasting duration."
+      },
+      "answer": "B",
+      "rationale": "The hourly field can be collapsed to a binary construct if the threshold is justified, but the finer information is lost and duration cannot be modeled across both studies."
+    },
+    {
+      "id": "KC2-02",
+      "lesson_id": "L2",
+      "objective_ids": ["LO1", "LO2"],
+      "type": "single_choice",
+      "prompt": "What is the best evidence that rows at several timepoints come from the same participant?",
+      "options": {
+        "A": "Similar metabolite profiles.",
+        "B": "Adjacent sample identifiers.",
+        "C": "A documented subject-sample relationship in the deposited metadata.",
+        "D": "The word longitudinal in the publication title."
+      },
+      "answer": "C",
+      "rationale": "Repeated-measures linkage needs explicit study metadata or a documented and validated parsing rule. Similarity, ordering, or a title is indirect evidence."
+    },
+    {
+      "id": "KC2-03",
+      "lesson_id": "L2",
+      "objective_ids": ["LO1", "LO2"],
+      "type": "single_choice",
+      "prompt": "Why is post insufficient as a harmonized timepoint?",
+      "options": {
+        "A": "Post-intervention samples are never useful.",
+        "B": "It lacks an intervention anchor, offset, and physiological state.",
+        "C": "It cannot appear in mwTab.",
+        "D": "It always means immediate recovery."
+      },
+      "answer": "B",
+      "rationale": "A timepoint needs a defined anchor and interval. In this module, diet-study days and acute exercise recovery labels represent different processes."
+    },
+    {
+      "id": "KC3-01",
+      "lesson_id": "L3",
+      "objective_ids": ["LO3"],
+      "type": "single_choice",
+      "prompt": "A fuzzy RefMet lookup returns two plausible candidates and the deposited record has no formula or external identifier. What should you do?",
+      "options": {
+        "A": "Select the first candidate.",
+        "B": "Select whichever candidate appears in the other study.",
+        "C": "Mark the row review_required or unmapped, preserve both candidates, and exclude it from exact overlap until resolved.",
+        "D": "Replace it with a chemical class label and call it exact."
+      },
+      "answer": "C",
+      "rationale": "The available evidence does not support a unique mapping. Preserving uncertainty prevents a forced match from inflating overlap."
+    },
+    {
+      "id": "KC3-02",
+      "lesson_id": "L3",
+      "objective_ids": ["LO2", "LO3"],
+      "type": "single_choice",
+      "prompt": "When can umol/L be converted to mmol/L for cross-study comparison?",
+      "options": {
+        "A": "Whenever both unit strings are present.",
+        "B": "Only after confirming the same quantity, compatible matrix and denominator, quantification basis, and a recorded conversion.",
+        "C": "Only for lipids.",
+        "D": "Never."
+      },
+      "answer": "B",
+      "rationale": "Dimensional convertibility is necessary but not sufficient. Matrix, analyte, denominator, calibration, and quantification basis must also support the comparison."
+    },
+    {
+      "id": "KC3-03",
+      "lesson_id": "L3",
+      "objective_ids": ["LO3"],
+      "type": "single_choice",
+      "prompt": "Which crosswalk design is most reproducible?",
+      "options": {
+        "A": "One column containing the final clean name.",
+        "B": "Original and standardized names, source and query provenance, mapping status, evidence, reviewer, decision reason, and purpose-specific eligibility.",
+        "C": "A list containing only mapped analytes.",
+        "D": "A table in which all ambiguities are manually forced to one value."
+      },
+      "answer": "B",
+      "rationale": "A reproducible crosswalk preserves source identity, evidence, decisions, uncertainty, and the purpose for which a row is eligible."
+    },
+    {
+      "id": "KC4-01",
+      "lesson_id": "L4",
+      "objective_ids": ["LO2", "LO4"],
+      "type": "single_choice",
+      "prompt": "Why should the QPP rows in ST001521 not be included in biological PCA?",
+      "options": {
+        "A": "They are pooled quality-control samples rather than participant-timepoint observations.",
+        "B": "PCA cannot use plasma.",
+        "C": "Their identifiers contain letters.",
+        "D": "Quality-control samples must always be deleted from the repository."
+      },
+      "answer": "A",
+      "rationale": "Pooled QC samples can be useful for analytical diagnostics, but they do not represent independent participant-timepoint observations and should not drive biological inference."
+    },
+    {
+      "id": "KC4-02",
+      "lesson_id": "L4",
+      "objective_ids": ["LO3", "LO4"],
+      "type": "single_choice",
+      "prompt": "What does the intermediate overlap of 153 represent?",
+      "options": {
+        "A": "153 metabolites proven to respond to both diet and exercise.",
+        "B": "153 shared nonblank exact RefMet strings before artifact and eligibility exclusions under a specific build.",
+        "C": "153 directly comparable concentrations.",
+        "D": "A permanent repository constant."
+      },
+      "answer": "B",
+      "rationale": "The raw string intersection is a reproducibility checkpoint. Eight isotope/internal-standard rows in ST003348 map to ordinary names and are excluded in the conservative biological set, leaving 145 in the audited build."
+    },
+    {
+      "id": "KC4-03",
+      "lesson_id": "L4",
+      "objective_ids": ["LO2", "LO4"],
+      "type": "single_choice",
+      "prompt": "Which PCA interpretation is defensible?",
+      "options": {
+        "A": "A separate within-study PCA is an exploratory view whose pattern must be interpreted with preprocessing, repeated measures, and design context.",
+        "B": "Separation between the two studies proves a diet-versus-exercise mechanism.",
+        "C": "Scaling removes plasma-versus-serum differences.",
+        "D": "PCA automatically corrects batch effects."
+      },
+      "answer": "A",
+      "rationale": "PCA is exploratory and preprocessing-sensitive. Separate within-study models preserve design context but still do not prove causal mechanisms."
+    },
+    {
+      "id": "KC5-01",
+      "lesson_id": "L5",
+      "objective_ids": ["LO5"],
+      "type": "single_choice",
+      "prompt": "What is the most accurate access description for MoTrPAC?",
+      "options": {
+        "A": "Every MoTrPAC dataset requires registration.",
+        "B": "Every MoTrPAC dataset is fully open.",
+        "C": "Access is dataset- and release-dependent; public and restricted paths exist and must be verified.",
+        "D": "MoTrPAC data can be used only inside All of Us."
+      },
+      "answer": "C",
+      "rationale": "Current first-party documentation describes public releases accessible without login and restricted or embargoed data with additional requirements."
+    },
+    {
+      "id": "KC5-02",
+      "lesson_id": "L5",
+      "objective_ids": ["LO5"],
+      "type": "single_choice",
+      "prompt": "What should move into a controlled-compute environment?",
+      "options": {
+        "A": "Approved analysis code and public reference resources that comply with environment policy.",
+        "B": "A public link that silently downloads participant data to a local laptop.",
+        "C": "Shared credentials.",
+        "D": "A module cache populated with participant-level records."
+      },
+      "answer": "A",
+      "rationale": "Portable code and permitted reference resources can move into the governed workspace; controlled participant-level data remain in approved storage and credentials are never embedded."
+    },
+    {
+      "id": "KC5-03",
+      "lesson_id": "L5",
+      "objective_ids": ["LO2", "LO5"],
+      "type": "single_choice",
+      "prompt": "A dataset is publicly downloadable and scientifically incompatible with your target estimand. What is the correct decision?",
+      "options": {
+        "A": "Pool it because access is open.",
+        "B": "Treat access and scientific compatibility separately; revise or stop the integration.",
+        "C": "Standardize names and ignore the design.",
+        "D": "Call it controlled access."
+      },
+      "answer": "B",
+      "rationale": "A dataset can be open and still be unsuitable for the intended comparison. Check access and scientific fit separately."
+    }
+  ]
+}

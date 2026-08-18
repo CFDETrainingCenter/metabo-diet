@@ -1,0 +1,11 @@
+study_id,endpoint,source,url,cache_path,fallback_reason
+ST001521,summary,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary,data/raw/ST001521_summary.json,live retrieval disabled for deterministic run
+ST001521,factors,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/factors,data/raw/ST001521_factors.json,live retrieval disabled for deterministic run
+ST001521,analysis,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/analysis,data/raw/ST001521_analysis.json,live retrieval disabled for deterministic run
+ST001521,metabolites,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/metabolites,data/raw/ST001521_metabolites.json,live retrieval disabled for deterministic run
+ST001521,data,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/data,data/raw/ST001521_data.json,live retrieval disabled for deterministic run
+ST003348,summary,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary,data/raw/ST003348_summary.json,live retrieval disabled for deterministic run
+ST003348,factors,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/factors,data/raw/ST003348_factors.json,live retrieval disabled for deterministic run
+ST003348,analysis,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/analysis,data/raw/ST003348_analysis.json,live retrieval disabled for deterministic run
+ST003348,metabolites,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/metabolites,data/raw/ST003348_metabolites.json,live retrieval disabled for deterministic run
+ST003348,data,validated cache,https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/data,data/raw/ST003348_data.json,live retrieval disabled for deterministic run

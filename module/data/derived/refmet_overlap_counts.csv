@@ -1,0 +1,8 @@
+metric,value
+diet_unique_nonblank_refmet,510
+exercise_unique_nonblank_refmet,475
+raw_exact_refmet_overlap,153
+exercise_isotope_internal_standard_rows,10
+raw_overlap_labels_with_standard_collision,8
+conservative_biological_refmet_overlap,145
+conservative_overlap_with_refmet_class,145

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Lesson 5 - Access tiers and transfer | Metabo-Diet</title>
+  <link rel="stylesheet" href="assets/course.css">
+</head>
+<body data-page-id="lesson_05">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="brand">METABO-DIET</p>
+      <p class="mode">Harmonizing dietary and exercise phenotypes with metabolomics</p>
+    </div>
+  </header>
+  <div class="page-shell">
+    
+<nav class="course-nav" aria-label="Course navigation">
+  <h2>Course navigation</h2>
+  <ul><li><a href="index.html">Course home</a></li>
+<li><a href="pretest.html">Pretest</a></li>
+<li><a href="lesson_01.html">Lesson 1 - Why harmonization matters</a></li>
+<li><a href="lesson_02.html">Lesson 2 - Comparing study design</a></li>
+<li><a href="lesson_03.html">Lesson 3 - Harmonizing metabolomics and metadata</a></li>
+<li><a href="lesson_04.html">Lesson 4 - Guided analysis and interpretation</a></li>
+<li><a href="lesson_05.html">Lesson 5 - Access tiers and transfer</a></li>
+<li><a href="posttest.html">Posttest</a></li></ul>
+  <p class="status" id="lms-mode">Checking LMS connection...</p>
+  <p class="status" id="course-status">Course status: not attempted</p>
+</nav>
+
+    <main id="main-content" tabindex="-1">
+      
+<article>
+<h1>Lesson 5 - Access patterns and transfer to additional resources</h1>
+<p><strong>Estimated time:</strong> 15 minutes</p>
+<p><strong>Bloom levels:</strong> Evaluate, create</p>
+<p><strong>Module objective addressed:</strong> LO5</p>
+<h2>Learning objectives</h2>
+<p>By the end of this lesson, you will be able to:</p>
+<ol>
+<li>Determine the current access pattern of a specific dataset and intended action using dated first-party evidence.</li>
+<li>Identify which parts of the Metabo-Diet workflow transfer unchanged and which must be redesigned.</li>
+<li>Draft a compliant analysis architecture for open, agreement-gated, or controlled-compute data.</li>
+<li>Produce a go, revise, wait, or stop decision with unresolved requirements stated explicitly.</li>
+</ol>
+<h2>Lesson map</h2>
+<div class="table-scroll" role="region" aria-label="Scrollable data table" tabindex="0"><table>
+<thead><tr>
+<th scope="col">Activity</th>
+<th scope="col">Minutes</th>
+</tr></thead><tbody>
+<tr>
+<td>Revisit access as a dataset property</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Worked transfer cases</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Transfer checklist</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Knowledge check</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>Instructional subtotal, excluding posttest</strong></td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td>Posttest, additional assessment time</td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>Learner time with posttest</strong></td>
+<td><strong>23</strong></td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>In the notebook (NB-L5):</strong> Review the source log and edit the transfer-decision cell with dated evidence for one exact target. Choose <code>GO</code>, <code>REVISE</code>, <code>WAIT</code>, or <code>STOP</code>, then run <code>NB-REPRO</code>. Complete the posttest after the artifact manifest appears without errors.</p>
+</blockquote>
+<h2>1. Access tier is not a logo</h2>
+<p>In Lesson 1, access was introduced as a planning problem. After completing an open-data workflow, you can now see exactly where access rules affect the analysis.</p>
+<p>Access is determined by the combination of:</p>
+<ul>
+<li>A specific dataset and release.</li>
+<li>The requested data level.</li>
+<li>Your identity, institution, training, and approvals.</li>
+<li>The intended use.</li>
+<li>The compute location.</li>
+<li>What inputs and outputs may cross the environment boundary.</li>
+<li>Current terms and policies.</li>
+</ul>
+<p>Do not assign a permanent tier to an entire program. Current MoTrPAC documentation, for example, distinguishes public releases that community users can access without an account from restricted or embargoed data that require authentication, a data-use agreement, or other authorization. The access pattern is dataset-dependent. All of Us provides Registered and Controlled Tier collections in a governed Researcher Workbench and restricts external release of participant-level data and small counts under its policies.</p>
+<p>The July 2026 proposal used MoTrPAC as a simplified registration-gated example. This module intentionally updates that framing to match current first-party documentation: <strong>verify the exact release and action every time</strong>.</p>
+<h2>2. What stays the same, and what must change</h2>
+<p>Some harmonization practices transfer across environments:</p>
+<ul>
+<li>Define the scientific question and estimand.</li>
+<li>Preserve original identifiers and metadata.</li>
+<li>Record provenance and decision rules.</li>
+<li>Separate naming, specimen, time, and unit compatibility.</li>
+<li>Flag unresolved mappings.</li>
+<li>Validate join cardinality.</li>
+<li>Respect repeated measures.</li>
+<li>Bound interpretation by design.</li>
+</ul>
+<p>Other parts may need redesign:</p>
+<ul>
+<li>Authentication and API calls.</li>
+<li>Where code executes.</li>
+<li>Where raw, derived, and cached data are stored.</li>
+<li>Whether external reference resources can be queried from the environment.</li>
+<li>Whether data can be joined across resources.</li>
+<li>Whether row-level outputs, logs, plots, models, or counts can be exported.</li>
+<li>Who reviews an export and what disclosure thresholds apply.</li>
+<li>How collaborators receive access.</li>
+</ul>
+<p>You can reuse the analysis steps even when the data must remain in a governed workspace.</p>
+<h2>3. Worked transfer case A: a MoTrPAC dataset</h2>
+<h3>Scenario</h3>
+<p>You find a MoTrPAC metabolomics release that may complement the exercise case study.</p>
+<h3>Verification sequence</h3>
+<ol>
+<li>Identify the exact collection, study, release, assay level, and files.</li>
+<li>Open current MoTrPAC Data Hub and Knowledge Center documentation.</li>
+<li>Test whether the desired public file can be browsed or downloaded without an account.</li>
+<li>If the file is restricted or embargoed, document authentication, DUA, publication, confidentiality, and review requirements.</li>
+<li>Record the evidence URL, page version if available, date, and result.</li>
+</ol>
+<h3>Architecture decision</h3>
+<ul>
+<li><strong>Public file:</strong> The local or Colab-style workflow may remain possible, subject to license, size, and terms. Replace the MW-specific retrieval adapter while retaining provenance and crosswalk logic.</li>
+<li><strong>Restricted file:</strong> Obtain authorization before access. Store and analyze only in permitted locations; do not add restricted content to the module cache. Adapt collaboration and output review to the DUA.</li>
+<li><strong>Unclear status:</strong> Pause data retrieval and ask the program help desk. Continue with public metadata or synthetic schema only.</li>
+</ul>
+<h3>Scientific decision</h3>
+<p>MoTrPAC&#x27;s detailed exercise design can improve phenotype context, but repository membership does not make its measurements quantitatively compatible with <code>ST003348</code>. Repeat the full platform, specimen, time, and unit assessment.</p>
+<h2>4. Worked transfer case B: Nutrition for Precision Health in All of Us</h2>
+<h3>Scenario</h3>
+<p>You want to adapt the diet harmonization workflow to NPH data stored in the All of Us Researcher Workbench.</p>
+<h3>Verification sequence</h3>
+<ol>
+<li>Confirm that the desired NPH data type and release are available.</li>
+<li>Determine whether the required collection is Registered or Controlled Tier.</li>
+<li>Verify current institutional, researcher, identity, training, workspace, and project requirements.</li>
+<li>Review the Data User Code of Conduct and Data and Statistics Dissemination Policy.</li>
+<li>Determine what participant-level data, code outputs, counts, plots, models, or aggregate results may leave the Workbench.</li>
+</ol>
+<h3>Architecture decision</h3>
+<p>The safe default is to move approved code and public reference mappings <strong>into</strong> the governed workspace, run participant-level work there, and export only outputs permitted under current policy. Do not download NPH participant-level data to populate this module&#x27;s local files or cached fallback. If external RefMet calls are unavailable or inappropriate, import a dated, approved reference table without participant data and record its version.</p>
+<h3>Scientific decision</h3>
+<p>NPH&#x27;s modular diet design and multimodal context may support questions that the small FARMM case cannot. It does not remove the need to define diet period, test-meal timing, specimen, assay, repeated measures, and the intended estimand.</p>
+<h2>5. Text-only concept sketch: transfer workflow</h2>
+<p>No separate image appears here. Picture a central box labeled <code>portable harmonization logic</code>. Three arrows point to an open laptop, a sign-in workspace, and a locked cloud workspace. The logic moves to all three. Raw data arrows move freely only into the open laptop; gated data remain in approved storage; controlled participant-level data remain inside the locked cloud. A single outbound arrow from the cloud is labeled <code>reviewed outputs permitted by policy</code>.</p>
+<h2>6. Hands-on activity: make a transfer decision</h2>
+<p>Use <code>module/templates/access_tier_transfer_checklist_learner.md</code> for a resource of your choice. You may use a specific MoTrPAC release, an NPH/All of Us collection, another Metabolomics Workbench accession, MetaboLights, or a consortium repository relevant to your work.</p>
+<p>For the timed course, complete five items: the exact dataset and intended action, one first-party source with its check date, the access pattern, the compute/storage boundary, and a <code>GO</code>, <code>REVISE</code>, <code>WAIT</code>, or <code>STOP</code> decision. The full checklist is a project extension.</p>
+<h3>Required evidence</h3>
+<ul>
+<li>Exact resource, dataset, and version or release.</li>
+<li>Intended data and action.</li>
+<li>First-party access documentation URL and check date.</li>
+<li>Account, agreement, institutional, training, or approval requirements.</li>
+<li>Permitted compute and storage location.</li>
+<li>Input and output movement rules.</li>
+<li>Metadata and identifier availability.</li>
+<li>Required changes to retrieval, cache, crosswalk, and reporting.</li>
+<li>One scientific compatibility risk distinct from access.</li>
+</ul>
+<h3>Decision options</h3>
+<ul>
+<li><code>GO</code>: Requirements are verified and the planned workflow is permitted and scientifically appropriate.</li>
+<li><code>REVISE</code>: The goal is possible, but architecture, scope, output, or analysis must change.</li>
+<li><code>WAIT</code>: A documented approval, release, or clarification is pending.</li>
+<li><code>STOP</code>: The planned action is prohibited or cannot answer the scientific question.</li>
+</ul>
+<p>Write one sentence that distinguishes policy evidence from your interpretation. Example:</p>
+<blockquote>
+<p>The first-party page states that this public release can be downloaded without an account; I infer that the local retrieval step is feasible, but I still need to confirm license and scientific compatibility before reuse.</p>
+</blockquote>
+<h2>7. Safety and governance rules</h2>
+<ul>
+<li>Verify current first-party terms; do not rely on this lesson as legal or policy authority.</li>
+<li>Dataset landing-page visibility does not prove participant-level download permission.</li>
+<li>Public metadata can be useful even when data are restricted, but it does not authorize reconstruction or access.</li>
+<li>Do not place credentials, tokens, signed URLs, or controlled data in notebooks, caches, logs, version control, or training artifacts.</li>
+<li>Do not evade a governed environment by exporting row-level data, small cells, recoverable embeddings, or model artifacts that policy treats as sensitive.</li>
+<li>Access approval does not establish scientific comparability.</li>
+<li>If rules conflict or remain unclear, pause the affected data movement and seek the resource&#x27;s official support channel.</li>
+</ul>
+<h2>8. Knowledge check</h2>
+<p><strong>KC5-01.</strong> What is the most accurate access description for MoTrPAC?</p>
+<p>A. Every MoTrPAC dataset requires registration.</p>
+<p>B. Every MoTrPAC dataset is fully open.</p>
+<p>C. Access is dataset- and release-dependent; public and restricted paths exist and must be verified.</p>
+<p>D. MoTrPAC data can be used only inside All of Us.</p>
+<p><strong>KC5-02.</strong> What should move into a controlled-compute environment?</p>
+<p>A. Approved analysis code and public reference resources that comply with environment policy.</p>
+<p>B. A public link that silently downloads participant data to a local laptop.</p>
+<p>C. Shared credentials.</p>
+<p>D. A module cache populated with participant-level records.</p>
+<p><strong>KC5-03.</strong> A dataset is publicly downloadable and scientifically incompatible with your target estimand. What is the correct decision?</p>
+<p>A. Pool it because access is open.</p>
+<p>B. Treat access and scientific compatibility separately; revise or stop the integration.</p>
+<p>C. Standardize names and ignore the design.</p>
+<p>D. Call it controlled access.</p>
+<h2>9. Posttest and transfer commitment</h2>
+<p>Complete <code>module/assessments/posttest.json</code> through the delivery platform, then finish this statement:</p>
+<blockquote>
+<p>Within the next month, I will apply the workflow to ________. My first evidence check will be ________, and the first incompatibility I will test is ________.</p>
+</blockquote>
+<h2>Final decision rule</h2>
+<p>The harmonization workflow transfers when its logic, provenance, and guardrails are preserved. Access changes the analysis architecture; study design changes the claims. Both must be checked before data move or models run.</p>
+<h2>Primary sources and first-party documentation</h2>
+<ol>
+<li>MoTrPAC. <a href="https://motrpac-data.org/knowledge-center/project-overview/faq">Data access FAQ</a>. Accessed August 17, 2026.</li>
+<li>MoTrPAC. <a href="https://motrpac-data.org/knowledge-center/dissemination/data-access/data-hub">Data Hub access documentation</a> and <a href="https://motrpac-data.org/knowledge-center/dissemination/data-access/onboarding">consortium/restricted onboarding</a>. Accessed August 17, 2026.</li>
+<li>NIH Common Fund. <a href="https://commonfund.nih.gov/nutritionforprecisionhealth/frequently-asked-questions">Nutrition for Precision Health FAQ</a>. Accessed August 10, 2026.</li>
+<li>All of Us Research Program. <a href="https://support.researchallofus.org/hc/en-us/articles/41981123613716-Researcher-Workbench">Researcher Workbench overview</a>. Accessed August 10, 2026.</li>
+<li>All of Us Research Program. <a href="https://support.researchallofus.org/hc/en-us/articles/34814131370388-Policy-Questions">Policy questions and dissemination guidance</a>. Accessed August 10, 2026.</li>
+<li>All of Us Research Program. <a href="https://www.allofus.nih.gov/protecting-data-and-privacy/research-projects-all-us-data/">Research project directory and access-tier requirements</a>. Accessed August 10, 2026.</li>
+</ol>
+</article>
+<div class="actions">
+  <button type="button" data-complete-lesson aria-pressed="false">Mark lesson complete</button>
+  <a class="button secondary" href="lesson_04.html">Previous</a>
+  <a class="button secondary" href="posttest.html">Next</a>
+</div>
+<p id="completion-notice" class="callout" tabindex="-1" aria-live="polite"></p>
+
+    </main>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>Metabo-Diet release 1.0 | Public Metabolomics Workbench case studies ST001521 and ST003348</p>
+      <p>Scientific boundary: no cross-study pooling of uncalibrated quantitative values.</p>
+    </div>
+  </footer>
+  <script src="assets/course.js"></script>
+  
+</body>
+</html>

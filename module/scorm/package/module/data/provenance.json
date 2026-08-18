@@ -1,0 +1,493 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-08-10T11:44:11Z",
+  "selection_status": "locked",
+  "proposal_source": {
+    "path": "tmp/cfde_career_talk_deck/proposal-mw-render/metabo_diet_proposal_MW_revised.pdf",
+    "sha256": "18ef49eddb5807d1860087bf248b47c21877ed0611f2df1826d28a65b935f779",
+    "bytes": 190215,
+    "selection_criteria_pages": [4]
+  },
+  "repository": {
+    "name": "Metabolomics Workbench / National Metabolomics Data Repository",
+    "base_url": "https://www.metabolomicsworkbench.org/",
+    "rest_documentation_url": "https://www.metabolomicsworkbench.org/tools/mw_rest.php",
+    "access_model": "open; no login, registration, credential, or data-use agreement required for the selected public REST records",
+    "retrieved_at_utc": "2026-08-10T11:44:11Z"
+  },
+  "primary_pair": {
+    "diet_study_id": "ST001521",
+    "exercise_study_id": "ST003348",
+    "overlap": {
+      "method": "Exact, case-sensitive set intersection of unique nonblank refmet_name values returned by each study's /metabolites REST endpoint, followed by source-metabolite-name review and exclusion of isotope-labeled/internal-standard rows.",
+      "diet_unique_refmet_names": 510,
+      "exercise_unique_refmet_names": 475,
+      "raw_exact_overlap": 153,
+      "excluded_internal_standard_mappings": [
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "AcCa(12:0)-D9",
+          "refmet_name": "CAR 12:0"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "AcCa(18:0)-D3",
+          "refmet_name": "CAR 18:0"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "Hippuric acid-D5",
+          "refmet_name": "Hippuric acid"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "Lysine-d4",
+          "refmet_name": "Standard"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "Taurine-D4",
+          "refmet_name": "Taurine"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "CDCA-D4",
+          "refmet_name": "Chenodeoxycholic acid"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "Palmitic acid-[13C]16",
+          "refmet_name": "Palmitic acid"
+        },
+        {
+          "study_id": "ST003348",
+          "source_metabolite_name": "Stearic acid-D35",
+          "refmet_name": "Stearic acid"
+        }
+      ],
+      "recommended_conservative_biological_overlap": 145,
+      "diet_overlap_percent_raw": 30.0,
+      "exercise_overlap_percent_raw": 32.21052631578947,
+      "diet_overlap_percent_conservative": 28.431372549019606,
+      "exercise_overlap_percent_conservative": 30.526315789473685,
+      "interpretation": "The 145-name count excludes eight known labeled/internal-standard mappings and is the operational biological crosswalk count. Further annotation curation may reduce it. Overlap supports identifier-crosswalk and class-summary exercises; it does not make raw peak areas quantitatively comparable across studies."
+    },
+    "selection_criteria_audit": {
+      "human_subjects": true,
+      "plasma_or_serum": true,
+      "lc_ms_or_comparable": true,
+      "diet_anchor": true,
+      "exercise_anchor": true,
+      "longitudinal_or_multitimepoint": true,
+      "public_release_and_no_active_embargo": true,
+      "factor_and_specimen_metadata_available": true,
+      "sufficient_refmet_overlap": true,
+      "important_qualification": "The plain-text mwTab records contain the required study, factor, collection, analysis, MS, and metabolite-data blocks. The study-level JSON REST endpoints are valid. Three ST001521 analysis-level mwTab JSON serializations are malformed at pooled-QC factor rows, so the module must use the valid study-level REST JSON or plain mwTab text rather than those three JSON serializations."
+    },
+    "independent_audit": {
+      "status": "completed and reconciled",
+      "result": "Confirmed ST001521 plus ST003348 as the preferred pair, reproduced endpoint and design checks, corrected the overlap to 145 after eight labeled/internal-standard exclusions, and recommended ST000292 plus ST001789 as the stronger reserve pair."
+    }
+  },
+  "sanitization_rules": {
+    "immutable_source_policy": "Files in module/data/raw are exact source snapshots and must not be edited in place. Sanitized/derived tables must retain source IDs and record these transformations.",
+    "ST001521_factors": [
+      "Trim factor-field whitespace without changing repository labels.",
+      "Exclude QPP01 through QPP10 and rows whose Study_Diet, Sex, and Time factors are NA from biological analyses; retain them only as pooled-QC records.",
+      "Derive biological participant_id from the leading four digits of local_sample_id and verify observed visits rather than forcing a balanced panel.",
+      "Preserve Western as the factor label and document that the narrative calls this arm omnivore.",
+      "Use the valid split study REST endpoints; do not ingest malformed AN002533, AN002535, or AN002536 mwTab JSON."
+    ],
+    "ST003348_factors": [
+      "Derive participant_id from the integer before the underscore in local_sample_id.",
+      "Validate suffixes 1, 2, 3, and 4 against rest, stat, rec3, and rec22, respectively.",
+      "Retain source sample_source=blood while setting harmonized specimen to serum from the collection block.",
+      "Treat the treatment-block value no treatment as a metadata defect; define the exercise contrast from the documented protocol, collection, and time factors."
+    ],
+    "cross_study_metabolites": [
+      "Remove the eight explicit isotope-labeled/internal-standard mappings listed in primary_pair.overlap before constructing the biological RefMet crosswalk.",
+      "Keep analysis_id attached to duplicated RefMet names unless a documented within-study collapse rule is applied.",
+      "Never concatenate uncalibrated peak areas across the plasma and serum studies."
+    ]
+  },
+  "studies": [
+    {
+      "role": "diet",
+      "study_id": "ST001521",
+      "project_id": "PR001024",
+      "project_doi": "10.21228/M8B984",
+      "title": "Plasma metabolites of known identity profiled using hybrid nontargeted methods (part-III)",
+      "canonical_study_url": "https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST001521",
+      "project_url": "https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Project&ProjectID=PR001024",
+      "organism": "Homo sapiens",
+      "specimen": "Blood (plasma)",
+      "population": "Thirty adults aged approximately 20-60 years; 20 male and 10 female; ten participants per diet arm.",
+      "design": "FARMM longitudinal diet study. Twenty omnivores were randomized to inpatient Western/omnivore or exclusive enteral nutrition (Modulen) feeding; ten established vegans continued their usual diet as outpatients. Plasma was collected at baseline and days 5, 9, 12, and 15.",
+      "factors": {
+        "rest_rows": 160,
+        "biological_rows_expected": 150,
+        "pooled_qc_rows": 10,
+        "diet_labels": ["Modulen", "Vegan", "Western"],
+        "time_labels": ["Baseline", "Day 5", "Day 9", "Day 12", "Day 15"],
+        "sex_labels": ["Female", "Male"],
+        "qc_rule": "Exclude local_sample_id values QPP01 through QPP10 and all rows whose Study_Diet, Sex, and Time factors are NA.",
+        "subject_id_rule": "For biological local_sample_id values such as 9002-3-PE, use the leading four digits as the participant identifier; preserve the repository factor fields as authoritative."
+      },
+      "analyses": [
+        {
+          "analysis_id": "AN002533",
+          "chromatography": "HILIC",
+          "ion_mode": "POSITIVE",
+          "instrument": "Thermo Exactive Plus Orbitrap",
+          "units": "unitless peak areas",
+          "metabolite_records": 183,
+          "sample_keys_per_record": 158
+        },
+        {
+          "analysis_id": "AN002534",
+          "chromatography": "Reversed phase C8",
+          "ion_mode": "POSITIVE",
+          "instrument": "Thermo Exactive Plus Orbitrap",
+          "units": "unitless peak areas",
+          "metabolite_records": 224,
+          "sample_keys_per_record": 158
+        },
+        {
+          "analysis_id": "AN002535",
+          "chromatography": "HILIC",
+          "ion_mode": "NEGATIVE",
+          "instrument": "Thermo Q Exactive Plus Orbitrap",
+          "units": "unitless peak areas",
+          "metabolite_records": 72,
+          "sample_keys_per_record": 160
+        },
+        {
+          "analysis_id": "AN002536",
+          "chromatography": "Reversed phase C18/T3",
+          "ion_mode": "NEGATIVE",
+          "instrument": "Thermo Q Exactive Orbitrap",
+          "units": "unitless peak areas",
+          "metabolite_records": 88,
+          "sample_keys_per_record": 160
+        }
+      ],
+      "processed_data_profile": {
+        "analyte_analysis_records": 567,
+        "unique_nonblank_refmet_names": 510,
+        "measurement_cells": 89906,
+        "missing_cells": 3708,
+        "missing_percent": 4.124307610170622,
+        "biological_measurement_cells_excluding_qc": 85050,
+        "biological_missing_cells_excluding_qc": 3594,
+        "biological_missing_percent": 4.225749559082892,
+        "positive_mode_missing_factor_samples": ["QPP01", "QPP10"]
+      },
+      "release": {
+        "release_date": "2021-04-01",
+        "version": "1",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "processed_data_public": true,
+        "raw_data_public": false,
+        "embargo_active": false,
+        "verification": "Release metadata and all five study-level REST endpoints returned public content on the retrieval date."
+      },
+      "rest_endpoints": {
+        "summary": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/summary",
+        "factors": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/factors",
+        "analysis": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/analysis",
+        "metabolites": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/metabolites",
+        "data": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST001521/data"
+      },
+      "mwtab_validation": [
+        {
+          "analysis_id": "AN002533",
+          "text_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002533/mwtab/txt",
+          "text_required_blocks_present": true,
+          "json_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002533/mwtab",
+          "json_parse_valid": false,
+          "json_issue": "Malformed pooled-QC Factors object caused by the source text `Sex:NA| Time:NA`."
+        },
+        {
+          "analysis_id": "AN002534",
+          "text_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002534/mwtab/txt",
+          "text_required_blocks_present": true,
+          "json_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002534/mwtab",
+          "json_parse_valid": true
+        },
+        {
+          "analysis_id": "AN002535",
+          "text_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002535/mwtab/txt",
+          "text_required_blocks_present": true,
+          "json_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002535/mwtab",
+          "json_parse_valid": false,
+          "json_issue": "Malformed pooled-QC Factors object caused by the source text `Sex:NA| Time:NA`."
+        },
+        {
+          "analysis_id": "AN002536",
+          "text_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002536/mwtab/txt",
+          "text_required_blocks_present": true,
+          "json_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN002536/mwtab",
+          "json_parse_valid": false,
+          "json_issue": "Malformed pooled-QC Factors object caused by the source text `Sex:NA| Time:NA`."
+        }
+      ],
+      "design_caveats": [
+        "This is not a clean diet-only perturbation: antibiotics were administered on days 6-8 and polyethylene glycol bowel purge on day 7. Day 9 and later changes reflect diet plus microbiome depletion/reconstitution.",
+        "The narrative calls one arm omnivore while the factor table labels it Western; preserve both labels in provenance and make any mapping explicit.",
+        "The vegan arm was outpatient and already vegan, while the two other arms were inpatient controlled feeding. Setting and prior exposure differ by arm.",
+        "Ten pooled-plasma QC rows are mixed into the 160 factor rows and must be excluded from biological summaries and PCA.",
+        "Western male factors contain nine Day 5 rows and eleven Day 9 rows rather than ten each; do not silently force a balanced panel.",
+        "The four analyses use different chromatography and ion modes. Duplicate RefMet names across analyses require an explicit analysis-aware or collapse rule.",
+        "Raw peak-area scale cannot be compared directly with ST003348."
+      ],
+      "cached_files": [
+        {
+          "path": "module/data/raw/ST001521_summary.json",
+          "endpoint": "summary",
+          "bytes": 575,
+          "sha256": "d2199dc631f33c09b9d9cb13f64a9c5233e1b6b7fe3f372e4cb8e947817541d9"
+        },
+        {
+          "path": "module/data/raw/ST001521_factors.json",
+          "endpoint": "factors",
+          "bytes": 49194,
+          "sha256": "7b88427c7434f20538aff398f8ddac7e88d666696f4e19992c85d6017fe0372f"
+        },
+        {
+          "path": "module/data/raw/ST001521_analysis.json",
+          "endpoint": "analysis",
+          "bytes": 2025,
+          "sha256": "72d60232e8a0f39eb24c790cabe7bd1585a1e852eb58f4b0288703273a0c70ac"
+        },
+        {
+          "path": "module/data/raw/ST001521_metabolites.json",
+          "endpoint": "metabolites",
+          "bytes": 95806,
+          "sha256": "7686f09d81f632d3996d5a5eceaedf31632a3c160d291f21cfa574d680251a53"
+        },
+        {
+          "path": "module/data/raw/ST001521_data.json",
+          "endpoint": "data",
+          "bytes": 1997104,
+          "sha256": "5528f4a721189f45de65d65b325727177bc5355181f571827f6030a7e7676c06"
+        }
+      ]
+    },
+    {
+      "role": "exercise",
+      "study_id": "ST003348",
+      "project_id": "PR002083",
+      "project_doi": "10.21228/M8C802",
+      "title": "An integrated LC-MS analysis of the biometric characteristics of different time cohorts of race walkers - untargeted",
+      "canonical_study_url": "https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST003348",
+      "project_url": "https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Project&ProjectID=PR002083",
+      "organism": "Homo sapiens",
+      "specimen": "Blood (serum)",
+      "population": "Nineteen male student race-walking athletes with complete four-timepoint profiles; the repository notes that one of twenty enrolled athletes withdrew.",
+      "design": "Acute endurance race-walking study with fasting pre-exercise REST, immediate post-exercise STAT, 3-hour recovery REC3, and fasting 22-hour recovery REC22 serum samples.",
+      "factors": {
+        "rest_rows": 76,
+        "biological_rows": 76,
+        "time_labels": ["rest", "stat", "rec3", "rec22"],
+        "rows_per_time": 19,
+        "subject_id_rule": "Derive the participant identifier from the integer before the underscore in local_sample_id; suffixes 1, 2, 3, and 4 correspond to rest, stat, rec3, and rec22 and are cross-checked against Collection_time.",
+        "specimen_rule": "The factors endpoint says sample_source=blood; use the collection metadata's more specific Blood (serum) designation."
+      },
+      "analyses": [
+        {
+          "analysis_id": "AN005483",
+          "chromatography": "Reversed phase C18",
+          "ion_mode": "POSITIVE",
+          "instrument": "Thermo Q Exactive Plus Orbitrap",
+          "units": "Peak area",
+          "metabolite_records": 319,
+          "sample_keys_per_record": 76
+        },
+        {
+          "analysis_id": "AN005484",
+          "chromatography": "Reversed phase C18",
+          "ion_mode": "NEGATIVE",
+          "instrument": "Thermo Q Exactive Plus Orbitrap",
+          "units": "Peak area",
+          "metabolite_records": 274,
+          "sample_keys_per_record": 76
+        }
+      ],
+      "processed_data_profile": {
+        "analyte_analysis_records": 593,
+        "unique_nonblank_refmet_names": 475,
+        "measurement_cells": 45068,
+        "missing_cells": 0,
+        "missing_percent": 0.0
+      },
+      "release": {
+        "release_date": "2024-08-09",
+        "version": "1",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
+        "processed_data_public": true,
+        "raw_data_public": true,
+        "raw_data_file_type": "raw (Thermo)",
+        "embargo_active": false,
+        "verification": "Release metadata and all five study-level REST endpoints returned public content on the retrieval date."
+      },
+      "rest_endpoints": {
+        "summary": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/summary",
+        "factors": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/factors",
+        "analysis": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/analysis",
+        "metabolites": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/metabolites",
+        "data": "https://www.metabolomicsworkbench.org/rest/study/study_id/ST003348/data"
+      },
+      "mwtab_validation": [
+        {
+          "analysis_id": "AN005483",
+          "text_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN005483/mwtab/txt",
+          "text_required_blocks_present": true,
+          "json_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN005483/mwtab",
+          "json_parse_valid": true
+        },
+        {
+          "analysis_id": "AN005484",
+          "text_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN005484/mwtab/txt",
+          "text_required_blocks_present": true,
+          "json_url": "https://www.metabolomicsworkbench.org/rest/study/analysis_id/AN005484/mwtab",
+          "json_parse_valid": true
+        }
+      ],
+      "design_caveats": [
+        "The study is restricted to male student-athletes; sex, training-status, and age generalizability is limited.",
+        "REST factors use the broad source label blood while the collection block specifies serum. Treat serum versus plasma as partially comparable, not identical.",
+        "The factors endpoint does not provide an explicit participant field; longitudinal pairing depends on a documented local_sample_id parsing rule.",
+        "The treatment block says no treatment despite the documented race-walking exercise protocol; use the study design, collection, and time-factor evidence instead.",
+        "REST returns 593 analyte-analysis records and 475 unique nonblank RefMet names, while the project narrative reports larger totals across untargeted and targeted work. Use endpoint-derived counts for the notebook.",
+        "REST and STAT were collected on the same morning, REC3 later that day, and REC22 fasting the next morning. Time-of-day and fasting status are part of the contrast.",
+        "Raw peak-area scale cannot be compared directly with ST001521."
+      ],
+      "cached_files": [
+        {
+          "path": "module/data/raw/ST003348_summary.json",
+          "endpoint": "summary",
+          "bytes": 621,
+          "sha256": "3766073c903b8975c2959fbb9c562b4cee531cddc02e749f380915354b193bee"
+        },
+        {
+          "path": "module/data/raw/ST003348_factors.json",
+          "endpoint": "factors",
+          "bytes": 11791,
+          "sha256": "e31bb851873fee1d185a2d91d8b5553637145d799793d416ecf2be6c3f8c3329"
+        },
+        {
+          "path": "module/data/raw/ST003348_analysis.json",
+          "endpoint": "analysis",
+          "bytes": 1051,
+          "sha256": "27f654c3cee086b2310ebe4aeee64f5a835949e99c8b0da4736e6316652c4a19"
+        },
+        {
+          "path": "module/data/raw/ST003348_metabolites.json",
+          "endpoint": "metabolites",
+          "bytes": 106651,
+          "sha256": "492be3dd45c6bd741b64634249e4acc89a3d0c9750f98f816215305cff5ef566"
+        },
+        {
+          "path": "module/data/raw/ST003348_data.json",
+          "endpoint": "data",
+          "bytes": 1076605,
+          "sha256": "0610a28e0e858524adefee5ee2d0dca46cf75c9a5bab1ebcb659e2573715adfb"
+        }
+      ]
+    }
+  ],
+  "cross_study_caveats": [
+    "The biospecimens differ: ST001521 is plasma and ST003348 is serum.",
+    "The populations differ strongly in sex distribution, age, training status, and setting.",
+    "The interventions differ in timescale and meaning: a 15-day diet/microbiome-depletion trajectory versus an acute exercise and recovery trajectory.",
+    "Chromatography, instrument implementations, ion modes, extraction, and peak-area units differ. Do not concatenate raw abundances across studies or run a single cross-study PCA on uncalibrated values.",
+    "Use RefMet overlap for nomenclature and within-study normalized summaries. Any cross-study biological interpretation must remain qualitative and explicitly provenance-aware.",
+    "A RefMet match is not proof that two analysis records have the same isomeric resolution, annotation confidence, or quantitation behavior."
+  ],
+  "fallback_pair": {
+    "status": "verified but not cached",
+    "diet_study": {
+      "study_id": "ST000292",
+      "project_id": "PR000233",
+      "project_doi": "10.21228/M8J590",
+      "title": "LC-MS Based Approaches to Investigate Metabolomic Differences in the Plasma of Young Women after Drinking Cranberry Juice or Apple Juice",
+      "canonical_study_url": "https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST000292",
+      "organism": "Homo sapiens",
+      "specimen": "Plasma (title and study narrative; collection field uses generic Blood)",
+      "population": "Seventeen young women completed the crossover and contributed baseline, apple-juice, and cranberry-juice samples; eighteen were recruited and one withdrew.",
+      "design": "Randomized cranberry-juice versus apple-juice crossover after procyanidin avoidance, with a two-week washout; 51 processed sample rows, 17 per condition.",
+      "analysis_ids": ["AN000466", "AN000467"],
+      "analysis_type": "Reversed-phase LC-MS, Q Exactive Orbitrap, positive and negative ESI",
+      "release_date": "2016-12-22",
+      "license": "CC BY 4.0",
+      "raw_data_public": true,
+      "raw_data_file_type": "mzXML",
+      "unique_nonblank_refmet_names": 553,
+      "rest_data_records": 1017,
+      "rest_data_sample_keys_per_record": 51,
+      "companion_urine_study_id": "ST000291",
+      "companion_urine_note": "ST000291 is the paired urine arm and has 15 complete participants; use ST000292 for the plasma-plasma fallback comparison.",
+      "api_verified_at_utc": "2026-08-10T11:47:00Z",
+      "caveats": [
+        "This is a controlled beverage crossover, not a full controlled-feeding intervention.",
+        "The collection field says Blood while the title and narrative specify plasma.",
+        "The repository Total Subjects value of 51 reflects sample rows, not unique participants."
+      ]
+    },
+    "exercise_study": {
+      "study_id": "ST001789",
+      "project_id": "PR001133",
+      "project_doi": "10.21228/M87X24",
+      "title": "Acute metabolomic changes of plasma in response to endurance exercise",
+      "canonical_study_url": "https://www.metabolomicsworkbench.org/data/DRCCMetadata.php?Mode=Study&StudyID=ST001789",
+      "organism": "Homo sapiens",
+      "specimen": "Blood (plasma)",
+      "design": "Nineteen young adults sampled before, immediately after, and 60 minutes after a monitored 90-minute endurance run; 57 processed sample rows.",
+      "analysis_ids": ["AN002901", "AN002902"],
+      "analysis_type": "Targeted HILIC and reversed-phase LC-MS/MS on an ABI Sciex 5500 QTrap",
+      "release_date": "2022-01-06",
+      "license": "CC BY 4.0",
+      "unique_nonblank_refmet_names": 669,
+      "rest_data_records": 689,
+      "rest_data_sample_keys_per_record": 57,
+      "api_verified_at_utc": "2026-08-10T11:47:00Z",
+      "caveat": "Participants consumed a banana after the run; recovery samples therefore combine exercise recovery and post-exercise feeding."
+    },
+    "overlap": {
+      "method": "Same exact unique nonblank RefMet intersection as the primary pair, with a documented source-name standard screen.",
+      "raw_exact_overlap": 122,
+      "known_internal_standard_overlap": {
+        "study_id": "ST000292",
+        "source_metabolite_name": "Tryptophan-2,3,3-D3",
+        "refmet_name": "Tryptophan"
+      },
+      "count_after_known_standard_filter": 121,
+      "interpretation": "121 is an upper bound pending a full source-name curation of both reserve studies."
+    },
+    "verification": "Summary, factors, analysis, metabolites, data, and mwTab text/JSON endpoints were retrieved successfully for both fallback studies."
+  },
+  "refmet_cache": {
+    "purpose": "Authoritative offline source for RefMet standardized names and chemical class fields used by metabolite-class summaries.",
+    "endpoint": "https://www.metabolomicsworkbench.org/rest/refmet/classification",
+    "retrieved_at_utc": "2026-08-10T11:52:52Z",
+    "publicly_retrievable": true,
+    "record_count": 206981,
+    "fields_observed": ["name", "super_class", "main_class", "sub_class", "refmet_id"],
+    "path": "module/data/raw/refmet_classification.json",
+    "bytes": 31375639,
+    "sha256": "b11b6f09c5f068226ac440b815c693af0255e506a2cb33736a265004a95cb50d",
+    "license_note": "The endpoint does not state a separate license in its payload; Metabolomics Workbench terms of use and citation guidance apply.",
+    "packaging_note": "The full source is retained for provenance. A study-only derived subset may be generated for learner delivery, but it must record this source checksum."
+  },
+  "cache_policy": {
+    "scope": "Primary-pair study-level REST JSON plus the authoritative RefMet classification JSON needed for offline notebook fallback is cached. Raw vendor files, duplicated analysis-level mwTab files, and fallback-pair matrices are not redistributed.",
+    "primary_study_cache_bytes": 3341423,
+    "refmet_cache_bytes": 31375639,
+    "total_cached_bytes": 34717062,
+    "cached_json_files": 11,
+    "integrity_algorithm": "SHA-256",
+    "refresh_rule": "On refresh, retrieve the same endpoints, record a new UTC timestamp, recompute every checksum, rerun JSON validation and overlap counts, and review release/license metadata before replacing this manifest."
+  }
+}

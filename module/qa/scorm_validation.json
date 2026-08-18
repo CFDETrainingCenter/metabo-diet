@@ -1,0 +1,72 @@
+{
+  "passed": true,
+  "failures": [],
+  "archive_file_count": 18,
+  "manifest_file_count": 17,
+  "required_pages_present": true,
+  "required_downloads_present": true,
+  "crc_passed": true,
+  "lms_calls_present": true,
+  "focus_indicator_passed": true,
+  "focus_dark_to_white_contrast_ratio": 8.31,
+  "accessibility_shell_checks": {
+    "index.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "lesson_01.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "lesson_02.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "lesson_03.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "lesson_04.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "lesson_05.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "posttest.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    },
+    "pretest.html": {
+      "lang": true,
+      "skip_link": true,
+      "main": true,
+      "title": true,
+      "viewport": true
+    }
+  },
+  "sha256": "8c95410bd3bad9f4e3ad496006507f6dd3afe7e3e5b75b9e167787122ed3ffe5",
+  "bytes": 5615196
+}

@@ -1,0 +1,490 @@
+---
+title: "Metabo-Diet R appendix"
+subtitle: "Metabolomics Workbench live retrieval with a validated cached-JSON fallback"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+    df_print: paged
+date: "2026-08-17"
+lang: en
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+options(width = 110)
+```
+
+# How to use the R companion
+
+This R Markdown file follows the same five lesson keys as the primary Python notebook. Read the matching guide lesson, then run the R chunks from top to bottom. If a check fails, stop and review the output. Record your interpretation in the worksheet. The Python notebook is the main activity; this file shows the same retrieval and analysis steps in R.
+
+| Learner guide | R companion section | Main action |
+|---|---|---|
+| Lesson 1 | `NB-R-L1` | Confirm setup, configuration, and scientific boundary |
+| Lesson 2 | `NB-R-L2` | Retrieve endpoints and derive biological sample structure |
+| Lesson 3 | `NB-R-L3` | Audit RefMet overlap and labeled standards |
+| Lesson 4 | `NB-R-L4` | Run separate within-study PCA examples |
+| Lesson 5 | `NB-R-L5` | State the transfer boundary and record session information |
+
+# Environment setup (`NB-R-SETUP`) {#nb-r-setup}
+
+To read the companion without installing anything, open the pre-rendered `module/notebooks/metabo_diet_R_appendix.html` in a browser.
+
+To rerun it, install R 4.3 or later from <https://cran.r-project.org/> plus RStudio or another Pandoc installation. From the directory that contains `module/`, check Pandoc, install the cached-path packages, and render:
+
+```bash
+Rscript -e 'stopifnot(rmarkdown::pandoc_available()); rmarkdown::pandoc_version()'
+Rscript module/notebooks/install_r_packages.R
+Rscript -e 'rmarkdown::render("module/notebooks/metabo_diet_R_appendix.Rmd")'
+```
+
+The default installer covers `rmarkdown`, `knitr`, `jsonlite`, `data.table`, and `httr`. The validated cache does not require network access after installation. To test optional live retrieval, run `Rscript module/notebooks/install_r_packages.R --live` first, then set `METABO_DIET_LIVE=1` before rendering.
+
+```{r environment-check}
+required_packages <- c("rmarkdown", "knitr", "jsonlite", "data.table", "httr")
+missing_packages <- required_packages[
+  !vapply(required_packages, requireNamespace, quietly = TRUE, FUN.VALUE = logical(1))
+]
+if (getRversion() < "4.3.0") stop("Use R 4.3 or later")
+if (length(missing_packages)) {
+  stop(
+    "Missing R packages: ", paste(missing_packages, collapse = ", "),
+    ". Run module/notebooks/install_r_packages.R and render again."
+  )
+}
+cat("R", as.character(getRversion()), "environment check passed\n")
+```
+
+# Lesson 1 companion - Scope and guardrails (`NB-R-L1`) {#nb-r-l1}
+
+This appendix reproduces the core data-ingest, metadata, RefMet-overlap, and PCA logic in R. It uses the public diet study **ST001521** and exercise study **ST003348**. Quantitative matrices are analyzed **within one study and one analysis**; they are never stacked across studies.
+
+The default path is deterministic and offline-capable. Set `METABO_DIET_LIVE=1` to try `metabolomicsWorkbenchR::do_query()` for each split endpoint. If the package, network, response, or schema is unavailable, the code falls back endpoint-by-endpoint to the validated JSON cache.
+
+Confirm the two accessions below. Then write one sentence explaining why a shared RefMet name supports a naming comparison but not pooled raw intensities.
+
+## Configuration and path discovery
+
+```{r configuration}
+DIET_ACCESSION <- "ST001521"
+EXERCISE_ACCESSION <- "ST003348"
+DIET_ANALYSIS_ID <- "AN002534"
+EXERCISE_ANALYSIS_ID <- "AN005483"
+MW_ENDPOINTS <- c("summary", "factors", "analysis", "metabolites", "data")
+PREFER_LIVE_API <- identical(Sys.getenv("METABO_DIET_LIVE", "0"), "1")
+
+find_module_dir <- function(start = normalizePath(getwd())) {
+  current <- start
+  repeat {
+    if (dir.exists(file.path(current, "data", "raw")) &&
+        dir.exists(file.path(current, "notebooks"))) return(current)
+    nested <- file.path(current, "module")
+    if (dir.exists(file.path(nested, "data", "raw"))) return(nested)
+    parent <- dirname(current)
+    if (identical(parent, current)) break
+    current <- parent
+  }
+  stop("Could not locate module/data/raw")
+}
+
+MODULE_DIR <- find_module_dir()
+RAW_DIR <- file.path(MODULE_DIR, "data", "raw")
+DERIVED_DIR <- file.path(MODULE_DIR, "data", "derived")
+dir.create(DERIVED_DIR, recursive = TRUE, showWarnings = FALSE)
+NORMALIZATION_SCRIPT <- file.path(MODULE_DIR, "scripts", "metabo_diet_R_normalization.R")
+if (!file.exists(NORMALIZATION_SCRIPT)) stop("Missing R normalization helpers: ", NORMALIZATION_SCRIPT)
+source(NORMALIZATION_SCRIPT)
+
+cat("Retrieval mode:", if (PREFER_LIVE_API) "live with cache fallback" else "validated cache", "\n")
+cat("Diet accession:", DIET_ACCESSION, "\n")
+cat("Exercise accession:", EXERCISE_ACCESSION, "\n")
+```
+
+# Lesson 2 companion - Comparing study design (`NB-R-L2`) {#nb-r-l2}
+
+Run the retrieval and factor chunks in order. Record endpoint source, samples, participants, specimen, conditions, and time meaning for each study. Stop if a factor check fails.
+
+## Split REST retrieval with cache fallback
+
+The official Bioconductor interface accepts the MW context, input field, accession, and output item. `fetch_endpoint()` makes one query per endpoint rather than treating study metadata and data as one undifferentiated response.
+
+`metabolomicsWorkbenchR` reshapes the responses. Flat endpoints become data frames, factors become lists by study, and data become lists by analysis. It also changes sample IDs such as `9002-3-PA` to `9002.3.PA`. The normalization script converts live and cached results to the same structure and restores IDs from the factor table. See the official [Bioconductor package page](https://bioconductor.org/packages/release/bioc/html/metabolomicsWorkbenchR.html) for the released implementation and documentation.
+
+```{r retrieval-functions}
+fetch_endpoint <- function(study_id, endpoint, prefer_live = FALSE,
+                           expected_sample_ids = NULL) {
+  url <- paste(
+    "https://www.metabolomicsworkbench.org/rest/study/study_id",
+    study_id, endpoint, sep = "/"
+  )
+  cache_path <- file.path(RAW_DIR, paste0(study_id, "_", endpoint, ".json"))
+  fallback_reason <- if (prefer_live) "" else "live retrieval disabled for deterministic run"
+
+  if (prefer_live && requireNamespace("metabolomicsWorkbenchR", quietly = TRUE)) {
+    live <- tryCatch(
+      metabolomicsWorkbenchR::do_query(
+        context = "study",
+        input_item = "study_id",
+        input_value = study_id,
+        output_item = endpoint
+      ),
+      error = function(error) error
+    )
+    if (!inherits(live, "error")) {
+      canonical_live <- tryCatch(
+        normalize_mw_endpoint(study_id, endpoint, live, expected_sample_ids),
+        error = function(error) error
+      )
+      if (!inherits(canonical_live, "error")) {
+        return(list(
+          payload = canonical_live,
+          source = data.frame(
+            study_id = study_id, endpoint = endpoint, source = "live metabolomicsWorkbenchR",
+            url = url, cache_path = cache_path, fallback_reason = "",
+            canonical_records = mw_endpoint_record_count(endpoint, canonical_live)
+          )
+        ))
+      }
+      fallback_reason <- paste("live normalization failed:", conditionMessage(canonical_live))
+    } else {
+      fallback_reason <- conditionMessage(live)
+    }
+  } else if (prefer_live) {
+    fallback_reason <- "metabolomicsWorkbenchR is not installed"
+  }
+
+  if (!file.exists(cache_path)) stop("Missing cached endpoint: ", cache_path)
+  cached <- jsonlite::fromJSON(cache_path, simplifyVector = FALSE)
+  canonical_cached <- normalize_mw_endpoint(
+    study_id, endpoint, cached, expected_sample_ids
+  )
+  list(
+    payload = canonical_cached,
+    source = data.frame(
+      study_id = study_id, endpoint = endpoint, source = "validated cache",
+      url = url, cache_path = cache_path, fallback_reason = fallback_reason,
+      canonical_records = mw_endpoint_record_count(endpoint, canonical_cached)
+    )
+  )
+}
+
+studies <- list()
+source_rows <- list()
+row_index <- 1L
+for (study_id in c(DIET_ACCESSION, EXERCISE_ACCESSION)) {
+  studies[[study_id]] <- list()
+  for (endpoint in MW_ENDPOINTS) {
+    expected_sample_ids <- NULL
+    if (endpoint == "data") {
+      expected_sample_ids <- vapply(
+        studies[[study_id]]$factors,
+        function(record) as.character(record$local_sample_id),
+        character(1)
+      )
+    }
+    fetched <- fetch_endpoint(
+      study_id, endpoint, PREFER_LIVE_API, expected_sample_ids
+    )
+    studies[[study_id]][[endpoint]] <- fetched$payload
+    source_rows[[row_index]] <- fetched$source
+    row_index <- row_index + 1L
+  }
+}
+source_log <- do.call(rbind, source_rows)
+stopifnot(nrow(source_log) == 10L)
+source_log[, c("study_id", "endpoint", "source", "canonical_records", "url")]
+```
+
+## Tidy the longitudinal factors
+
+```{r factor-functions}
+records_list <- function(payload) {
+  if (is.data.frame(payload)) {
+    return(lapply(seq_len(nrow(payload)), function(index) as.list(payload[index, , drop = FALSE])))
+  }
+  unname(payload)
+}
+
+flat_records_df <- function(payload) {
+  rows <- records_list(payload)
+  do.call(rbind, lapply(rows, function(row) {
+    flat <- vapply(row, function(value) {
+      if (length(value) == 0L || is.null(value)) "" else as.character(value[[1L]])
+    }, character(1))
+    as.data.frame(as.list(flat), stringsAsFactors = FALSE)
+  }))
+}
+
+parse_factor_string <- function(value) {
+  pieces <- trimws(strsplit(value, "|", fixed = TRUE)[[1L]])
+  parsed <- lapply(pieces, function(piece) {
+    location <- regexpr(":", piece, fixed = TRUE)[1L]
+    if (location < 1L) stop("Malformed factor component: ", piece)
+    c(key = trimws(substr(piece, 1L, location - 1L)),
+      value = trimws(substr(piece, location + 1L, nchar(piece))))
+  })
+  keys <- vapply(parsed, `[[`, character(1), "key")
+  values <- vapply(parsed, `[[`, character(1), "value")
+  if (anyDuplicated(keys)) stop("Duplicate factor key")
+  stats::setNames(values, keys)
+}
+
+diet_factors_raw <- flat_records_df(studies[[DIET_ACCESSION]]$factors)
+exercise_factors_raw <- flat_records_df(studies[[EXERCISE_ACCESSION]]$factors)
+
+diet_biological <- diet_factors_raw[!grepl("^QPP(?:0[1-9]|10)$", diet_factors_raw$local_sample_id), ]
+diet_parsed <- lapply(diet_biological$factors, parse_factor_string)
+diet_tidy <- data.frame(
+  study_id = DIET_ACCESSION,
+  local_sample_id = diet_biological$local_sample_id,
+  participant_id = sub("-.*$", "", diet_biological$local_sample_id),
+  specimen_harmonized = "plasma",
+  condition_original = vapply(diet_parsed, `[[`, character(1), "Study_Diet"),
+  time_original = vapply(diet_parsed, `[[`, character(1), "Time"),
+  stringsAsFactors = FALSE
+)
+
+exercise_parsed <- lapply(exercise_factors_raw$factors, parse_factor_string)
+exercise_tidy <- data.frame(
+  study_id = EXERCISE_ACCESSION,
+  local_sample_id = exercise_factors_raw$local_sample_id,
+  participant_id = sub("_.*$", "", exercise_factors_raw$local_sample_id),
+  specimen_harmonized = "serum",
+  condition_original = "acute endurance exercise",
+  time_original = tolower(vapply(exercise_parsed, `[[`, character(1), "Collection_time")),
+  stringsAsFactors = FALSE
+)
+
+suffix_time <- c(`1` = "rest", `2` = "stat", `3` = "rec3", `4` = "rec22")
+observed_suffix <- sub("^.*_", "", exercise_tidy$local_sample_id)
+stopifnot(all(unname(suffix_time[observed_suffix]) == exercise_tidy$time_original))
+stopifnot(nrow(diet_tidy) == 150L, length(unique(diet_tidy$participant_id)) == 30L)
+stopifnot(nrow(exercise_tidy) == 76L, length(unique(exercise_tidy$participant_id)) == 19L)
+
+tidy_factors <- rbind(diet_tidy, exercise_tidy)
+aggregate(local_sample_id ~ study_id, tidy_factors, function(x) length(unique(x)))
+```
+
+# Lesson 3 companion - Harmonizing metabolomics and metadata (`NB-R-L3`) {#nb-r-l3}
+
+Predict the raw overlap, inspect the labeled-standard collisions, and trace one retained RefMet name to the source names and analysis IDs in both studies.
+
+## RefMet overlap and conservative standard cleanup
+
+```{r overlap}
+diet_metabolites <- flat_records_df(studies[[DIET_ACCESSION]]$metabolites)
+exercise_metabolites <- flat_records_df(studies[[EXERCISE_ACCESSION]]$metabolites)
+
+nonblank_refmet <- function(values) unique(values[!is.na(values) & nzchar(values) & values != "-"])
+diet_refmet <- nonblank_refmet(diet_metabolites$refmet_name)
+exercise_refmet <- nonblank_refmet(exercise_metabolites$refmet_name)
+raw_overlap <- intersect(diet_refmet, exercise_refmet)
+
+# Explicit hyphenated stable-isotope suffixes; this does not misclassify vitamin D3.
+is_standard <- grepl("-[dD][0-9]+$|-\\[(13C|15N)\\][0-9]*$",
+                     exercise_metabolites$metabolite_name, perl = TRUE)
+standard_rows <- exercise_metabolites[is_standard, ]
+standard_collision_labels <- intersect(nonblank_refmet(standard_rows$refmet_name), raw_overlap)
+conservative_overlap <- setdiff(raw_overlap, standard_collision_labels)
+
+overlap_counts <- data.frame(
+  metric = c(
+    "diet unique nonblank RefMet", "exercise unique nonblank RefMet",
+    "raw exact overlap", "exercise isotope/internal-standard rows",
+    "raw-overlap labels with a standard collision", "conservative biological overlap"
+  ),
+  value = c(
+    length(diet_refmet), length(exercise_refmet), length(raw_overlap),
+    nrow(standard_rows), length(standard_collision_labels), length(conservative_overlap)
+  )
+)
+stopifnot(identical(overlap_counts$value, c(510L, 475L, 153L, 10L, 8L, 145L)))
+overlap_counts
+standard_rows[, c("analysis_id", "metabolite_name", "refmet_name")]
+```
+
+The 145-name result is deliberately conservative: if any ST003348 labeled-standard row points to a RefMet label, that label is omitted from the overlap even when another reported row appears unlabeled. When available, the Python-generated `metabolite_crosswalk.csv` supplies the release's richer class, evidence, confidence, and decision fields. The fallback below keeps the R companion runnable on its own and clearly labels its narrower exact-name audit.
+
+```{r crosswalk}
+crosswalk_path <- file.path(DERIVED_DIR, "metabolite_crosswalk.csv")
+if (file.exists(crosswalk_path)) {
+  crosswalk <- read.csv(crosswalk_path, check.names = FALSE, stringsAsFactors = FALSE)
+} else {
+  collapse_values <- function(values) {
+    values <- values[!is.na(values) & nzchar(values)]
+    paste(sort(unique(values)), collapse = ";")
+  }
+  summarize_names <- function(table, prefix) {
+    selected <- table[
+      table$refmet_name %in% conservative_overlap,
+      c("refmet_name", "metabolite_name", "analysis_id")
+    ]
+    summarized <- stats::aggregate(
+      cbind(metabolite_name, analysis_id) ~ refmet_name,
+      data = selected,
+      FUN = collapse_values
+    )
+    names(summarized) <- c(
+      "refmet_name",
+      paste0(prefix, "_source_reported_names"),
+      paste0(prefix, "_analysis_ids")
+    )
+    summarized
+  }
+  crosswalk <- merge(
+    data.frame(refmet_name = sort(conservative_overlap)),
+    summarize_names(diet_metabolites, "diet"),
+    by = "refmet_name",
+    all.x = TRUE
+  )
+  crosswalk <- merge(
+    crosswalk,
+    summarize_names(exercise_metabolites, "exercise"),
+    by = "refmet_name",
+    all.x = TRUE
+  )
+  crosswalk$main_class <- "not classified in the R fallback"
+  crosswalk$mapping_confidence <- "exact repository RefMet name; source role reviewed"
+}
+stopifnot(nrow(crosswalk) == 145L)
+head(crosswalk[, c(
+  "refmet_name", "main_class", "diet_source_reported_names", "diet_analysis_ids",
+  "exercise_source_reported_names", "exercise_analysis_ids", "mapping_confidence"
+)], 8L)
+```
+
+# Lesson 4 companion - Guided analysis and interpretation (`NB-R-L4`) {#nb-r-l4}
+
+Run each PCA separately. Record the preprocessing, sample counts, and explained variance, then write an interpretation that includes other explanations and the limit of the claim.
+
+## Separate PCA in R
+
+The R path uses the same preprocessing contract as Python: biological samples only, explicit labeled-standard exclusion for ST003348, no more than 20% missingness, `log2(x + 1)`, feature-median imputation, removal of constant features, and feature autoscaling. PCA signs may flip relative to Python without changing the solution.
+
+```{r pca-function}
+pca_one_analysis <- function(study_id, analysis_id, payload, factors,
+                             exclude_standards = FALSE, max_missing = 0.20) {
+  selected <- Filter(
+    function(row) identical(as.character(row$analysis_id[[1L]]), analysis_id),
+    records_list(payload)
+  )
+  sample_ids <- factors$local_sample_id
+  matrices <- list()
+  retained_names <- character()
+
+  for (row in selected) {
+    reported <- as.character(row$metabolite_name[[1L]])
+    isotope_row <- grepl("-[dD][0-9]+$|-\\[(13C|15N)\\][0-9]*$", reported, perl = TRUE)
+    if (exclude_standards && isotope_row) next
+    data_values <- row$DATA
+    if (is.data.frame(data_values)) data_values <- as.list(data_values[1L, ])
+    values <- vapply(sample_ids, function(sample_id) {
+      value <- data_values[[sample_id]]
+      if (is.null(value) || length(value) == 0L || is.na(value[[1L]])) NA_real_
+      else as.numeric(value[[1L]])
+    }, numeric(1))
+    if (mean(is.na(values)) <= max_missing) {
+      matrices[[length(matrices) + 1L]] <- values
+      retained_names <- c(retained_names, paste(study_id, analysis_id,
+                                                 as.character(row$metabolite_id[[1L]]), sep = "|"))
+    }
+  }
+  matrix <- do.call(cbind, matrices)
+  colnames(matrix) <- retained_names
+  logged <- log2(matrix + 1)
+  for (column in seq_len(ncol(logged))) {
+    missing <- is.na(logged[, column])
+    logged[missing, column] <- stats::median(logged[, column], na.rm = TRUE)
+  }
+  nonconstant <- apply(logged, 2L, stats::sd) > 0
+  fitted <- stats::prcomp(logged[, nonconstant, drop = FALSE], center = TRUE, scale. = TRUE)
+  list(
+    study_id = study_id,
+    analysis_id = analysis_id,
+    samples = nrow(logged),
+    input_features = length(selected),
+    pca_features = sum(nonconstant),
+    variance_percent = 100 * fitted$sdev^2 / sum(fitted$sdev^2),
+    scores = cbind(factors, PC1 = fitted$x[, 1L], PC2 = fitted$x[, 2L])
+  )
+}
+```
+
+```{r pca-run}
+diet_pca <- pca_one_analysis(
+  DIET_ACCESSION, DIET_ANALYSIS_ID, studies[[DIET_ACCESSION]]$data,
+  diet_tidy, exclude_standards = FALSE
+)
+exercise_pca <- pca_one_analysis(
+  EXERCISE_ACCESSION, EXERCISE_ANALYSIS_ID, studies[[EXERCISE_ACCESSION]]$data,
+  exercise_tidy, exclude_standards = TRUE
+)
+
+pca_summary <- do.call(rbind, lapply(list(diet_pca, exercise_pca), function(result) {
+  data.frame(
+    study_id = result$study_id,
+    analysis_id = result$analysis_id,
+    samples = result$samples,
+    input_features = result$input_features,
+    pca_features = result$pca_features,
+    PC1_variance_percent = result$variance_percent[1L],
+    PC2_variance_percent = result$variance_percent[2L]
+  )
+}))
+stopifnot(
+  identical(pca_summary$samples, c(150L, 76L)),
+  identical(pca_summary$pca_features, c(212L, 313L))
+)
+pca_summary
+```
+
+```{r pca-figures, fig.width=12, fig.height=5, fig.cap="Separate within-study PCA examples. The coordinate systems are independent and must not be compared directly."}
+plot_pca_scores <- function(result, group, title) {
+  group <- factor(group)
+  colors <- grDevices::hcl.colors(nlevels(group), palette = "Dark 3")
+  graphics::plot(
+    result$scores$PC1,
+    result$scores$PC2,
+    col = colors[as.integer(group)],
+    pch = 19,
+    xlab = sprintf("PC1 (%.1f%%)", result$variance_percent[1L]),
+    ylab = sprintf("PC2 (%.1f%%)", result$variance_percent[2L]),
+    main = title
+  )
+  graphics::legend(
+    "topright",
+    legend = levels(group),
+    col = colors,
+    pch = 19,
+    cex = 0.72,
+    bty = "n"
+  )
+}
+
+old_parameters <- graphics::par(mfrow = c(1L, 2L), mar = c(4.2, 4.2, 3.0, 1.0))
+plot_pca_scores(
+  diet_pca,
+  diet_pca$scores$condition_original,
+  "ST001521 / AN002534 - plasma"
+)
+plot_pca_scores(
+  exercise_pca,
+  exercise_pca$scores$time_original,
+  "ST003348 / AN005483 - serum"
+)
+graphics::par(old_parameters)
+```
+
+**Accessible interpretation.** The left panel contains 150 diet-study plasma samples and colors the deposited diet groups. The right panel contains 76 exercise-study serum samples and colors rest/recovery timepoints. Both axes report model-specific explained variance. Because each PCA was fit independently, positions and axis values cannot be compared across panels.
+
+# Lesson 5 companion - Access transfer and interpretation (`NB-R-L5`) {#nb-r-l5}
+
+These PCAs are exploratory, not causal tests or repeated-measures models. In FARMM, days 9 to 15 reflect more than diet alone; in `ST003348`, time also varies with fasting and clock time. A later analysis could fit a longitudinal model within each study and compare effect directions and uncertainty instead of raw peak-area values.
+
+Use the learner-guide transfer checklist to document an exact dataset and action, dated first-party evidence, the compute boundary, permitted outputs, unresolved requirements, and a `GO`, `REVISE`, `WAIT`, or `STOP` decision. Keep credentials and governed data out of this file.
+
+```{r session-info}
+sessionInfo()
+```

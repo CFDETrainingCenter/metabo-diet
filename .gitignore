@@ -1,0 +1,15 @@
+.DS_Store
+.venv/
+tmp/
+__pycache__/
+*.py[cod]
+*.Rhistory
+
+# Large, reproducible visual-QA intermediates.
+module/qa/renders/
+module/qa/contact_sheets/
+module/data/derived/.matplotlib-cache/
+
+# The learner site is currently a separate embedded Git repository.
+# Do not record it as an unusable gitlink in the parent repository.
+module/site/
